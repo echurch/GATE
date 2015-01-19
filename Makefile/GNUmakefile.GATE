@@ -1,0 +1,87 @@
+# default target list
+all: .depend $(DICT).cc lib/$(SHLIB)  $(NEMLIBDIR)/$(SHLIB) 
+
+# define ROOTMAP and add it to the default target list, unless NO_ROOTMAP set
+#ifndef NO_ROOTMAP
+#ROOTMAP= $(DOGS_PATH)/lib/$(SHLIB:.so=.rootmap)
+#all: $(ROOTMAP)
+#endif
+
+# DCcmpat lib support
+CFLAGS   += -D_$(OSNAME)_
+CXXFLAGS += -D_$(OSNAME)_
+
+
+# root class dictionary
+$(DICT).cc: $(HEADERS) LinkDef.hh
+	@echo '<< generating CINT >>'
+	@echo 'rootcint -f $(DICT).cc -c $(INCFLAGS) $(HEADERS) LinkDef.hh'
+	@rootcint -f $(DICT).cc -c $(INCFLAGS) $(HEADERS) LinkDef.hh
+
+# default rule for making .o files from .cc files
+.cc.o: 
+	@echo '<< compiling' $< '>>'
+	@$(CXX) $(CXXFLAGS) $(INCFLAGS) -c $<
+
+# rule for making shareable library
+lib/$(SHLIB): $(OBJECTS) $(DICT).o
+	@echo '<< generating $(SHLIB) >>'
+	@mkdir -p lib
+	@$(SOMAKER) $(SOFLAGS) -o lib/$(SHLIB) $(filter-out $(DICT).o, $(OBJECTS)) $(DICT).o
+	@echo '<< Done! >>'
+
+# rule for making symlink in $(NEMLIBDIR)
+$(NEMLIBDIR)/$(SHLIB): lib/$(SHLIB)
+	@echo '<< installing $(SHLIB) in $(NEMLIBDIR) >>'
+	@mkdir -p $(NEMLIBDIR)
+	@ln -sf $(PWD)/lib/$(SHLIB) $(NEMLIBDIR)
+
+
+# if ROOTMAP defined, define rule for making it
+#ifdef ROOTMAP
+#$(ROOTMAP): $(DOGS_PATH)/lib/$(SHLIB)
+#	@echo "<< Making rootmaps >>"
+#	@cd $(DOGS_PATH)/lib && ./DOGS_make_rootmap.sh
+#endif
+
+
+
+###################################################
+# "make clean" target
+clean:
+	@echo '<< cleaning all >>'
+	@rm -f $(DICT).* *.o lib*.so *~ .depend ./lib/*.o lib/lib*.so
+
+###################################################
+libclean:
+	@echo '<< clearning lib/ directory >>'
+	@rm -f $(NEMLIBDIR)/$(SHLIB) 
+	@rm -f lib/$(SHLIB) 
+
+###################################################
+clearCINT:
+	@echo '<< removing CINT >>'
+	@rm -f $(DICT).*
+
+
+###################################################
+# auto-generate dependencies using g++ -M
+.depend: $(SOURCES) $(HEADERS)
+	@#rm .depend
+	@echo '<< checking dependencies >>'
+	@g++ -M $(CXXFLAGS) $(INCFLAGS) $(SOURCES) > .depend
+
+-include .depend
+
+#####################################################
+# rule for making DCBase/DOGS-svninfo.h
+# need this rule here and in DCBase, since we use recursive makefiles
+# note svn-vinfo2c itself takes care of seeing if the file needs updating
+#DCBase/DOGS-svninfo.h: ALWAYS
+#	make -C $(DOGS_PATH)/DCBase DOGS-svninfo.h
+
+#$(DOGS_PATH)/DCBase/DOGS-svninfo.h: ALWAYS
+#	make -C $(DOGS_PATH)/DCBase DOGS-svninfo.h
+
+# It is important that there be no prerequisites or commands for ALWAYS
+#ALWAYS:
