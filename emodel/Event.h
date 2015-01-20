@@ -4,7 +4,9 @@
 #include<TSystem.h>
 #include<TH1F.h>
 
-class Event{
+namespace gate{class Event;}
+
+class gate::Event{
 
 public:
   

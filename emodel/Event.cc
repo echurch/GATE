@@ -1,9 +1,9 @@
 #include<Event.h>
 
-ClassImp(Event);
+ClassImp(gate::Event);
 
-Event::Event(std::string lab){ _label = lab; histo=0;}
+gate::Event::Event(std::string lab){ _label = lab; histo=0;}
 
-Event::~Event(){}
+gate::Event::~Event(){}
 
-std::string Event::getLabel() const {return _label;}
+std::string gate::Event::getLabel() const {return _label;}

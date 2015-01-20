@@ -3,8 +3,8 @@
 GATEMAKEDIR = ../Makefile
 GATELIBDIR = ../lib
 
-DICT  = NemModelCint
-SHLIB = libNemModel.so
+DICT  = GATECint
+SHLIB = libGATE.so
 SOURCES = $(wildcard *.cc)
 #HEADERS = $(wildcard *.h)
 HEADERS = $(filter-out NemModelCint.h,$(wildcard *.h))

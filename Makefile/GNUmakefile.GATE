@@ -1,5 +1,5 @@
 # default target list
-all: .depend $(DICT).cc lib/$(SHLIB)  $(NEMLIBDIR)/$(SHLIB) 
+all: .depend $(DICT).cc lib/$(SHLIB)  $(GATELIBDIR)/$(SHLIB) 
 
 # define ROOTMAP and add it to the default target list, unless NO_ROOTMAP set
 #ifndef NO_ROOTMAP
@@ -15,7 +15,6 @@ CXXFLAGS += -D_$(OSNAME)_
 # root class dictionary
 $(DICT).cc: $(HEADERS) LinkDef.hh
 	@echo '<< generating CINT >>'
-	@echo 'rootcint -f $(DICT).cc -c $(INCFLAGS) $(HEADERS) LinkDef.hh'
 	@rootcint -f $(DICT).cc -c $(INCFLAGS) $(HEADERS) LinkDef.hh
 
 # default rule for making .o files from .cc files
@@ -30,11 +29,11 @@ lib/$(SHLIB): $(OBJECTS) $(DICT).o
 	@$(SOMAKER) $(SOFLAGS) -o lib/$(SHLIB) $(filter-out $(DICT).o, $(OBJECTS)) $(DICT).o
 	@echo '<< Done! >>'
 
-# rule for making symlink in $(NEMLIBDIR)
-$(NEMLIBDIR)/$(SHLIB): lib/$(SHLIB)
-	@echo '<< installing $(SHLIB) in $(NEMLIBDIR) >>'
-	@mkdir -p $(NEMLIBDIR)
-	@ln -sf $(PWD)/lib/$(SHLIB) $(NEMLIBDIR)
+# rule for making symlink in $(GATELIBDIR)
+$(GATELIBDIR)/$(SHLIB): lib/$(SHLIB)
+	@echo '<< installing $(SHLIB) in $(GATELIBDIR) >>'
+	@mkdir -p $(GATELIBDIR)
+	@ln -sf $(PWD)/lib/$(SHLIB) $(GATELIBDIR)
 
 
 # if ROOTMAP defined, define rule for making it
@@ -55,7 +54,7 @@ clean:
 ###################################################
 libclean:
 	@echo '<< clearning lib/ directory >>'
-	@rm -f $(NEMLIBDIR)/$(SHLIB) 
+	@rm -f $(GATELIBDIR)/$(SHLIB) 
 	@rm -f lib/$(SHLIB) 
 
 ###################################################
