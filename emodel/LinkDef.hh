@@ -8,4 +8,6 @@
 
 #pragma link C++ class gate::Event+;
 
+#pragma link C++ function operator << (ostream& , const gate::Event&);
+
 #endif

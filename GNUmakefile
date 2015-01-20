@@ -12,9 +12,9 @@ GATEDOCDIR := doc
 
 all:
 	@mkdir -p $(GATELIBDIR)
-	@for i in $(SUBDIRS); do ( echo "" && echo "Compiling $$i..." && cd $$i && $(MAKE) ) || exit $$?; done
 	@mkdir -p $(GATEINCDIR)
 	@for i in $(SUBDIRS); do ( cd $(GATEINCDIR) && ln -sf -t ./  ../$$i/*.h ) || exit $$?; done
+	@for i in $(SUBDIRS); do ( echo "" && echo "Compiling $$i..." && cd $$i && $(MAKE) ) || exit $$?; done
 
 clean:
 	@for i in $(SUBDIRS); do ( echo "" && echo "Cleaning $$i..." && cd $$i && $(MAKE) clean ) || exit $$?; done
