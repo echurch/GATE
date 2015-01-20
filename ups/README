@@ -1,0 +1,6 @@
+To declare GATE as an uos product, type:
+
+ups declare GATE <version> -r $GATEDIR 
+  -f ANY  -U $GATEDIR/ups/ -m GATE.table -M $GATEDIR/ups/
+
+where GATEDIR is the path to the the root directory of GATE
