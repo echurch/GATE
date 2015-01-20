@@ -8,5 +8,6 @@
 
 #pragma link C++ class gate::IReader+;
 #pragma link C++ class gate::IWriter+;
+#pragma link C++ class gate::RootWriter+;
 
 #endif

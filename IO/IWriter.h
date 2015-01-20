@@ -1,9 +1,9 @@
 #ifndef __iwriter_h
-#define __iwriterx_h
+#define __iwriter_h
 
 #include<emodel/Event.h> 
-//#include<bhep/dst.h> 
-//#include<bhep/run.h> 
+//#include<emodel/dst.h> 
+//#include<emodel/run.h> 
 
 #include<TSystem.h>
 
@@ -13,21 +13,21 @@ namespace gate{
     
   protected:
     
-    bool isOpen_;
+    bool _isOpen;
 
   public:    
     
-    IWriter() {isOpen_=false;}
+    IWriter() {_isOpen=false;}
 
     virtual ~IWriter() {}
     
-    bool isOpen()const {return isOpen_;}
+    bool IsOpen()const {return _isOpen;}
 
-    virtual void write(Event& evt) = 0;
+    virtual void Write(Event& evt) = 0;
 
-    virtual void open(std::string,std::string opt="") = 0;
+    virtual void Open(std::string,std::string opt="") = 0;
 
-    virtual void close() = 0;
+    virtual void Close() = 0;
     
     //virtual void write_run_info(run&)=0;
 

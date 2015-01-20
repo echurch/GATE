@@ -7,7 +7,7 @@ DICT  = GATEIOCint
 SHLIB = libGATEIO.so
 SOURCES = $(wildcard *.cc)
 #HEADERS = $(wildcard *.h)
-HEADERS = $(filter-out NemModelCint.h,$(wildcard *.h))
+HEADERS = $(filter-out GATEIOCint.h,$(wildcard *.h))
 OBJECTS = $(SOURCES:.cc=.o)
 #OBJECTS = $(filter-out RunActionUnit.o, $(SOURCES:.cc=.o))
 
