@@ -3,8 +3,8 @@
 GATEMAKEDIR = ../Makefile
 GATELIBDIR = ../lib
 
-DICT  = GATEIOCint
-SHLIB = libGATEIO.so
+DICT  = GATEUtilCint
+SHLIB = libGATEUtil.so
 SOURCES = $(wildcard *.cc)
 #HEADERS = $(wildcard *.h)
 HEADERS = $(filter-out NemModelCint.h,$(wildcard *.h))
@@ -13,8 +13,6 @@ OBJECTS = $(SOURCES:.cc=.o)
 
 # include options for this package
 INCFLAGS = -I.
-INCFLAGS += -I../
-#INCFLAGS += -I$()/DCBase
 
 # platform-specific options
 OSNAME          = $(shell uname -s)
