@@ -1,13 +1,15 @@
 #include <ParamStore.h>
 
-using namespace std;
+ClassImp(gate::ParamStore)
 
-using namespace gate;
-
-ClassImp(ParamStore)
 
 //**************************************************** 
-ParamStore::ParamStore(std::string name) {
+gate::ParamStore::ParamStore() {fStoreName="ParamStore";}
+//****************************************************
+
+
+//**************************************************** 
+gate::ParamStore::ParamStore(std::string name) {
 //****************************************************
 
   fStoreName=name;
@@ -20,7 +22,7 @@ ParamStore::ParamStore(std::string name) {
 
 
 //**************************************************** 
-void ParamStore::store(std::string name,double val, bool force){ 
+void gate::ParamStore::store(std::string name,double val, bool force){ 
 //****************************************************
   
   if (!force && this->find_dstore(name)){
@@ -34,7 +36,7 @@ void ParamStore::store(std::string name,double val, bool force){
 
 }
 //****************************************************
-void ParamStore::store(std::string name,int val,bool force){
+void gate::ParamStore::store(std::string name,int val,bool force){
 //****************************************************
 
   if (!force && this->find_istore(name)){
@@ -49,7 +51,7 @@ void ParamStore::store(std::string name,int val,bool force){
 }
 
 //****************************************************
-void ParamStore::store(std::string name,std::string val, bool force){
+void gate::ParamStore::store(std::string name,std::string val, bool force){
 //****************************************************
 
   if (!force && this->find_sstore(name)){
@@ -64,7 +66,7 @@ void ParamStore::store(std::string name,std::string val, bool force){
 }
 
 //****************************************************
-void ParamStore::store(std::string name,vdouble& val, bool force){
+void gate::ParamStore::store(std::string name,gate::vdouble& val, bool force){
 //****************************************************
 
   if (!force && this->find_dvstore(name)){
@@ -79,7 +81,7 @@ void ParamStore::store(std::string name,vdouble& val, bool force){
 }
 
 //**************************************************** 
-void ParamStore::store(std::string name,vstring& val, bool force){
+void gate::ParamStore::store(std::string name,gate::vstring& val, bool force){
 //****************************************************
   
   if (!force && this->find_svstore(name)){
@@ -93,7 +95,7 @@ void ParamStore::store(std::string name,vstring& val, bool force){
 }
 
 //**************************************************** 
-void ParamStore::store(std::string name,vint& val, bool force){
+void gate::ParamStore::store(std::string name,gate::vint& val, bool force){
 //****************************************************
   
   if (!force && this->find_ivstore(name)){
@@ -107,7 +109,7 @@ void ParamStore::store(std::string name,vint& val, bool force){
 }
 
 //**************************************************** 
-void ParamStore::store(std::string name,TObject* val, bool force){
+void gate::ParamStore::store(std::string name,TObject* val, bool force){
 //****************************************************
   
   if (!force && this->find_tstore(name)){
@@ -122,7 +124,7 @@ void ParamStore::store(std::string name,TObject* val, bool force){
 
 
 //**************************************************** 
-void ParamStore::store(std::string name,vtobject& val, bool force){
+void gate::ParamStore::store(std::string name,gate::vtobject& val, bool force){
 //****************************************************
   
   if (!force && this->find_tvstore(name)){
@@ -136,7 +138,7 @@ void ParamStore::store(std::string name,vtobject& val, bool force){
 }
 
 //**************************************************** 
-double ParamStore::fetch_dstore(std::string name) { 
+double gate::ParamStore::fetch_dstore(std::string name) { 
 //**************************************************** 
   
   if (!this->find_dstore(name)){
@@ -150,7 +152,7 @@ double ParamStore::fetch_dstore(std::string name) {
 }
 
 //**************************************************** 
-int ParamStore::fetch_istore(std::string name) {
+int gate::ParamStore::fetch_istore(std::string name) {
 //**************************************************** 
   
   if (!this->find_istore(name)){
@@ -165,7 +167,7 @@ int ParamStore::fetch_istore(std::string name) {
 }
 
 //**************************************************** 
-std::string ParamStore::fetch_sstore(std::string name) {
+std::string gate::ParamStore::fetch_sstore(std::string name) {
 //**************************************************** 
 
   if (!this->find_sstore(name)){
@@ -179,7 +181,7 @@ std::string ParamStore::fetch_sstore(std::string name) {
 }
 
 //**************************************************** 
-const vdouble& ParamStore::fetch_dvstore(std::string name) {
+const gate::vdouble& gate::ParamStore::fetch_dvstore(std::string name) {
 //**************************************************** 
 
   if (!this->find_dvstore(name)){
@@ -194,7 +196,7 @@ const vdouble& ParamStore::fetch_dvstore(std::string name) {
 }
 
 //**************************************************** 
-const vstring& ParamStore::fetch_svstore(std::string name) {
+const gate::vstring& gate::ParamStore::fetch_svstore(std::string name) {
 //**************************************************** 
   
   if (!this->find_svstore(name)){
@@ -209,7 +211,7 @@ const vstring& ParamStore::fetch_svstore(std::string name) {
 }
 
 //**************************************************** 
-const vint& ParamStore::fetch_ivstore(std::string name) {
+const gate::vint& gate::ParamStore::fetch_ivstore(std::string name) {
 //**************************************************** 
   
   if (!this->find_ivstore(name)){
@@ -223,7 +225,7 @@ const vint& ParamStore::fetch_ivstore(std::string name) {
 }
 
 //**************************************************** 
-TObject* ParamStore::fetch_tstore(std::string name) {
+TObject* gate::ParamStore::fetch_tstore(std::string name) {
 //**************************************************** 
 
   if (!this->find_tstore(name)){
@@ -237,7 +239,7 @@ TObject* ParamStore::fetch_tstore(std::string name) {
 }
 
 //**************************************************** 
-const vtobject& ParamStore::fetch_tvstore(std::string name) {
+const gate::vtobject& gate::ParamStore::fetch_tvstore(std::string name) {
 //**************************************************** 
   
   if (!this->find_tvstore(name)){
@@ -251,7 +253,7 @@ const vtobject& ParamStore::fetch_tvstore(std::string name) {
 }
 
 //**************************************************** 
-size_t ParamStore::size() const{
+size_t gate::ParamStore::size() const{
 //****************************************************     
 
   size_t len=0;
@@ -269,7 +271,7 @@ size_t ParamStore::size() const{
 }
 
 //**************************************************** 
-void ParamStore::clear(){
+void gate::ParamStore::clear(){
 //**************************************************** 
   dstore_.clear();
   istore_.clear();
@@ -282,7 +284,7 @@ void ParamStore::clear(){
 }
 
 //**************************************************** 
-int ParamStore::find(std::string name) const{ 
+int gate::ParamStore::find(std::string name) const{ 
 //****************************************************
   int count = 0;
   if (find_dstore(name))

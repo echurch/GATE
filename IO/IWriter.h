@@ -1,7 +1,7 @@
 #ifndef __iwriter_h
 #define __iwriter_h
 
-#include<emodel/Event.h> 
+#include<Event.h> 
 //#include<emodel/dst.h> 
 //#include<emodel/run.h> 
 

@@ -5,11 +5,11 @@
 
 #include<TSystem.h>
 
-#include<../util/ParamStore.h>
+#include<ParamStore.h>
 
 namespace gate{class Event;}
 
-class gate::Event : ParamStore {
+class gate::Event : public gate::ParamStore {
 
 public:
   
@@ -35,8 +35,8 @@ private:
 
   //! trigger ID
   int  _eventID;
- 
-  ClassDef(Event,1)
+  
+  ClassDef(gate::Event,1)
 
 }; 
 

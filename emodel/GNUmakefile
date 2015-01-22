@@ -14,6 +14,7 @@ OBJECTS = $(SOURCES:.cc=.o)
 
 # include options for this package
 INCFLAGS = -I.
+INCFLAGS += -I../include
 
 # platform-specific options
 OSNAME          = $(shell uname -s)

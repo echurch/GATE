@@ -3,7 +3,7 @@
 ClassImp(gate::Event);
 
 //=======================================================
-gate::Event::Event(): _eventID(-1){
+gate::Event::Event(): gate::ParamStore("Event"),_eventID(-1){
 //=======================================================
 }
 

@@ -6,7 +6,7 @@
 #include<TTree.h> 
 
 #include<IWriter.h> 
-#include<../emodel/Event.h> 
+#include<Event.h> 
 
 namespace gate{
 

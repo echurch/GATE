@@ -2,21 +2,25 @@
 #define __ParamStore_h
 
 #include<TSystem.h>
-
+#include<TObject.h>
 
 //#include<string>
-#include<vector>
+//#include<vector>
 #include<map>
 
-//! a vector of doubles
-typedef std::vector<double> vdouble;
-//! a vector of integers
-typedef std::vector<int> vint;
-//! a vector of std::strings
-typedef std::vector<std::string> vstring;
-//! a vector of tobjects
-typedef std::vector<TObject*> vtobject;
 
+namespace gate{
+
+  //! a vector of doubles
+  typedef std::vector<double> vdouble;
+  //! a vector of integers
+  typedef std::vector<int> vint;
+  //! a vector of std::strings
+  typedef std::vector<std::string> vstring;
+  //! a vector of tobjects
+  typedef std::vector<TObject*> vtobject;
+
+}
 
 namespace gate{ class ParamStore; }
 
@@ -39,7 +43,7 @@ protected:
   //! ParamStore for vectors of integers
   std::map<std::string,vint> ivstore_;
   //! ParamStore for vectors of strings
-  std::map<std::string,vstring> svstore_;
+  std::map<std::string,gate::vstring> svstore_;
   
   //! ParamStore for TObjects
   std::map<std::string,TObject*> tstore_;
@@ -48,8 +52,11 @@ protected:
 
 public:
   
-  //! Default constructor
-  ParamStore(std::string name="ParamStore");
+  //! Default contructor
+  ParamStore();
+
+  //! Constructor with name
+  ParamStore(std::string name);
 
   //! default destructor
   virtual ~ParamStore(){}
@@ -61,16 +68,16 @@ public:
   //! store a new string in the store 
   void store(std::string name,std::string val,bool force=false);
   //! store a new histo definition in the store
-  void store(std::string name,vdouble& val,bool force=false);
+  void store(std::string name,gate::vdouble& val,bool force=false);
   //! store a new string vector in the store
-  void store(std::string name,vstring& val,bool force=false);
+  void store(std::string name,gate::vstring& val,bool force=false);
   //! store a new integer vector in the store
-  void store(std::string name,vint& val,bool force=false);
+  void store(std::string name,gate::vint& val,bool force=false);
   
   //! store a new TObject in the store 
   void store(std::string name,TObject* val,bool force=false);
   //! store a new vector of TObjects in the store 
-  void store(std::string name,vtobject& val,bool force=false);
+  void store(std::string name,gate::vtobject& val,bool force=false);
 
   
   //!size of the double store
@@ -119,16 +126,16 @@ public:
   //! Fetch a string in the store
   std::string fetch_sstore(std::string name) ; 
   //! Fetch a vector in the store
-  const vdouble& fetch_dvstore(std::string name);
+  const gate::vdouble& fetch_dvstore(std::string name);
   //! Fetch a string vector in the store
-  const vstring& fetch_svstore(std::string name); 
+  const gate::vstring& fetch_svstore(std::string name); 
   //! Fetch a string vector in the store
-  const vint& fetch_ivstore(std::string name);
+  const gate::vint& fetch_ivstore(std::string name);
   
   //! Fetch a TObject in the store
   TObject* fetch_tstore(std::string name);
   //! Fetch a TObject in the store
-  const vtobject& fetch_tvstore(std::string name);
+  const gate::vtobject& fetch_tvstore(std::string name);
   
   //! erase double from store 
   bool erase_dstore(std::string name) {return dstore_.erase(name);}
@@ -156,16 +163,16 @@ public:
   //! returns all store as a map
   const std::map<std::string,double>& dstore_map() const { return dstore_; }
   //! returns all store as a map
-  const std::map<std::string,vstring>& svstore_map() const {return svstore_; }
+  const std::map<std::string,gate::vstring>& svstore_map() const {return svstore_; }
   //! returns all store as a map
-  const std::map<std::string,vint>& ivstore_map() const { return ivstore_; }
+  const std::map<std::string,gate::vint>& ivstore_map() const { return ivstore_; }
   //! returns all store as a map
-  const std::map<std::string,vdouble>& dvstore_map() const{ return dvstore_; }
+  const std::map<std::string,gate::vdouble>& dvstore_map() const{ return dvstore_; }
   
   //! returns all store as a map
   const std::map<std::string,TObject*>& tstore_map() const { return tstore_; }
   //! returns all store as a map
-  const std::map<std::string,vtobject>& tvstore_map() const{ return tvstore_; }
+  const std::map<std::string,gate::vtobject>& tvstore_map() const{ return tvstore_; }
   
 
   //remove all elements in gstore

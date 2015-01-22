@@ -13,7 +13,7 @@ OBJECTS = $(SOURCES:.cc=.o)
 
 # include options for this package
 INCFLAGS = -I.
-INCFLAGS += -I../
+INCFLAGS += -I../include
 #INCFLAGS += -I$()/DCBase
 
 # platform-specific options

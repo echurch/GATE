@@ -1,7 +1,7 @@
 #ifndef __ireader_h
 #define __ireader_h
 
-#include<emodel/Event.h>
+#include<Event.h>
 //#include<bhep/dst.h>  
 //#include<bhep/run.h> 
 
