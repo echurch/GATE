@@ -8,7 +8,10 @@
 
 #pragma link C++ class gate::ParamStore+;
 #pragma link C++ class gate::Event+;
-
+#pragma link C++ class gate::Pulse+;
+#pragma link C++ class gate::Waveform+;
+#pragma link C++ class gate::Hit+;
+#pragma link C++ class gate::Point3D+;
 
 // why the hell does CINT need this dictionaries?????????
 #pragma link C++ class std::pair<std::string,std::string>;
@@ -18,5 +21,8 @@
 //#pragma link C++ class std::pair<std::string, vector<TObject*> >;
 
 #pragma link C++ function operator << (ostream& , const gate::Event&);
+#pragma link C++ function operator << (ostream& , const gate::Hit&);
+#pragma link C++ function operator << (ostream& , const gate::Waveform&);
+#pragma link C++ function operator << (ostream& , const gate::Pulse&);
 
 #endif

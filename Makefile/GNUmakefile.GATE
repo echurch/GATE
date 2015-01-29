@@ -1,16 +1,9 @@
 # default target list
 all: .depend $(DICT).cc lib/$(SHLIB)  $(GATELIBDIR)/$(SHLIB) 
 
-# define ROOTMAP and add it to the default target list, unless NO_ROOTMAP set
-#ifndef NO_ROOTMAP
-#ROOTMAP= $(DOGS_PATH)/lib/$(SHLIB:.so=.rootmap)
-#all: $(ROOTMAP)
-#endif
-
 # DCcmpat lib support
 CFLAGS   += -D_$(OSNAME)_
 CXXFLAGS += -D_$(OSNAME)_
-
 
 # root class dictionary
 $(DICT).cc: $(HEADERS) LinkDef.hh
