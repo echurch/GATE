@@ -15,6 +15,7 @@
 
 #pragma link C++ class std::vector<gate::Hit*>;
 #pragma link C++ class std::pair<gate::SENSORTYPE,gate::Hit*>;
+#pragma link C++ class std::vector<std::pair<double,double> >;
 
 
 // why the hell does CINT need this dictionaries for ParamStore?????????
