@@ -1,7 +1,8 @@
 #include "Waveform.h"
 
 //=======================================================
-gate::Waveform::Waveform() : ParamStore("Waveform"), _sensorID(-1){
+//gate::Waveform::Waveform() : ParamStore("Waveform"), _sensorID(-1){
+gate::Waveform::Waveform() : _sensorID(-1){
 //=======================================================
 
 }

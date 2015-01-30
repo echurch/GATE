@@ -3,8 +3,11 @@
 ClassImp(gate::Pulse);
 
 //=======================================================
-gate::Pulse::Pulse() : gate::ParamStore("Pulse"),
-                       _sensorID(-1), _wform(0),
+//gate::Pulse::Pulse() : gate::ParamStore("Pulse"),
+//                       _sensorID(-1), _wform(0),
+//                       _state(gate::NOSTATE), _amp(0),
+//                       _sTime(-1),  _eTime(-1), _mTime(-1){
+gate::Pulse::Pulse() : _sensorID(-1), _wform(0),
                        _state(gate::NOSTATE), _amp(0),
                        _sTime(-1),  _eTime(-1), _mTime(-1){
 //=======================================================

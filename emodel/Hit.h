@@ -29,7 +29,8 @@
 
 namespace gate{class Hit;}
 
-class gate::Hit : public gate::ParamStore {
+//class gate::Hit : public gate::ParamStore {
+class gate::Hit {
 
  public:
 
@@ -37,7 +38,7 @@ class gate::Hit : public gate::ParamStore {
   Hit();
 
   //! default destructor
-  ~Hit(){};
+  virtual ~Hit(){};
 
  private:
   

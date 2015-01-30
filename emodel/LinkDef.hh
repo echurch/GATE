@@ -13,6 +13,9 @@
 #pragma link C++ class gate::Hit+;
 #pragma link C++ class gate::Point3D+;
 
+#pragma link C++ class std::pair<gate::SENSORTYPE,gate::Hit*>;
+
+
 // why the hell does CINT need this dictionaries?????????
 #pragma link C++ class std::pair<std::string,std::string>;
 #pragma link C++ class std::pair<std::string,TObject*>;

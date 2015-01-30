@@ -3,7 +3,8 @@
 ClassImp(gate::Event);
 
 //=======================================================
-gate::Event::Event(): gate::ParamStore("Event"),_eventID(-1){
+//gate::Event::Event(): gate::ParamStore("Event"),_eventID(-1){
+gate::Event::Event(): _eventID(-1){
 //=======================================================
 }
 
@@ -13,8 +14,16 @@ gate::Event::Event(int id): _eventID(id){
 }
 
 //=======================================================
-gate::Event::~Event(){}
+gate::Event::~Event(){
 //=======================================================
+    
+    // destroy hits
+
+    typedef std::multimap<gate::SENSORTYPE, gate::Hit*>::const_iterator I;
+    for(I i=_hits.begin(); i !=_hits.end(); ++i){ delete i->second; }
+    _hits.clear();
+
+}
 
 //=======================================================
 std::vector<gate::Hit*> gate::Event::GetHits() const{

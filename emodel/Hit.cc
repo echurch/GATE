@@ -3,8 +3,10 @@
 ClassImp(gate::Hit);
 
 //=======================================================
-gate::Hit::Hit() : gate::ParamStore("Hit"),
-                   _sensorID(-1), _sType(NOSTYPE), _dType(NODTYPE),
+//gate::Hit::Hit() : gate::ParamStore("Hit"),
+//                   _sensorID(-1), _sType(NOSTYPE), _dType(NODTYPE),
+//                   _state(gate::NOSTATE), _pos(),_amp(0), _time(-1), _wform(0) {
+gate::Hit::Hit() : _sensorID(-1), _sType(NOSTYPE), _dType(NODTYPE),
                    _state(gate::NOSTATE), _pos(),_amp(0), _time(-1), _wform(0) {
 //=======================================================
 }

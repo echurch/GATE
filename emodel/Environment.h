@@ -29,6 +29,6 @@ namespace gate{
   //! sensor type: SiPM or PMT
   enum SENSORTYPE{ NOSTYPE,SIPM,PMT};
 
-}; // end of gate namespace
+} // end of gate namespace
 
 #endif

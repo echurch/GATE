@@ -29,7 +29,8 @@ namespace gate{class Waveform;}
 
 namespace gate{class Pulse;}
 
-class gate::Pulse : public gate::ParamStore {
+//class gate::Pulse : public gate::ParamStore {
+class gate::Pulse {
 
  public:
 
@@ -37,7 +38,7 @@ class gate::Pulse : public gate::ParamStore {
   Pulse();
 
   //! default destructor
-  ~Pulse(){};
+  virtual ~Pulse(){};
 
  private:
   

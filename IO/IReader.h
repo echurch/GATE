@@ -13,39 +13,39 @@ namespace gate{
     
   protected:
     
-    bool isOpen_;
+    bool _isOpen;
 
   public:
     
     /// default constructor
-    IReader(){isOpen_=false;}
+    IReader(){_isOpen=false;}
 
     /// destructor
     virtual ~IReader(){}
     
     /// true if file is open
-    bool isOpen() const {return isOpen_;}
+    bool isOpen() const {return _isOpen;}
 
     /// open file
-    virtual void open(std::string) = 0;
+    virtual void Open(std::string) = 0;
     
     /// read event from file
-    virtual Event& read_event(size_t) = 0;
+    virtual Event& Read(size_t) = 0;
 
     /// close file
-    virtual void close() = 0;
+    virtual void Close() = 0;
     
     /// end of file
     virtual bool eof(size_t)=0;
 
     /// number of events in file
-    virtual size_t max_events()=0;
+    virtual unsigned int GetNEvents() const =0;
 
     /// number of run info's in file
-    virtual size_t max_runs()=0;
+    //virtual size_t MaxRuns()=0;
 
     /// number of dst info's in file
-    virtual size_t max_dsts()=0;
+    //virtual size_t MaxDsts()=0;
     
     /// retrieve run info
     //virtual run& get_run_info(size_t)=0;
@@ -54,7 +54,7 @@ namespace gate{
     //virtual dst& get_dst_info(size_t)=0;
     
     /// print info
-    virtual void print()= 0 ;
+    virtual void Print()= 0 ;
 
     ClassDef(IReader,1)
 

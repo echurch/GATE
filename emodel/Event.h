@@ -25,7 +25,9 @@
 
 namespace gate{class Event;}
 
-class gate::Event : public gate::ParamStore {
+//class gate::Event : public gate::ParamStore {
+
+class gate::Event {
 
 public:
   
