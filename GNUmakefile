@@ -22,6 +22,5 @@ clean:
 
 doxygen:
 	@echo 'dOxygenising GATE...'
-	@mkdir -p $(GATEDOCDIR)/dOxygenGATE
 	@doxygen $(GATEDOCDIR)/doxygenGATE.script
-	@ln -sf $(GATEDOCDIR)/dOxygenGATE/html/index.html doxygenisedGATE.html	
+	@ln -sf $(GATEDOCDIR)/dOxygen/html/index.html doxygenisedGATE.html	
