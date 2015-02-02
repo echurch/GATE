@@ -60,12 +60,15 @@ class gate::HitMap {
   //! get time sample size
   double GetTimeSample() const; 
   
-  //! get map
-  std::vector<std::map<int,double> > GetMap() const;
+  //! get time map
+  std::vector<std::map<int,double> > GetTimeMap() const;
   
   //! set cathode map
-  void SetMap(std::vector<std::map<int,double> > m);
+  void SetTimeMap(std::vector<std::map<int,double> > m);
 
+  //! get map for time slice
+  std::map<int,double>  GetMap(size_t isample) const;
+  
  private:
   
   //! signal type (S1 or S2)
@@ -80,9 +83,15 @@ class gate::HitMap {
   //! size of time samples
   double _tSample;
 
-  //! time map for cathode signal
-  std::vector<std::map<int,double> > _map; 
-   
+  //! time map for signal
+  std::vector<std::map<int,double> > _tmap; 
+  
+  //! get channels id in isample time slice
+  std::vector<int> GetChannels(size_t isample) const;
+  
+  //! get channels id in isample time slice
+  std::vector<double> GetAmplitudes(size_t isample) const;
+  
  public:
 
   //! print pulse into stream
@@ -104,10 +113,13 @@ inline double gate::HitMap::GetEndTime()  const { return _eTime;}
 inline void gate::HitMap::SetTimeSample(double t) { _tSample = t; }
 inline double gate::HitMap::GetTimeSample()  const { return _tSample;}
 
-inline void gate::HitMap::SetMap(std::vector<std::map<int,double> > m) { 
-  _map = m; }
-inline std::vector<std::map<int,double> > gate::HitMap::GetMap()  const { 
-  return _map;}
+inline void gate::HitMap::SetTimeMap(std::vector<std::map<int,double> > m) { 
+  _tmap = m; }
+inline std::vector<std::map<int,double> > gate::HitMap::GetTimeMap() const { 
+  return _tmap;}
+
+inline std::map<int,double> gate::HitMap::GetMap(size_t isample) const { 
+  return _tmap[isample];}
 
 ostream& operator << (ostream& s, const gate::HitMap& hmap); 
 

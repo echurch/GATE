@@ -19,6 +19,8 @@
 #pragma link C++ class std::vector<gate::HitMap*>;
 #pragma link C++ class std::pair<gate::SENSORTYPE,gate::Hit*>;
 #pragma link C++ class std::pair<gate::SENSORTYPE,gate::HitMap*>;
+#pragma link C++ class std::vector<std::map<int,double> >;
+#pragma link C++ class std::map<int,double>;
 #pragma link C++ class std::vector<std::pair<double,double> >;
 #pragma link C++ class std::vector<std::pair<int,double> >;
 

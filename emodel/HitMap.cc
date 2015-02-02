@@ -9,6 +9,34 @@ gate::HitMap::HitMap() : _sType(gate::NOSIGTYPE),
 
 }
 
+//=======================================================
+std::vector<int> gate::HitMap::GetChannels(size_t isample) const{
+//=======================================================
+  
+  typename std::map<int, double>::const_iterator pi;
+  std::vector<int> chs;
+     
+  for (pi = _tmap[isample].begin(); pi!= _tmap[isample].end(); ++pi){
+    chs.push_back(pi->first);} 
+  
+  return chs;
+
+}
+
+//=======================================================
+std::vector<double> gate::HitMap::GetAmplitudes(size_t isample) const{
+//=======================================================
+  
+  typename std::map<int, double>::const_iterator pi;
+  std::vector<double> chs;
+     
+  for (pi = _tmap[isample].begin(); pi!= _tmap[isample].end(); ++pi){
+    chs.push_back(pi->second);} 
+  
+  return chs;
+
+}
+
 
 //=======================================================
 void gate::HitMap::Info(ostream& s) const{
