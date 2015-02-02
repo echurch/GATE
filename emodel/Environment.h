@@ -14,7 +14,6 @@
  *
  */
 
-
 namespace gate{  
   
   //! not defined number
@@ -22,6 +21,9 @@ namespace gate{
 
   //! Data type: MC-TRUTH, MC-DIGI, or DATA 
   enum DATATYPE{ NODTYPE, MCTRUTH,MC,DATA};
+  
+  //! Signal type: S1 or S2
+  enum SIGNALTYPE{ NOSIGTYPE, S1,S2};
   
   //! hit state: raw, recosntructed or calibrated
   enum STATE{ NOSTATE, RAW,RECOED,CALIB};

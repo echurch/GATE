@@ -38,7 +38,7 @@ class gate::Hit {
   Hit();
 
   //! default destructor
-  virtual ~Hit(){};
+  virtual ~Hit();
 
  private:
   
@@ -117,10 +117,10 @@ class gate::Hit {
   const Waveform& GetWaveform() const;
 
   //! Add  pulse
-  void AddPulse(const gate::Pulse& p);
+  void AddPulse(gate::Pulse* p);
   
   //! Get  pulses
-  const std::vector<const gate::Pulse*>&  GetPulses() const;
+  const std::vector<gate::Pulse*>&  GetPulses() const;
 
   //! print hit into stream
   void Info(ostream& s) const;
@@ -132,9 +132,9 @@ class gate::Hit {
 inline void gate::Hit::SetWaveform(const gate::Waveform& wf ) { _wform = &wf; }
 inline const gate::Waveform& gate::Hit::GetWaveform() const { return *_wform; }
 
-inline void gate::Hit::AddPulse( const gate::Pulse& p) { 
+inline void gate::Hit::AddPulse(gate::Pulse* p) { 
   ((gate::Waveform*) _wform)->AddPulse(p); }
-inline  const std::vector<const gate::Pulse*>&  
+inline  const std::vector<gate::Pulse*>&  
 gate::Hit::GetPulses() const { return _wform->GetPulses();}
 
 inline void gate::Hit::SetSensorID(int id ) { _sensorID = id; }

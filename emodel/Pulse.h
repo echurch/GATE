@@ -60,8 +60,11 @@ class gate::Pulse {
   //! end time
   double _eTime;
   
-   //! maximum amplitude  time
+  //! maximum amplitude  time
   double _mTime;
+  
+  //! pulse type
+  gate::SIGNALTYPE _sType;
 
  public:
   
@@ -107,6 +110,12 @@ class gate::Pulse {
   //! Set maximum amplitude time
   void SetMaxTime(double t);
 
+  //! Set pulse type (S1 or S2)
+  void SetSignalType(gate::SIGNALTYPE type);
+  
+  //! Get pulse type (S1 or S2)
+  gate::SIGNALTYPE GetSignalType() const;
+
   //! print pulse into stream
   void Info(ostream& s) const;
   
@@ -135,6 +144,9 @@ inline double gate::Pulse::GetEndTime() const { return _eTime; }
 
 inline void gate::Pulse::SetMaxTime(double t) {  _mTime = t; }
 inline double gate::Pulse::GetMaxTime() const { return _mTime; }
+
+inline void gate::Pulse::SetSignalType(gate::SIGNALTYPE t) {  _sType = t; }
+inline gate::SIGNALTYPE gate::Pulse::GetSignalType() const { return _sType; }
 
 ostream& operator << (ostream& s, const gate::Pulse& pulse); 
 

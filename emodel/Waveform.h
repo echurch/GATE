@@ -37,7 +37,7 @@ class gate::Waveform {
   Waveform();
 
   //! default destructor
-  virtual ~Waveform(){};
+  virtual ~Waveform();
 
  private:
   
@@ -45,7 +45,7 @@ class gate::Waveform {
   int _sensorID;
   
   //! pulses found within waveform
-  std::vector<const gate::Pulse*> _pulses;
+  std::vector<gate::Pulse*> _pulses;
   
   //! waveform data, as a vector of pair<time,amp>
   std::vector< std::pair<double,double> > _data;
@@ -65,10 +65,10 @@ class gate::Waveform {
   void SetData(std::vector< std::pair<double,double> > data);
 
   //! Add  pulse
-  void AddPulse(const gate::Pulse& p);
-  
+  void AddPulse(gate::Pulse* p);
+    
   //! Get  pulses
-  const std::vector<const gate::Pulse*>&  GetPulses() const;
+  const std::vector<gate::Pulse*>&  GetPulses() const;
 
   //! print pulse into stream
   void Info(ostream& s) const;
@@ -81,9 +81,9 @@ class gate::Waveform {
 inline const std::vector< std::pair<double,double> >& 
   gate::Waveform::GetData() const {return _data;}
 
-inline void gate::Waveform::AddPulse( const gate::Pulse& p) { 
-  _pulses.push_back(&p); }
-inline  const std::vector<const gate::Pulse*>&  
+inline void gate::Waveform::AddPulse( gate::Pulse* p) { 
+  _pulses.push_back(p); }
+inline  const std::vector<gate::Pulse*>&  
 gate::Waveform::GetPulses() const { return _pulses;}
 
 inline void gate::Waveform::SetSensorID(int id ) { _sensorID = id; }

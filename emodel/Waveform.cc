@@ -8,6 +8,16 @@ gate::Waveform::Waveform() : _sensorID(-1){
 }
 
 //=======================================================
+gate::Waveform::~Waveform() {
+//=======================================================
+    
+    typedef std::vector<gate::Pulse*>::const_iterator p;
+    for(p i=_pulses.begin(); i !=_pulses.end(); ++i){  delete *i; }
+    _pulses.clear();
+
+}
+
+//=======================================================
 void gate::Waveform::SetData(std::vector< std::pair<double,double> >data){
 //=======================================================
     _data=data;}
