@@ -14,6 +14,7 @@
 #pragma link C++ class gate::Point3D+;
 
 #pragma link C++ class std::vector<gate::Hit*>;
+#pragma link C++ class std::vector<gate::Pulse*>;
 #pragma link C++ class std::pair<gate::SENSORTYPE,gate::Hit*>;
 #pragma link C++ class std::vector<std::pair<double,double> >;
 
