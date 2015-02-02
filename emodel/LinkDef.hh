@@ -11,12 +11,16 @@
 #pragma link C++ class gate::Pulse+;
 #pragma link C++ class gate::Waveform+;
 #pragma link C++ class gate::Hit+;
+#pragma link C++ class gate::HitMap+;
 #pragma link C++ class gate::Point3D+;
 
 #pragma link C++ class std::vector<gate::Hit*>;
 #pragma link C++ class std::vector<gate::Pulse*>;
+#pragma link C++ class std::vector<gate::HitMap*>;
 #pragma link C++ class std::pair<gate::SENSORTYPE,gate::Hit*>;
+#pragma link C++ class std::pair<gate::SENSORTYPE,gate::HitMap*>;
 #pragma link C++ class std::vector<std::pair<double,double> >;
+#pragma link C++ class std::vector<std::pair<int,double> >;
 
 
 // why the hell does CINT need this dictionaries for ParamStore?????????
@@ -28,6 +32,7 @@
 
 #pragma link C++ function operator << (ostream& , const gate::Event&);
 #pragma link C++ function operator << (ostream& , const gate::Hit&);
+#pragma link C++ function operator << (ostream& , const gate::HitMap&);
 #pragma link C++ function operator << (ostream& , const gate::Waveform&);
 #pragma link C++ function operator << (ostream& , const gate::Pulse&);
 

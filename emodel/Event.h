@@ -22,6 +22,7 @@
 
 #include<ParamStore.h>
 #include<Hit.h>
+#include<HitMap.h>
 
 namespace gate{class Event;}
 
@@ -54,12 +55,21 @@ public:
   
   //! retrieve all hits
   std::vector<gate::Hit*> GetHits() const;
-
+  
   //! retrieve hits of specific type
   std::vector<gate::Hit*> GetHits(gate::SENSORTYPE type) const;
   
   // add hit
   void AddHit(gate::SENSORTYPE, gate::Hit*);
+  
+  //! retrieve all hit maps
+  std::vector<gate::HitMap*> GetHitMaps() const;
+  
+  //! retrieve hit maps of specific type
+  std::vector<gate::HitMap*> GetHitMaps(gate::SENSORTYPE type) const;
+
+  // add hit map
+  void AddHitMap(gate::SENSORTYPE, gate::HitMap*);
 
   //! print event into stream
   void Info(ostream& s) const;
@@ -74,6 +84,9 @@ private:
 
   //! multimap of hits: key specificies type (PMT, SiPM, ...)
   std::multimap<gate::SENSORTYPE, gate::Hit*> _hits;
+
+  //! multimap of hit-maps
+  std::multimap<gate::SENSORTYPE, gate::HitMap*> _hmaps;
   
   ClassDef(gate::Event,1)
 
