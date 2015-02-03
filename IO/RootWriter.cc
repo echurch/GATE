@@ -2,41 +2,38 @@
 
 ClassImp(gate::RootWriter)
 
-gate::RootWriter::RootWriter() :   IWriter(), _tf(0) , _evtTree(0),_evt(0) {
+gate::RootWriter::RootWriter() :   IWriter(), 
+  
+  _tf(0) , _evtTree(0),_evt(0), _run(0) {
 
 }
   
 void  gate::RootWriter::buildTree(){
   
     _evt = 0;
-
-    //_dst = 0;
-
-    //_run = 0;
+    
+    _run = 0;
     
     _evtTree= new TTree("EVENT","GATE event tree");
-
-    //_dstTree= new TTree("DST","GATE dst tree");
-
-    //_runTree= new TTree("RUN","GATE run tree");
-
     
+    _runTree= new TTree("RUN","GATE run tree");
+
     TTree::SetBranchStyle(1);
     
     _evtTree->Branch("event","gate::Event",&_evt,32000,0);
 
-    //dstTree_->Branch("dst","bhep::dst",&dst_);
-
-    //runTree_->Branch("run","bhep::run",&run_);
+    _runTree->Branch("run","bhep::run",&_run);
     
     // TOFIX: Potential memory leak!!!!!!
     // cannot modify or delete tree, don't know reason
    
   }
 
-  //! destructor
+
 gate::RootWriter::~RootWriter(){
-    
+  
+  // TO BE IMPLEMENTED
+
     //delete tf_;
 
     //delete evtTree_; 
@@ -71,36 +68,18 @@ void gate::RootWriter::Close(){
   }  
  
 void gate::RootWriter::Write(Event& evt){
-
-    //bhep::Assert(tf_ !=0, __FILE__,__LINE__,
-//		 bhep::internal_logic("writer is not open!!"));
     
     _evt = &evt; 
     
     _evtTree->Fill();
      
-  }
+}
   
-  // void gate::RootWriter::write_dst_info(dst& dstInfo){
+void gate::RootWriter::WriteRunInfo(Run& runInfo){
+       
+    _run = &runInfo;
     
-  //   //bhep::Assert(tf_ !=0, __FILE__,__LINE__,
-  //     //  	 bhep::internal_logic("writer is not open!!"));
-    
-  //   dst_ = &dstInfo;
-    
-  //   dstTree_->Fill();
+    _runTree->Fill();
      
-  // }
-  
-
-// void gate::RootWriter::write_run_info(run& runInfo){
-    
-//     //bhep::Assert(tf_ !=0, __FILE__,__LINE__,
-//     //	 bhep::internal_logic("writer is not open!!"));
-    
-//     _run = &runInfo;
-    
-//     _runTree->Fill();
-     
-// }
+}
   

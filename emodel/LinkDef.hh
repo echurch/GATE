@@ -14,6 +14,7 @@
 #pragma link C++ class gate::HitMap+;
 #pragma link C++ class gate::Point3D+;
 
+#pragma link C++ class std::vector<gate::Run*>;
 #pragma link C++ class std::vector<gate::Hit*>;
 #pragma link C++ class std::vector<gate::Pulse*>;
 #pragma link C++ class std::vector<gate::HitMap*>;
@@ -32,6 +33,7 @@
 //#pragma link C++ class std::pair<std::string, vector<int> >;
 //#pragma link C++ class std::pair<std::string, vector<TObject*> >;
 
+#pragma link C++ function operator << (ostream& , const gate::Run&);
 #pragma link C++ function operator << (ostream& , const gate::Event&);
 #pragma link C++ function operator << (ostream& , const gate::Hit&);
 #pragma link C++ function operator << (ostream& , const gate::HitMap&);

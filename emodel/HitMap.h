@@ -69,6 +69,13 @@ class gate::HitMap {
   //! get map for time slice
   std::map<int,double>  GetMap(size_t isample) const;
   
+  //! get channels id in isample time slice
+  std::vector<int> GetChannels(size_t isample) const;
+  
+  //! get channels id in isample time slice
+  std::vector<double> GetAmplitudes(size_t isample) const;
+  
+
  private:
   
   //! signal type (S1 or S2)
@@ -85,12 +92,6 @@ class gate::HitMap {
 
   //! time map for signal
   std::vector<std::map<int,double> > _tmap; 
-  
-  //! get channels id in isample time slice
-  std::vector<int> GetChannels(size_t isample) const;
-  
-  //! get channels id in isample time slice
-  std::vector<double> GetAmplitudes(size_t isample) const;
   
  public:
 
