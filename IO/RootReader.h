@@ -2,6 +2,7 @@
 #define __RootReader_h
 
 #include<Event.h>
+#include<Run.h>
 #include<IReader.h>
 
 #include<TSystem.h>
@@ -19,10 +20,16 @@ class gate::RootReader : public gate::IReader {
   
   //! tree for events
   TTree* _evtTree;
+  
+  //! tree for run information
+  TTree* _runTree;
 
   //! pointer to current event
   gate::Event* _evt;
   
+  //! pointer to run information
+  gate::Run* _run;
+
  public:
     
   //! default contructor
@@ -46,28 +53,12 @@ class gate::RootReader : public gate::IReader {
   //! return maximum number of events in file
   unsigned int GetNEvents() const; 
 
-  //! return maximum number of events in file
-  //size_t MaxEvents(){
-  //  if (_evtTree) return _evtTree->GetEntries();
-  //  else return 0;}
-    
-  /* //! return maximum number of dst info's in file */
-  /* size_t max_dsts(){ */
-  /*   if (dstTree_) return dstTree_->GetEntries(); */
-  /*   else return 0;} */
-    
-  /* /// return maximum number of RUN info's in file */
-  /* size_t max_runs(){ */
-  /*   if (runTree_) return runTree_->GetEntries(); */
-  /*   else return 0;} */
-
-    
-    /* /// retrieve run info */
-    /* run& get_run_info(size_t i = 0); */
-    
-    /* /// retireve dst info */
-    /* dst& get_dst_info(size_t i = 0); */
-    
+  //! return maximum number of RUN info's in file
+  size_t GetNRuns() const;
+   
+  //! retrieve run info
+  gate::Run& GetRunInfo(size_t i = 0);
+             
   //! print file info
   void Print();
 
@@ -76,7 +67,12 @@ class gate::RootReader : public gate::IReader {
     };
 
 inline unsigned int gate::RootReader::GetNEvents() const {   
-    if (_evtTree) return _evtTree->GetEntries();
-    else return 0;}
+  
+  return (_evtTree) ? _evtTree->GetEntries(): 0; }
+
+inline unsigned int gate::RootReader::GetNRuns() const {   
+  
+  return (_runTree) ? _runTree->GetEntries(): 0; }
+
 
 #endif

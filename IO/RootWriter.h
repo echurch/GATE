@@ -7,6 +7,7 @@
 
 #include<IWriter.h> 
 #include<Event.h> 
+#include<Run.h> 
 
 namespace gate{
 
@@ -21,19 +22,13 @@ namespace gate{
     TTree* _evtTree;
     
     //! tree for RUN info's
-    //TTree* _runTree;
-
-    //! tree for DST info's
-    //TTree* _dstTree;
+    TTree* _runTree;
     
     //! pointer to current event
     Event* _evt;
 
-    //! pointer to dst info
-    //dst* _dst;
-    
     //! pointer to run info
-    //run* _run;
+    Run* _run;
    
   private:
    
@@ -44,6 +39,7 @@ namespace gate{
     
     //! constructor 
     RootWriter();
+    
     //! destructor
     virtual ~RootWriter();
     
@@ -57,22 +53,14 @@ namespace gate{
     void Close();
     
     //! write dst info into root file
-    //void WriteRunInfo(Run& run);
-    
-    //! write dst info into root file
-    //void WriteDSTInfo(dst &);
- 
+    void WriteRunInfo(Run& run);
+     
     //! return maximum number of events in file
     unsigned int GetNEvents() const;
-          
-    /// return maximum number of dst info's in file
-    //size_t max_dsts(){
-    // if (dstTree_) return dstTree_->GetEntries();
-    //else return 0;}
-    
-    //! return number of RUN info's in file
-    //size_t GetNRuns() const;
-    
+
+    //! return maximum number of run infos in file
+    unsigned int GetNRuns() const;
+        
     ClassDef(gate::RootWriter,1)
 
       };   
@@ -80,11 +68,12 @@ namespace gate{
 }
   
 inline unsigned int gate::RootWriter::GetNEvents() const {   
-    if (_evtTree) return _evtTree->GetEntries();
-    else return 0;}
+  
+  return (_evtTree) ? _evtTree->GetEntries() : 0;}
 
-  //inline size_t gate::RootWriter::GetNRuns() const {   
-  // if (_runTree) return _runTree->GetEntries();
-  // else return 0;}}
+inline unsigned int gate::RootWriter::GetNRuns() const {   
+  
+  return (_runTree) ? _runTree->GetEntries() : 0;}
+
 
 #endif
