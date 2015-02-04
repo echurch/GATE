@@ -54,7 +54,7 @@ class gate::RootReader : public gate::IReader {
   unsigned int GetNEvents() const; 
 
   //! return maximum number of RUN info's in file
-  size_t GetNRuns() const;
+  unsigned int GetNRuns() const;
    
   //! retrieve run info
   gate::Run& GetRunInfo(size_t i = 0);

@@ -31,7 +31,7 @@ class gate::Run{
   Run();
   
   //! default destructor
-  ~Run(){}
+  virtual ~Run(){}
 
  private:
   

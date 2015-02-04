@@ -7,6 +7,7 @@
 #pragma link C++ namespace gate;
 
 #pragma link C++ class gate::ParamStore+;
+#pragma link C++ class gate::Run+;
 #pragma link C++ class gate::Event+;
 #pragma link C++ class gate::Pulse+;
 #pragma link C++ class gate::Waveform+;

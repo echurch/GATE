@@ -22,7 +22,7 @@ void  gate::RootWriter::buildTree(){
     
     _evtTree->Branch("event","gate::Event",&_evt,32000,0);
 
-    _runTree->Branch("run","bhep::run",&_run);
+    _runTree->Branch("run","gate::Run",&_run);
     
     // TOFIX: Potential memory leak!!!!!!
     // cannot modify or delete tree, don't know reason
