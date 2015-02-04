@@ -1,4 +1,4 @@
-To declare GATE as an uos product, type:
+To declare GATE as an ups product, type:
 
 ups declare GATE <version> -r $GATEDIR 
   -f ANY  -U $GATEDIR/ups/ -m GATE.table -M $GATEDIR/ups/
