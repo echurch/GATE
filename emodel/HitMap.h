@@ -6,7 +6,7 @@
  * 
  * @brief HitMap class: time hit map for reconstructed signals 
  *
- * @details For each reconstructed signal time, time vector with waveform amplitudes. Waveform zones with  no amplitue are rejected.
+ * @details For each reconstructed signal time, contains a time vector with waveform amplitudes for each sensor. Such data are represeted as a vector of <sensor,amplitude> maps. Waveform zones with  no amplitue are rejected.
  *    
  * @author Pau Novella  <pau.novella@ific.uv.es>, from Art product
  *
@@ -63,7 +63,7 @@ class gate::HitMap {
   //! get time map
   std::vector<std::map<int,double> > GetTimeMap() const;
   
-  //! set cathode map
+  //! set time map
   void SetTimeMap(std::vector<std::map<int,double> > m);
 
   //! get map for time slice
