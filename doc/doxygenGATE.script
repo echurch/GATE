@@ -745,6 +745,8 @@ WARN_LOGFILE           =
 
 INPUT                  = ./
 
+INPUT += README.md
+
 # This tag can be used to specify the character encoding of the source files
 # that doxygen parses. Internally doxygen uses the UTF-8 encoding. Doxygen uses
 # libiconv (or the iconv built into libc) for the transcoding. See the libiconv
@@ -777,6 +779,7 @@ FILE_PATTERNS          = *.c \
                          *.py \
                          *.php \
                          *.php3 \
+			 *.md \
                          *.java
 
 # The RECURSIVE tag can be used to specify whether or not subdirectories should
@@ -892,14 +895,14 @@ FILTER_SOURCE_FILES    = NO
 # *.ext= (so without naming a filter).
 # This tag requires that the tag FILTER_SOURCE_FILES is set to YES.
 
-FILTER_SOURCE_PATTERNS =
+FILTER_SOURCE_PATTERNS = 
 
 # If the USE_MDFILE_AS_MAINPAGE tag refers to the name of a markdown file that
 # is part of the input, its contents will be placed on the main page
 # (index.html). This can be useful if you have a project on for instance GitHub
 # and want to reuse the introduction page also for the doxygen output.
 
-USE_MDFILE_AS_MAINPAGE =
+USE_MDFILE_AS_MAINPAGE = README.md
 
 #---------------------------------------------------------------------------
 # Configuration options related to source browsing

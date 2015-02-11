@@ -4,7 +4,9 @@
 /**
  * @file Event.h
  * 
- * @brief Event class, holding all trigger information
+ * @class Event
+ *
+ * @brief Holds all trigger information
  *
  * @details Contains low or high level objects, according to configuration  
  *    

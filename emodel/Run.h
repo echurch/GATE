@@ -3,8 +3,10 @@
 
 /**
  * @file Run.h
- * 
- * @brief Run class, holding all run-wise information
+ *
+ * @class Run
+ *
+ * @brief Holds all run-wise information
  *
  * @details Contains run info, from data taking to detector configuration  
  *    

@@ -3,11 +3,12 @@
 
 /**
  * @file Hit.h
- * 
- * @brief Hit class: sensor type and response to signal
  *
- * @details Contains sensor and response (waveform, pulse, amplitude, time) 
- *               information 
+ * @class Hit
+ * 
+ * @brief Sensor type and response signal
+ *
+ * @details Contains sensor and response (waveform, pulse, amplitude, time) information. It can be associated to a waveform and a vector of reconstructed pulses. 
  *    
  * @author Pau Novella  <pau.novella@ific.uv.es>
  *

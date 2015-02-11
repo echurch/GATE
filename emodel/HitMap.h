@@ -3,8 +3,10 @@
 
 /**
  * @file HitMap.h
- * 
- * @brief HitMap class: time hit map for reconstructed signals 
+ *
+ * @class HitMap
+ *
+ * @brief Time hit-map for reconstructed signals 
  *
  * @details For each reconstructed signal time, contains a time vector with waveform amplitudes for each sensor. Such data are represeted as a vector of <sensor,amplitude> maps. Waveform zones with  no amplitue are rejected.
  *    

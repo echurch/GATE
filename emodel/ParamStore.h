@@ -1,13 +1,27 @@
 #ifndef __ParamStore_h
 #define __ParamStore_h
 
+/**
+ * @file ParamStore.h
+ *
+ * @class ParamStore
+ * 
+ * @brief Generic store for parameters of different types
+ *
+ * @details Contains stores for int, double, string and TObject, and stores for vectors of the same types. 
+ *    
+ * @author Pau Novella  <pau.novella@ific.uv.es>, from bhep
+ *
+ * @version Revision 1.0.0
+ *
+ * @date January 2015
+ *
+ */
+
 #include<TSystem.h>
 #include<TObject.h>
 
-//#include<string>
-//#include<vector>
 #include<map>
-
 
 namespace gate{
 

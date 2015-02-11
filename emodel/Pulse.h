@@ -3,8 +3,10 @@
 
 /**
  * @file Pulse.h
+ *
+ * @class Pulse
  * 
- * @brief Pulse class: signal within a waveform
+ * @brief Reconstructed signal within a waveform
  *
  * @details A pulse is a reconstructed signal found within a waveform
  Contains charge/PE and time of the signal  

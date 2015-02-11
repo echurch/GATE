@@ -3,12 +3,14 @@
 
 /**
  * @file Point3D.h
+ *
+ * @class Point3D
  * 
- * @brief 3-D point class: coordinates
+ * @brief 3D coordinates
  *
  * @details Contains x, y and z coordinates
  *    
- * @author Pau Novella  <pau.novella@ific.uv.es>
+ * @author Pau Novella  <pau.novella@ific.uv.es>, from bhep
  *
  * @version Revision 1.0.0
  *

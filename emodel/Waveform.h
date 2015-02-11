@@ -3,10 +3,12 @@
 
 /**
  * @file Waveform.h
- * 
- * @brief Waveform class: DAQ ADC time stream
  *
- * @details collection of ADC count per time sample  
+ * @class Waveform
+ *
+ * @brief DAQ ADC stream within a given time window
+ *
+ * @details Collection of ADC count per time sample, stored as a vector<double>  
  *    
  * @author Pau Novella  <pau.novella@ific.uv.es>
  *
