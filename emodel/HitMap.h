@@ -36,6 +36,12 @@ class gate::HitMap {
   //! default destructor
   virtual ~HitMap(){};
   
+  //! set sensor type (PMT or SiPM)
+  void SetSensorType(gate::SENSORTYPE type); 
+  
+  //! set sensor type (PMT or SiPM)
+  gate::SENSORTYPE GetSensorType() const;
+
   //! set signal type (S1 or S2)
   void SetSignalType(gate::SIGNALTYPE type); 
   
@@ -78,6 +84,9 @@ class gate::HitMap {
 
  private:
   
+  //! signal sensor type (PMT or SiPM)
+  gate::SENSORTYPE _sensType;
+
   //! signal type (S1 or S2)
   gate::SIGNALTYPE _sType;
 
@@ -101,6 +110,9 @@ class gate::HitMap {
   ClassDef(HitMap,1)
 
 };
+
+inline void gate::HitMap::SetSensorType(gate::SENSORTYPE t){ _sensType = t; }
+inline gate::SENSORTYPE gate::HitMap::GetSensorType() const{ return _sensType;}
 
 inline void gate::HitMap::SetSignalType(gate::SIGNALTYPE t) { _sType = t; }
 inline gate::SIGNALTYPE gate::HitMap::GetSignalType()  const { return _sType;}

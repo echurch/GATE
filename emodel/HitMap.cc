@@ -3,7 +3,7 @@
 ClassImp(gate::HitMap)
 
 //=======================================================
-gate::HitMap::HitMap() : _sType(gate::NOSIGTYPE),
+gate::HitMap::HitMap() : _sensType(gate::NOSTYPE),_sType(gate::NOSIGTYPE),
     _sTime(-1),_eTime(-1),_tSample(-1) {
 //=======================================================
 
