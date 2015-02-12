@@ -1,0 +1,42 @@
+# specific names for this package
+
+GATEMAKEDIR = ../Makefile
+GATELIBDIR = ../lib
+
+DICT  = GATEUtilsCint
+SHLIB = libGATEUtils.so
+SOURCES = $(wildcard *.cc)
+#HEADERS = $(wildcard *.h)
+HEADERS = $(filter-out GATECint.h,$(wildcard *.h))
+OBJECTS = $(SOURCES:.cc=.o)
+#OBJECTS = $(filter-out RunActionUnit.o, $(SOURCES:.cc=.o))
+
+
+# include options for this package
+INCFLAGS = -I.
+INCFLAGS += -I../include
+INCFLAGS += -I../emodel
+INCFLAGS += -I../IO
+
+# platform-specific options
+OSNAME          = $(shell uname -s)
+HOST            = $(shell uname -n)
+OSNAMEMODE      = $(OSNAME)
+
+include $(GATEMAKEDIR)/Makefile.${OSNAME}
+
+# set compiler options for ROOT
+CXXFLAGS += $(shell root-config --cflags)
+CXXFLAGS += '-fPIC'
+
+
+# call the common GNUmakefile
+include $(GATEMAKEDIR)/GNUmakefile.GATE
+
+#all: bin
+
+### binary compilation ###
+
+LIBS += $(shell root-config --libs) 
+LIBS += -L$(GATELIBDIR)  
+
