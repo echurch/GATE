@@ -20,6 +20,8 @@
 
 #include<iostream>
 
+#include<Environment.h>
+
 #include<TSystem.h>
 
 namespace gate{class Run;}
@@ -30,13 +32,16 @@ class gate::Run{
  public:
   
   //! default constructor
-  Run();
+  Run(gate::DATATYPE dt=gate::NODTYPE, int id=-1);
   
   //! default destructor
   virtual ~Run(){}
 
  private:
   
+  //! data type
+  gate::DATATYPE _dType;
+
   //! run number
   int _runID;
   
@@ -48,6 +53,12 @@ class gate::Run{
 
  public:
   
+  //! Get data type
+  gate::DATATYPE GetDataType() const;
+
+  //! Set data type
+  void SetDataType(gate::DATATYPE t);
+
   //! Get run number
   int GetRunID() const;
 
@@ -73,6 +84,8 @@ class gate::Run{
 
 };
 
+inline gate::DATATYPE gate::Run::GetDataType() const {return _dType;}
+inline void gate::Run::SetDataType(gate::DATATYPE t) {_dType = t;}
 
 inline void gate::Run::SetRunID(int id){ _runID = id;}
 inline int gate::Run::GetRunID() const { return _runID;}

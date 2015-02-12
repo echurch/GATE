@@ -4,7 +4,8 @@
 ClassImp(gate::Run)
 
 //===============================================================
-gate::Run::Run() : _runID(-1),_sTime(-1),_eTime(-1){
+gate::Run::Run(gate::DATATYPE dt, int id) : _dType(dt), _runID(id),
+  _sTime(-1),_eTime(-1){
 //===============================================================
 
   
