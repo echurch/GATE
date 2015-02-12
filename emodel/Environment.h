@@ -30,6 +30,10 @@ namespace gate{
   
   //! sensor type: SiPM or PMT
   enum SENSORTYPE{ NOSTYPE,SIPM,PMT};
+  
+  //! verbosity levels
+  enum VLEVEL{MUTE,CONCISE,NORMAL,WARNING,DETAILED,VERBOSE,VVERBOSE,DUMP};
+
 
 } // end of gate namespace
 
