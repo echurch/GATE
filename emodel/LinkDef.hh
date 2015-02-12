@@ -6,6 +6,15 @@
 
 #pragma link C++ namespace gate;
 
+#pragma link C++ class gate::tstore<int>+;
+#pragma link C++ class gate::tstore<double>+;
+#pragma link C++ class gate::tstore<string>+;
+#pragma link C++ class gate::tstore<TObject*>+;
+#pragma link C++ class gate::tstore<std::vector<int> >+;
+#pragma link C++ class gate::tstore<std::vector<double> >+;
+#pragma link C++ class gate::tstore<std::vector<string> >+;
+#pragma link C++ class gate::tstore<std::vector<TObject*> >+;
+
 #pragma link C++ class gate::ParamStore+;
 #pragma link C++ class gate::Run+;
 #pragma link C++ class gate::Event+;
@@ -26,6 +35,7 @@
 #pragma link C++ class std::vector<std::pair<double,double> >;
 #pragma link C++ class std::vector<std::pair<int,double> >;
 
+#pragma link C++ class gate::Messenger+;
 
 // why the hell does CINT need this dictionaries for ParamStore?????????
 //#pragma link C++ class std::pair<std::string,std::string>;
