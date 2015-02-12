@@ -2,8 +2,7 @@
 #define __ireader_h
 
 #include<Event.h>
-//#include<bhep/dst.h>  
-//#include<bhep/run.h> 
+#include<Run.h> 
 
 #include<TSystem.h>
 
@@ -40,15 +39,18 @@ namespace gate{
 
     /// number of events in file
     virtual unsigned int GetNEvents() const =0;
+    
+    /// number of events in file
+    virtual unsigned int GetNRuns() const =0;
+    
+    /// retrieve run info
+    virtual gate::Run& GetRunInfo(size_t) = 0;
 
     /// number of run info's in file
     //virtual size_t MaxRuns()=0;
 
     /// number of dst info's in file
     //virtual size_t MaxDsts()=0;
-    
-    /// retrieve run info
-    //virtual run& get_run_info(size_t)=0;
     
     /// retrieve dst info
     //virtual dst& get_dst_info(size_t)=0;

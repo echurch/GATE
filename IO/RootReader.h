@@ -58,7 +58,7 @@ class gate::RootReader : public gate::IReader {
    
   //! retrieve run info
   gate::Run& GetRunInfo(size_t i = 0);
-             
+  
   //! print file info
   void Print();
 

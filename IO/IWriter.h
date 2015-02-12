@@ -2,8 +2,7 @@
 #define __iwriter_h
 
 #include<Event.h> 
-//#include<emodel/dst.h> 
-//#include<emodel/run.h> 
+#include<Run.h> 
 
 #include<TSystem.h>
 
@@ -29,7 +28,7 @@ namespace gate{
 
     virtual void Close() = 0;
     
-    //virtual void write_run_info(run&)=0;
+    virtual void WriteRunInfo(Run&)=0;
 
     //virtual void write_dst_info(dst&)=0;
 
