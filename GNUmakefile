@@ -1,5 +1,5 @@
 
-SUBDIRS := emodel IO
+SUBDIRS := emodel IO utils
 
 GATELIBDIR := lib
 

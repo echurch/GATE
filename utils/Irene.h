@@ -49,7 +49,7 @@ namespace gate{
   public:
     ///nothing to do in constructor and destructor
     control_panel(){};
-    ~control_panel(){};
+    virtual ~control_panel(){};
     
     /// Add a switch to the board (initially open)
     void new_switch(std::string name){ cp_[name] = false; }
@@ -203,7 +203,7 @@ namespace gate{
     
   public:
     ///Default destructor
-    ~engine(){}    
+    virtual ~engine(){}    
     /// Sets the output level for the engine
     void info_level(VLEVEL level) {m_.set_level(level);} 
     /// returns the control panel for reading
@@ -308,7 +308,7 @@ namespace gate{
     }
   
     /// Destructor closes file
-    ~sreader()
+    virtual ~sreader()
     {
       if (panel_.switch_closed("file"))    
 	m_dataFile.close();

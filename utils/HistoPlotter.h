@@ -61,7 +61,7 @@ class gate::HistoPlotter{
   HistoPlotter(gate::ParamStore,gate::VLEVEL vl = gate::NORMAL);
   
   //! destructor
-  ~HistoPlotter();
+  virtual ~HistoPlotter();
  
  
   //! initialize canvas and attributes

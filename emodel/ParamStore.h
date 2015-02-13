@@ -24,7 +24,7 @@
 #include<TSystem.h>
 
 namespace gate{
-
+  
 /**
  * @class tstore
  * 
@@ -39,7 +39,7 @@ namespace gate{
  * @date January 2015
  *
  */
-
+  
   template <class T>
   class tstore{
   protected:  
@@ -182,13 +182,19 @@ namespace gate{
       // else{
       // 	;}
     }
-
-    ClassDef(tstore,1)
-
+    
+    ClassDef(tstore,1) 
+      //ClassDef(gate::tstore<double>,1)
+      // ClassDef(gate::tstore<std::string>,1)
+      //ClassDef(gate::tstore<TObject*>,1)
+  /* ClassDef(gate::tstore<vint>,1) */
+  /* ClassDef(gate::tstore<vdouble>,1) */
+  /* ClassDef(gate::tstore<gate::vstring>,1) */
+  /* ClassDef(gate::tstore<vtobject>,1) */
+  
   };
 
-  
-  //! a vector of doubles
+   //! a vector of doubles
   typedef std::vector<double> vdouble;
   //! a vector of integers
   typedef std::vector<int> vint;
@@ -197,6 +203,7 @@ namespace gate{
   //! a vector of tobjects
   typedef std::vector<TObject*> vtobject;
 
+  
    //! a store of integers
   typedef tstore<int> istore;
   //! a store of doubles
@@ -210,6 +217,8 @@ namespace gate{
   //! a store of vectors of string
   typedef tstore<gate::vstring> svstore;
   
+  //ClassImp(gate::tstore)
+
 /**
  * @class ParamStore
  * 

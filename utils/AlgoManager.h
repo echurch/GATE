@@ -11,7 +11,7 @@
 /**
  * \class AlgoManager
  *
- * \ingroup Tools
+ * \ingroup utils
  *
  * \brief Algorithm store and manager
  *
@@ -43,7 +43,7 @@ public:
   /// finalize algorithms
   virtual void finalize();
   
-   /// add algorithm to be executed 
+  /// add algorithm to be executed 
   void addAlgo(std::string name,gate::IAlgo*);
  
   /// retrieve algorithm
