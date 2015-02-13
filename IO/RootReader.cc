@@ -37,7 +37,7 @@ void gate::RootReader::Open(std::string file){
 
   _evtTree->SetBranchAddress("event", &_evt);
   
-  _runTree->SetBranchAddress("run", &_run);
+  if (_runTree) _runTree->SetBranchAddress("run", &_run);
   
   _isOpen = true;
 
@@ -47,14 +47,14 @@ void gate::RootReader::Print(){
 
   _evtTree->Print();
 
-  _runTree->Print();
+  if (_runTree) _runTree->Print();
 
 }
 
 
 gate::Run& gate::RootReader::GetRunInfo(size_t i){
   
-  _runTree->GetEntry(i);
+  if (_runTree) _runTree->GetEntry(i);
 
   return *_run;
   
