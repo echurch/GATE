@@ -7,7 +7,7 @@ DICT  = GATEUtilsCint
 SHLIB = libGATEUtils.so
 SOURCES = $(wildcard *.cc)
 #HEADERS = $(wildcard *.h)
-HEADERS = $(filter-out GATECint.h,$(wildcard *.h))
+HEADERS = $(filter-out GATEUtilsCint.h,$(wildcard *.h))
 OBJECTS = $(SOURCES:.cc=.o)
 #OBJECTS = $(filter-out RunActionUnit.o, $(SOURCES:.cc=.o))
 
