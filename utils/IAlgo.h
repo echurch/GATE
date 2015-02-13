@@ -22,10 +22,6 @@ public:
   IAlgo(const gate::ParamStore& gs,gate::VLEVEL vl=gate::NORMAL,
 	string name="IAlgo",int ver=0, string label="IAlgo");
 
-  //! constructor with parameter file, verbosity level and name
-  IAlgo(string param,gate::VLEVEL vl=gate::NORMAL,
-	string name="IAlgo",int ver=0, string label ="IAlgo");
-
   //! Destructor
   virtual ~IAlgo(){}
   

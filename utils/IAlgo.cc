@@ -13,10 +13,8 @@ gate::IAlgo::IAlgo(gate::VLEVEL vl, string name,int ver, string label){
   if (_label.empty()) _label = name;
   
   _m = gate::Messenger(_label,vl);
-  
-  //algo_info = new gate::algo(name,ver);
-  
-  _m.message("++ Algorithm Generated:",name,gate::VERBOSE);
+    
+  _m.message(">>> Algorithm Generated:",name,gate::VERBOSE);
     
 }
 
@@ -30,26 +28,10 @@ gate::IAlgo::IAlgo(const gate::ParamStore& gs, gate::VLEVEL vl,
   if (_label.empty()) _label = name;
   
   _m = gate::Messenger(_label,vl);
-
-  _m.message("++ Algorithm Generated:",name,gate::VERBOSE);
   
-}
+  this->add_properties(gs);
 
-
-//*************************************************************
-gate::IAlgo::IAlgo(string param, gate::VLEVEL vl, 
-	     string name,int ver,string label){
-//*************************************************************
-  
-  _label = label;
-
-  if (_label.empty()) _label = name;
-
-  _m = gate::Messenger(_label,vl);
-  
-  //algo_info = new gate::algo(name,ver,param);
-  
-  _m.message("++ Algorithm Generated:",name,gate::VERBOSE);
+  _m.message(">>> Algorithm Generated:",name,gate::VERBOSE);
   
 }
 

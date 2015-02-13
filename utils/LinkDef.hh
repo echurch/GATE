@@ -7,5 +7,6 @@
 #pragma link C++ namespace gate;
 
 #pragma link C++ class gate::IAlgo+;
+#pragma link C++ class AlgoTemplate+;
 
 #endif
