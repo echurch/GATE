@@ -3,8 +3,10 @@
 
 #include <TSystem.h>
 
-#include <IAlgo.h>
-#include <Event.h>
+//#include <IAlgo.h>
+//#include <Event.h>
+#include <Centella.h>
+//#include <HistoManager.h>
 
 class AlgoTemplate : public gate::IAlgo {
 

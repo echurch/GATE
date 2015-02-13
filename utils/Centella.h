@@ -92,30 +92,30 @@ public:
   
   
   //! set number of events to read
-  void setNevents(size_t n) { _nevents = n;}
+  inline void setNevents(size_t n) { _nevents = n;}
   
   //! set first event to read
-  void setFirstEvent(size_t n) {_fevent = n;}
+  inline void setFirstEvent(size_t n) {_fevent = n;}
   
   //! set first event to read
-  void setNdebug(size_t n) {_ndebug = n;}
+  inline void setNdebug(size_t n) {_ndebug = n;}
 
   //! write output dst ?
-  void setWrite(bool write) { _write = write;}
+  inline void saveEvents(bool write) { _write = write;}
 
   //! write output histogram file ?
-  void setHistos(bool histos) { _histos = histos;}
+  inline void saveHistos(bool histos) { _histos = histos;}
   
   //! get number of event to analize
-  size_t getNevents(){return _nevents;}
+  inline size_t getNevents() const {return _nevents;}
 
-  bool isLastEventRun(){
+  inline bool isLastEventRun() const{
     return (this->getNevents()==tievents || 
 	    (greader->eof(ievent+1) && cifile==nifiles));
   }
   
   //! clear
-  void clear(){AlgoManager::clear();EventManager::clear();}
+  inline void clear(){AlgoManager::clear();EventManager::clear();}
   
 public:
 

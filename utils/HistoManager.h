@@ -32,7 +32,10 @@
 #include<TH2F.h>
 #include<TH3F.h>
 #include<TFile.h>
+#include<TObjArray.h>
 #include<TSystem.h>
+#include<TDirectory.h>
+
 
 /**
  * \class HistoManager
@@ -118,7 +121,7 @@ class gate::HistoManager : public gate::HistoPlotter{
  private:
   
   //! output histogram file
-  TFile* ofile;
+  TFile* _ofile;
   
   //! name of histogram file
   std::string _hfile;
@@ -128,6 +131,9 @@ class gate::HistoManager : public gate::HistoPlotter{
   
   //! messenger
   gate::Messenger _m;
+  
+  //! directory for plots
+  TDirectory* _hdir;
 
  private:
 

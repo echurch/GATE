@@ -9,8 +9,7 @@ gate::HistoManager::HistoManager(std::string hname, gate::VLEVEL vl)
   
   _hfile = hname;
 
-  //ofile = new TFile(_hfile.c_str(),"RECREATE");
-  ofile = 0;
+  _hdir = new TDirectory("HistoManager","HistoManager");
 
   _m = gate::Messenger("HistoManager",vl);
 
@@ -25,8 +24,7 @@ gate::HistoManager::HistoManager(gate::ParamStore st,gate::VLEVEL vl )
 
   readHistoParam(st);
 
-  //ofile = new TFile(_hfile.c_str(),"RECREATE");
-  ofile =0;
+  _ofile =0;
 
   _m = gate::Messenger("HistoManager",vl);
 
@@ -41,7 +39,7 @@ gate::HistoManager::~HistoManager(){
 
   _m.message("++ destroying Histogram Manager...",gate::VERBOSE);
 
-
+  delete _hdir;
   
 }
 
@@ -73,8 +71,8 @@ void gate::HistoManager::h1(std::string name,std::string title,size_t nbin,
 		      double fb,double lb){
 //************************************************************************  
   
-  if (!ofile) ofile = new TFile(_hfile.c_str(),"RECREATE");
-  ofile->cd();
+  _hdir->cd();
+  
   TH1F* h = new TH1F(name.c_str(),title.c_str(),nbin,fb,lb);
   
   store(name,h);
@@ -87,8 +85,8 @@ void gate::HistoManager::h2(std::string name,std::string title,size_t nxbin,
 		      size_t fby,size_t lby){
 //************************************************************************  
   
-  if (!ofile) ofile = new TFile(_hfile.c_str(),"RECREATE");
-  ofile->cd();
+  _hdir->cd();
+  
   TH2F* h = new TH2F(name.c_str(),title.c_str(),nxbin,fbx,lbx,
 		     nybin,fby,lby);
   
@@ -128,8 +126,6 @@ void gate::HistoManager::draw(std::string name, Option_t* opt){
 }
 
 
-
-
 //************************************************************************  
 void gate::HistoManager::divide1D(std::string name1,std::string name2,std::string name3){
 //************************************************************************  
@@ -165,24 +161,20 @@ void gate::HistoManager::save(){
   
   _m.message("++ Histogram Manager saving histos...",gate::NORMAL);
   
-  if (!ofile) ofile = new TFile(_hfile.c_str(),"RECREATE");
+  _ofile = new TFile(_hfile.c_str(),"RECREATE");
+  
+  map<std::string,TH1*>::const_iterator it;
 
-  ofile->cd();
-  
-  map<std::string,TH1*>::const_iterator iter = hstore.store_map().begin();
-  
-  while( iter != hstore.store_map().end() ) {
-   
-    (*iter).second->Write();
+  for (it= hstore.store_map().begin(); it!=hstore.store_map().end(); ++it){
     
-    iter++;
-  }
+    (*it).second->Write(); }
   
+  _ofile->Close();
+  
+  delete _ofile;
+
   HistoPlotter::finalize();
 
-  //ofile->Write();
-  ofile->Close();
-  
 }
 
 

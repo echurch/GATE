@@ -50,7 +50,7 @@ gate::Centella::Centella(gate::VLEVEL vl):RunManager(vl),AlgoManager(vl){
 
     this->init();
     
-    _hman = new gate::HistoManager("ccentella_histos.root",vl);
+    _hman = new gate::HistoManager("centella_histos.root",vl);
 }
 
 
@@ -187,11 +187,11 @@ void gate::Centella::finalize(){
     
     _logMan.write();}
   
-  else _m.message("++ not writing log file",gate::VERBOSE);
+  else _m.message("not writing log file",gate::NORMAL);
 
   if (_histos) _hman->save();
   
-  else _m.message("++ not saving hitograms",gate::VERBOSE);
+  else _m.message("not saving hitograms",gate::NORMAL);
   
 
 }
@@ -204,15 +204,12 @@ void gate::Centella::execute(){
   
   if (_log) {this->runLog(); this->dataLog(); }
   
-  // run analysis if any: TODO!!!
-
-  //
-
   // run algorithms
   
   if (_fevent){ 
 
     this->read(_fevent-1); // serach for event in dst list
+
     tievents--;
   }
   //if (_fevent) ievent = _fevent;
@@ -232,14 +229,14 @@ void gate::Centella::execute(){
     bool algoOK = gate::AlgoManager::execute(e);
     
     //TODO: abort or keep on according to return value
-
+    
     if (_write && algoOK) gate::EventManager::write(e); 
     
   }
   
   if (_log) { this->algoLog(); }
  
-
+  
 }
 
 //*************************************************************
@@ -368,9 +365,9 @@ bool gate::Centella::run(){
 //*************************************************************
   
   this->initialize();
-
+  
   this->execute();
-
+  
   this->finalize();
   
   return true;
