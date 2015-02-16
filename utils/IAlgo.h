@@ -10,7 +10,7 @@
 
 namespace gate{class IAlgo;}
 
-class gate::IAlgo : public ParamStore {
+class gate::IAlgo : public gate::ParamStore {
 
 public:
   
@@ -233,57 +233,56 @@ public:
       return this->dvproperties_map();
     }
     
-    //! return properties name 
-    vector<std::string> sproperties() const 
-    {return this->sproperties();}
+   //  //! return properties name 
+  // inline const std::vector<std::string>& sproperties() const 
+  //   {return this->sproperties();}
     
-    //! return properties name 
-    vector<std::string> iproperties() const 
-    {return this->iproperties();}
+  //   //! return properties name 
+  // inline const std::vector<std::string>& iproperties() const 
+  //   {return this->iproperties();}
     
-    //! return properties name 
-    vector<std::string> dproperties() const 
-    {return this->dproperties();}
+  //   //! return properties name 
+  // inline const std::vector<std::string>& dproperties() const 
+  //   {return this->dproperties();}
 
-    //! return properties name 
-    vector<std::string> svproperties() const 
-    {return this->svproperties();}
+  //   //! return properties name 
+  // inline const  std::vector<std::string>& svproperties() const 
+  //   {return this->svproperties();}
     
-    //! return properties name 
-    vector<std::string> ivproperties() const 
-    {return this->ivproperties();}
+  //   //! return properties name 
+  // inline const std::vector<std::string>& ivproperties() const 
+  //   {return this->ivproperties();}
     
-    //! return properties name 
-    vector<std::string> dvproperties() const 
-    {return this->dvproperties();}
+  //   //! return properties name 
+  // inline const std::vector<std::string>& dvproperties() const 
+  //   {return this->dvproperties();}
     
+  //   //! return properties value
+  //   inline const std::vector<std::string>& sproperties_values() const 
+  //   {return this->sproperties_values();}
+    
+  //   //! return properties value
+  //   inline const std::vector<int>& iproperties_values() const 
+  //   {return this->iproperties_values();}
+    
+  //   //! return properties value
+  //   inline const std::vector<double>& dproperties_values() const 
+  //   {return this->dproperties_values();}
 
-    //! return properties value
-    vector<std::string> sproperties_values() const 
-    {return this->sproperties_values();}
+  //    //! return properties value
+  //   inline const std::vector<gate::vstring>& svproperties_values() const 
+  //   {return this->svproperties_values();}
     
-    //! return properties value
-    vector<int> iproperties_values() const 
-    {return this->iproperties_values();}
+  //   //! return properties value
+  //   inline const std::vector<gate::vint>& ivproperties_values() const 
+  //   {return this->ivproperties_values();}
     
-    //! return properties value
-    vector<double> dproperties_values() const 
-    {return this->dproperties_values();}
+  //   //! return properties value
+  //   inline const std::vector<gate::vdouble>& dvproperties_values() const 
+  //   {return this->dvproperties_values();}
 
-     //! return properties value
-    vector<gate::vstring> svproperties_values() const 
-    {return this->svproperties_values();}
-    
-    //! return properties value
-    vector<gate::vint> ivproperties_values() const 
-    {return this->ivproperties_values();}
-    
-    //! return properties value
-    vector<gate::vdouble> dvproperties_values() const 
-    {return this->dvproperties_values();}
-
-    //! reset properties
-    void clear(){this->clear();}
+  //   //! reset properties
+  //   void clear(){this->clear();}
 
   
  
