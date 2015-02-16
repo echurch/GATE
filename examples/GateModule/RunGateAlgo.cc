@@ -4,8 +4,7 @@
 int main(){
   
   GateAlgo* algo1 = new GateAlgo(gate::NORMAL,"algo1");
-  GateAlgo* algo2 = new GateAlgo(gate::NORMAL,"algo2");
-
+ 
   gate::Centella::instance(gate::NORMAL);
   gate::Centella::instance()->addInputFile("input_dst.root");
   gate::Centella::instance()->addOutputFile("output_dst.root");
@@ -13,8 +12,7 @@ int main(){
   gate::Centella::instance()->saveEvents(true);
   gate::Centella::instance()->saveHistos(true);
   gate::Centella::instance()->addAlgo("my_algo1",algo1);
-  gate::Centella::instance()->addAlgo("my_algo2",algo2);
-  
+   
   gate::Centella::instance()->run();
   
   gate::Centella::instance()->destroy();
