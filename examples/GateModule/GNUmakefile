@@ -3,13 +3,13 @@
 GATEMAKEDIR = ../../Makefile
 GATELIBDIR = ../../lib
 
-DICT  = GATEModuleCint
-SHLIB = libGATEModule.so
+DICT  = GateModuleCint
+SHLIB = libGateModule.so
 SOURCES = $(wildcard *.cc)
 #HEADERS = $(wildcard *.h)
 HEADERS = $(filter-out GATEModuleCint.h,$(wildcard *.h))
-OBJECTS = $(SOURCES:.cc=.o)
-#OBJECTS = $(filter-out RunActionUnit.o, $(SOURCES:.cc=.o))
+#OBJECTS = $(SOURCES:.cc=.o)
+OBJECTS = $(filter-out RunGateAlgo.o, $(SOURCES:.cc=.o))
 
 
 # include options for this package
@@ -35,6 +35,17 @@ include $(GATEMAKEDIR)/GNUmakefile.GATE
 
 ### binary compilation ###
 
-LIBS += $(shell root-config --libs) 
-LIBS += -L$(GATELIBDIR)  
+LIBS += $(shell root-config --libs)  -lCore -lRIO -lHist
+LIBS += -L../../lib  -lGATE -lGATEIO -lGATEUtils -lGateModule
+
+bin: lib/$(SHLIB) RunGateAlgo.o
+	@echo "<< compiling RunGateAlgo >>"
+	@$(CXX) -g $(CXXFLAGS) -o ./bin/RunGateAlgo $^ $(LIBS) 
+
+.PHONY: clean cleanapps
+
+clean:  cleanapps
+
+cleanapps:
+	@rm -f ./bin/RunGateAlgo
 
