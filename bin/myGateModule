@@ -1,0 +1,107 @@
+#!/usr/bin/env python
+
+"""
+Script to generate a new Gate-based analysis library.
+A template algorithm is added to the library.
+
+Author: Pau Novella <pau.novella@ific.es>
+"""
+
+import sys,os
+
+import fileinput
+
+from subprocess import call
+
+def error(msg=""):
+
+    if msg: print "\n>> %s \n"%msg
+    
+    sys.exit()
+
+try: mpathname = sys.argv[1]
+
+except IndexError: error("usage: myGateModule module_name")
+
+if os.path.exists(mpathname): error("Module %s already exists!"%(mpathname))
+
+try: gpath = os.environ["GATE_DIR"]+"/examples/GateModule"
+
+except KeyError: error("GATE_DIR not defined!")
+
+mpath,mname = os.path.split(mpathname)[0],os.path.split(mpathname)[1]
+
+#------------ create module directories ------------#
+
+os.mkdir(mname)
+
+os.mkdir(mname+'/doc')
+
+os.mkdir(mname+'/lib')
+
+os.mkdir(mname+'/mac')
+
+os.mkdir(mname+'/bin')
+
+#------------ copy module files form gate utils ------------#
+
+call("cp %s/GNUmakefile %s/GNUmakefile"%(gpath,mpathname),shell=True)
+
+call("cp %s/LinkDef.hh %s/LinkDef.hh"%(gpath,mpathname),shell=True)
+
+call("cp %s/RunGateAlgo.cc %s/Run%s.cc"%(gpath,mpathname,mname),shell=True)
+
+call("cp %s/GateAlgo.h %s/%s.h"%(gpath,mpathname,mname),shell=True)
+
+call("cp %s/GateAlgo.cc %s/%s.cc"%(gpath,mpathname,mname),shell=True)
+
+call("cp %s/mac/runAlgo.C %s/mac/run%s.C"%(gpath,mpathname,mname),shell=True)
+
+#------------ replace name in files ------------#
+
+    
+files = [mpathname+'/LinkDef.hh', mpathname+'/GNUmakefile',
+         
+         mpathname+'/mac/run%s.C'%mname, mpathname+'/Run'+mname+'.cc',
+
+         mpathname+'/'+mname+'.h',mpathname+'/'+mname+'.cc']
+
+for line in fileinput.input(files,inplace=1):
+    
+    line = line.replace('GateAlgo',mname)
+    
+    line = line.replace('GateAlgo',mname)
+
+    line = line.replace('libGateModule.so','lib'+mname+'.so') 
+
+    line = line.replace('libGaModule','lib'+mname)
+
+    line = line.replace('RunGateAlgo.o','Run'+mname+".o")
+
+    line = line.replace('RunGateAlgo','Run'+mname)
+
+    line = line.replace('-lDCGateModule','-l'+mname)
+        
+    line = line.replace('GateModuleCint',mname+'Cint')
+
+    line = line.replace('GATEMAKEDIR = ../../',"GATEMAKEDIR = $(GATE_DIR)/")
+
+    line = line.replace('GATELIBDIR = ../../lib',"GATELIBDIR = $(GATE_DIR)/lib")
+
+    line = line.replace('-I../../include',"-I$(GATE_DIR)/include")
+
+    line = line.replace('#pragma link C++ class gate::GateAlgo+;','')#!!!
+
+    line = line.replace('#pragma link C++ namespace gate;','')#!!!
+    
+    line = line.replace('../../../lib/',"$(GATE_DIR)/lib/")
+
+    line = line.replace('../../../lib/',"$(GATE_DIR)/lib/")
+
+    line = line.replace('../../../lib/',"$(GATE_DIR)/lib/")
+
+    sys.stdout.write(line)
+
+fileinput.close()
+
+
