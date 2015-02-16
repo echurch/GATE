@@ -24,9 +24,11 @@ void gate::RootReader::Open(std::string file){
   if (_tf) delete _tf;
 
   _tf = new TFile(file.c_str());
-
-  // TODO: add protection for if _tf not created!!!
-
+  
+  Assert(_tf->IsOpen(),__FILE__,__LINE__,
+	 
+	 bad_argument("File not found, name: "+file));
+  
   _evtTree = (TTree*) _tf->Get("EVENT");
   
   _runTree = (TTree*) _tf->Get("RUN");

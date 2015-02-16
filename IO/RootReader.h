@@ -4,6 +4,7 @@
 #include<Event.h>
 #include<Run.h>
 #include<IReader.h>
+#include<Error.h>
 
 #include<TSystem.h>
 #include<TFile.h> 
