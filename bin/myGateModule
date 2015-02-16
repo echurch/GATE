@@ -13,15 +13,19 @@ import fileinput
 
 from subprocess import call
 
-def error(msg=""):
+def msg(m): print "\n>> %s \n"%m
+    
+def error(m=""):
 
-    if msg: print "\n>> %s \n"%msg
+    if m: msg(m)
     
     sys.exit()
 
 try: mpathname = sys.argv[1]
 
 except IndexError: error("usage: myGateModule module_name")
+
+mpathname = os.path.abspath(mpathname)
 
 if os.path.exists(mpathname): error("Module %s already exists!"%(mpathname))
 
@@ -33,15 +37,17 @@ mpath,mname = os.path.split(mpathname)[0],os.path.split(mpathname)[1]
 
 #------------ create module directories ------------#
 
-os.mkdir(mname)
+msg("Creating module in %s..."%mpathname)
 
-os.mkdir(mname+'/doc')
+os.mkdir(mpathname)
 
-os.mkdir(mname+'/lib')
+os.mkdir(mpathname+'/doc')
 
-os.mkdir(mname+'/mac')
+os.mkdir(mpathname+'/lib')
 
-os.mkdir(mname+'/bin')
+os.mkdir(mpathname+'/mac')
+
+os.mkdir(mpathname+'/bin')
 
 #------------ copy module files form gate utils ------------#
 
