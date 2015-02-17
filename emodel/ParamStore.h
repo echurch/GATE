@@ -44,7 +44,7 @@ namespace gate{
   class tstore{
   protected:  
     //! attributes: a map of objects of type T keyed by name	
-    map<std::string, T> m_store;   
+    std::map<std::string, T> m_store;   
     
   public:
 
@@ -54,7 +54,7 @@ namespace gate{
     virtual ~tstore(){};
     
     //! retrieve map with parameters
-    inline const map<std::string,T>& store_map() const {return m_store;}
+    inline const std::map<std::string,T>& store_map() const {return m_store;}
     
     //! clear map of parameters
     inline void clear(){m_store.clear();}
@@ -92,7 +92,7 @@ namespace gate{
     //! find an element in the store by name
     inline bool find (std::string name) const {
       bool gotcha = false;
-      typename map<std::string, T>::const_iterator pi;
+      typename std::map<std::string, T>::const_iterator pi;
       
       for ( pi = m_store.begin(); 
 	    pi!= m_store.end(); ++pi)
@@ -125,7 +125,7 @@ namespace gate{
 	       internal_logic("name not found in --tstore::fetch(), name ="
 			      + name));
      
-      typename map<std::string, T>::const_iterator it;
+      typename std::map<std::string, T>::const_iterator it;
       for (it = m_store.begin(); it!= m_store.end(); ++it)
       {
 	if(it->first == name) break;
@@ -143,28 +143,29 @@ namespace gate{
     }
 
     //! returns all names in store
-    vector<std::string> names () const {
+    std::vector<std::string> names () const {
 
-      typename map<std::string, T>::const_iterator pi;
-      vector<std::string> nam;
+      typename std::map<std::string, T>::const_iterator pi;
+      std::vector<std::string> nam;
       
       for (pi = m_store.begin(); pi!= m_store.end(); ++pi){
 	nam.push_back(pi->first);}
  
       return nam;
     }
+
     
     //! returns the vector of items
-    vector<T> items() const{
-      vector<T> vitems;
-      typename map<std::string, T>::const_iterator it;
+    std::vector<T> items() const{
+      std::vector<T> vitems;
+      typename std::map<std::string, T>::const_iterator it;
       for (it = m_store.begin(); it!= m_store.end(); ++it){
 	  vitems.push_back(it->second);}
       return vitems;
     }
 
     //! print interface
-    virtual void info(ostream& s = cout) const{
+    virtual void info(ostream& s = std::cout) const{
       // if (level_ > MUTE){
       // 	ostd::stringstream ostr;
 	
@@ -211,7 +212,7 @@ namespace gate{
   //! a store of strings
   typedef tstore<std::string> sstore;
   //! a store of vector of doubles
-  typedef tstore<gate::vdouble> vstore;
+  typedef tstore<gate::vdouble> dvstore;
   //! a store of vectors of int
   typedef tstore<gate::vint> ivstore;
   //! a store of vectors of string
@@ -241,7 +242,7 @@ namespace gate{
     dstore dstore_;
     istore istore_;
     sstore sstore_;
-    vstore vstore_;
+    dvstore dvstore_;
     ivstore ivstore_;
     svstore svstore_;
 
@@ -258,7 +259,7 @@ namespace gate{
     //! store a new std::string in the store 
     void store(std::string name,std::string val){sstore_.store(name,val);}
     //! store a new histo definition in the store
-    void store(std::string name,gate::vdouble& val){vstore_.store(name,val);}
+    void store(std::string name,gate::vdouble& val){dvstore_.store(name,val);}
     //! store a new std::string vector in the store
     void store(std::string name,gate::vstring& val){svstore_.store(name,val);}
     //! store a new integer vector in the store
@@ -271,8 +272,8 @@ namespace gate{
     //! change a std::string in the store
     void change_sstore(std::string name,std::string val){sstore_.sstore(name,val);}
     //! change a histo definition in the store
-    void change_vstore(std::string name,gate::vdouble& val){
-      vstore_.sstore(name,val);}
+    void change_dvstore(std::string name,gate::vdouble& val){
+      dvstore_.sstore(name,val);}
     //! change a std::string vector in the store
     void change_svstore(std::string name,gate::vstring& val){
       svstore_.sstore(name,val);}
@@ -287,7 +288,7 @@ namespace gate{
     //!size of the std::string store
     size_t size_sstore()const {return sstore_.size();}
     //!size of the histo definitions store
-    size_t size_vstore()const {return vstore_.size();}
+    size_t size_dvstore()const {return dvstore_.size();}
    //!size of the vector store
     size_t size_svstore()const {return svstore_.size();}
     //!size of the vector store
@@ -299,8 +300,8 @@ namespace gate{
     bool find_istore(std::string name)const{return istore_.find(name);}
     //! Find std::string (if exists) in the store
     bool find_sstore(std::string name)const{return sstore_.find(name);}
-    //! Find HD (if exists) in the store
-    bool find_vstore(std::string name)const{return vstore_.find(name);}
+    //! Find double vecotor (if exists) in the store
+    bool find_dvstore(std::string name)const{return dvstore_.find(name);}
     //! Find std::string vector (if exists) in the store
     bool find_svstore(std::string name)const{return svstore_.find(name);}
     //! Find integer vector (if exists) in the store
@@ -313,7 +314,7 @@ namespace gate{
     //! Fetch a std::string in the store
     std::string fetch_sstore(std::string name)const{return sstore_.fetch(name);}
     //! Fetch a vector in the store
-    const vdouble& fetch_vstore(std::string name)const{return vstore_.fetch(name);}
+    const vdouble& fetch_dvstore(std::string name)const{return dvstore_.fetch(name);}
     //! Fetch a std::string vector in the store
     const vstring& fetch_svstore(std::string name)const{return svstore_.fetch(name);}
     //! Fetch a std::string vector in the store
@@ -326,76 +327,64 @@ namespace gate{
     //! erase std::string from store 
     bool erase_sstore(std::string name) {return sstore_.erase(name);}
     //! erase HD from store 
-    bool erase_vstore(std::string name) {return vstore_.erase(name);}
+    bool erase_dvstore(std::string name) {return dvstore_.erase(name);}
     //! erase std::string vector from store 
     bool erase_svstore(std::string name) {return svstore_.erase(name);}
     //! erase int vector from store 
     bool erase_ivstore(std::string name) {return ivstore_.erase(name);}
 
+  
     //! returns all names in double store
-    //vector<std::string> names_dstore() {return dstore_.names();}  
+    std::vector<std::string> names_dstore() const {return dstore_.names();}  
     //! returns all names in int store
-    //vector<std::string> names_istore() {return istore_.names();}  
+    std::vector<std::string> names_istore() const {return istore_.names();}  
     //! returns all names in std::string store
-    //vector<std::string> names_sstore() {return sstore_.names();}  
-    //! returns all names in std::string vector store
-    //vector<std::string> names_svstore() {return svstore_.names();}  
-    //vector<std::string> names_vstore() {return vstore_.names();}  
-    //vector<std::string> names_ivstore() {return ivstore_.names();}  
-
-    //! returns all names in double store
-    vector<std::string> names_dstore() const {return dstore_.names();}  
-    //! returns all names in int store
-    vector<std::string> names_istore() const {return istore_.names();}  
-    //! returns all names in std::string store
-    vector<std::string> names_sstore() const {return sstore_.names();}  
+    std::vector<std::string> names_sstore() const {return sstore_.names();}  
     //! returns all names in vector store
-    vector<std::string> names_vstore() const {return vstore_.names();}  
-    vector<std::string> names_dvstore() const {return vstore_.names();}  
+    std::vector<std::string> names_dvstore() const {return dvstore_.names();}  
     //! returns all names in std::string vector store
-    vector<std::string> names_svstore() const {return svstore_.names();}  
+    std::vector<std::string> names_svstore() const {return svstore_.names();}  
     //! returns all names in int vector store
-    vector<std::string> names_ivstore() const {return ivstore_.names();}
+    std::vector<std::string> names_ivstore() const {return ivstore_.names();}
 
     //! returns all items in double store
-    vector<double> items_dstore() const{return dstore_.items();}  
+    std::vector<double> items_dstore() const{return dstore_.items();}  
     //! returns all items in int store
-    vector<int> items_istore() const{return istore_.items();}  
+    std::vector<int> items_istore() const{return istore_.items();}  
     //! returns all items in std::string store
-    vector<std::string> items_sstore() const{return sstore_.items();}  
-    //! returns all items in HD store
-    //! returns all items in vector store
-    vector<gate::vdouble> items_vstore() const{return vstore_.items();}  
-    vector<gate::vdouble> items_dvstore() const{return vstore_.items();}  
-    vector<gate::vint> items_ivstore() const{return ivstore_.items();}  
+    std::vector<std::string> items_sstore() const{return sstore_.items();}  
+    //! returns all items in double vector store
+    std::vector<gate::vdouble> items_dvstore() const{return dvstore_.items();}
+    //! returns all items in int vector store
+    std::vector<gate::vint> items_ivstore() const{return ivstore_.items();}  
     //! returns all items in std::string vector store
-    vector<gate::vstring> items_svstore() const{return svstore_.items();}  
+    std::vector<gate::vstring> items_svstore() const{return svstore_.items();}  
     
     //! returns all store as a map
-    const map<std::string,std::string>& sstore_map() const{
+    const std::map<std::string,std::string>& sstore_map() const{
       return sstore_.store_map();}
     //! returns all store as a map
-    const map<std::string,int>& istore_map() const{
+    const std::map<std::string,int>& istore_map() const{
       return istore_.store_map();}
     //! returns all store as a map
-    const map<std::string,double>& dstore_map() const{
+    const std::map<std::string,double>& dstore_map() const{
       return dstore_.store_map();}
     //! returns all store as a map
-    const map<std::string,gate::vstring>& svstore_map() const{
+    const std::map<std::string,gate::vstring>& svstore_map() const{
       return svstore_.store_map();}
     //! returns all store as a map
-    const map<std::string,gate::vint>& ivstore_map() const{
+    const std::map<std::string,gate::vint>& ivstore_map() const{
       return ivstore_.store_map();}
     //! returns all store as a map
-    const map<std::string,gate::vdouble>& dvstore_map() const{
-      return vstore_.store_map();}
+    const std::map<std::string,gate::vdouble>& dvstore_map() const{
+      return dvstore_.store_map();}
     
     //remove all elements in store
     void clear(){
       dstore_.clear();
       istore_.clear();
       sstore_.clear();
-      vstore_.clear();
+      dvstore_.clear();
       svstore_.clear();
       ivstore_.clear();
     }
@@ -408,7 +397,7 @@ namespace gate{
       len += size_istore();
       len += size_dstore();
       len += size_sstore();
-      len += size_vstore();
+      len += size_dvstore();
       len += size_ivstore();
       len += size_svstore();
       
