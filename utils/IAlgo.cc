@@ -10,6 +10,8 @@ gate::IAlgo::IAlgo(gate::VLEVEL vl, std::string name,
    
   _name = name;
   
+  _version = ver;
+
   _label = label;
   
   if (_label.empty()) _label = name;
@@ -26,6 +28,8 @@ gate::IAlgo::IAlgo(const gate::ParamStore& gs, gate::VLEVEL vl,
 //*************************************************************
   
   _name = name;
+  
+  _version = ver;
 
   _label = label;
 
