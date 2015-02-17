@@ -26,8 +26,6 @@
 #include <stdexcept>
 #include <string>  
 
-using namespace std;
-
 /**
  *\defgroup error Exception handling 
  */
@@ -47,7 +45,7 @@ namespace gate{
     
     if(!assert) {
       std::cerr << "Assertion failed" ;
-      cerr << e.what() << endl;
+      std::cerr << e.what() << std::endl;
       e.raise();
       
     }
@@ -66,7 +64,7 @@ namespace gate{
       std::cerr << "Assertion failed in file " 
 		<< file<< " at line " 
 		<< line << ":" << std::endl; 
-      cerr << e.what() << endl;
+      std::cerr << e.what() << std::endl;
       e.raise();
       
     }
