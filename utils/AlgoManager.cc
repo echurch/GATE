@@ -22,7 +22,7 @@ bool gate::AlgoManager::initialize(){
   
   if (!_AlgoList.size()) return false;
   
-  vector<gate::IAlgo*>::iterator iter;   
+  std::vector<gate::IAlgo*>::iterator iter;   
   
   for( iter = _AlgoList.begin(); iter != _AlgoList.end(); iter++ ) {
     
@@ -41,7 +41,7 @@ void gate::AlgoManager::finalize(){
   
   _am.message("+++ Finalising algorithms +++",gate::NORMAL);
   
-  vector<IAlgo*>::iterator iter;   
+  std::vector<IAlgo*>::iterator iter;   
 
   for( iter = _AlgoList.begin(); iter != _AlgoList.end(); iter++ ) {
     
@@ -55,7 +55,7 @@ void gate::AlgoManager::finalize(){
 bool gate::AlgoManager::execute(gate::Event& evt){
 //*************************************************************
     
-  vector<IAlgo*>::iterator iter;
+  std::vector<IAlgo*>::iterator iter;
 
   bool ok = true;
 
@@ -108,7 +108,7 @@ gate::vstring gate::AlgoManager::getAlgoLabels(){
   
   gate::vstring labels;
   
-  vector<IAlgo*>::iterator iter;
+  std::vector<IAlgo*>::iterator iter;
 
   for( iter = _AlgoList.begin(); iter != _AlgoList.end(); iter++ ) {
 

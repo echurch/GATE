@@ -7,17 +7,12 @@
  * @class HistoManager
  *
  * \brief Histogram manager class
- *
  *    
- * \author Pau Novella $Author: pnovella $
+ * \author Pau Novella <pau.novella@ific.uv.es>
  *
  * \version $Revision: 1.0 $
  *
- *
- * Contact: pau.novella@ciemat.es
- *
  */
-
 
 
 #include<map>
@@ -35,22 +30,6 @@
 #include<TObjArray.h>
 #include<TSystem.h>
 #include<TDirectory.h>
-
-
-/**
- * \class HistoManager
- *
- * \ingroup utils
- *
- * \brief Histogram Manager
- *
- * \author Pau Novella
- *
- * \version $Revision: 1.0 $
- * 
- * Contact: pau.novella@ific.uv.es
- *
- */
 
 
 namespace gate{class HistoManager;}
@@ -110,10 +89,10 @@ class gate::HistoManager : public gate::HistoPlotter{
   const gate::tstore<TH1*>& getHistoStore(){return hstore;}
   
   //! retrieve names of histos 
-  vector<std::string> names() const {return hstore.names();}
+  std::vector<std::string> names() const {return hstore.names();}
   
   //! retrieve histos
-  vector<TH1*> histos() const {return hstore.items();}
+  std::vector<TH1*> histos() const {return hstore.items();}
 
   //! retrieve name of hitograms file
   std::string getHistoFileName() const {return _hfile;}

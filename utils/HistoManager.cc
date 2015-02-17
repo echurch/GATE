@@ -163,7 +163,7 @@ void gate::HistoManager::save(){
   
   _ofile = new TFile(_hfile.c_str(),"RECREATE");
   
-  map<std::string,TH1*>::const_iterator it;
+  std::map<std::string,TH1*>::const_iterator it;
 
   for (it= hstore.store_map().begin(); it!=hstore.store_map().end(); ++it){
     

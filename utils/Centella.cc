@@ -300,27 +300,27 @@ void gate::Centella::algoLog(){
     }
     {
     typedef map<string, int>::const_iterator I;
-    for(I j=al.iproperties_map().begin();j!=al.iproperties_map().end();++j)
+    for(I j=al.istore_map().begin();j!=al.istore_map().end();++j)
       _logMan.strongAddLog(algoName,j->first,j->second);
     }
     {
     typedef map<string, double>::const_iterator I;
-    for(I j=al.dproperties_map().begin();j!=al.dproperties_map().end();++j)
+    for(I j=al.dstore_map().begin();j!=al.dstore_map().end();++j)
       _logMan.strongAddLog(algoName,j->first,j->second);
     }
     {
     typedef map<string,gate::vstring>::const_iterator I;
-    for(I j=al.svproperties_map().begin();j!=al.svproperties_map().end();++j)
+    for(I j=al.svstore_map().begin();j!=al.svstore_map().end();++j)
       _logMan.strongAddLog(algoName,j->first,j->second);
     }
     {
     typedef map<string,gate::vint>::const_iterator I;
-    for(I j=al.ivproperties_map().begin();j!=al.ivproperties_map().end();++j)
+    for(I j=al.ivstore_map().begin();j!=al.ivstore_map().end();++j)
       _logMan.strongAddLog(algoName,j->first,j->second);
     }
     {
     typedef map<string,gate::vdouble>::const_iterator I;
-    for(I j=al.dvproperties_map().begin();j!=al.dvproperties_map().end();++j)
+    for(I j=al.dvstore_map().begin();j!=al.dvstore_map().end();++j)
       _logMan.strongAddLog(algoName,j->first,j->second);
     }
   }  

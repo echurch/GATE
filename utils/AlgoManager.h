@@ -50,7 +50,7 @@ public:
   gate::IAlgo* getAlgo(std::string name){ return _AlgoMap[name];}
 
   /// retrive algos
-  const vector<gate::IAlgo*>& getAlgos(){return _AlgoList;} 
+  const std::vector<gate::IAlgo*>& getAlgos(){return _AlgoList;} 
    
   /// get algorithm names
   gate::vstring getAlgoNames();

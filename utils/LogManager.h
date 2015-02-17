@@ -218,7 +218,7 @@ class gate::LogManager{
 
     if (!prefix.empty()) key = prefix+"_"+key;  
 
-    _logs[group].change_vstore(key,val);}
+    _logs[group].change_dvstore(key,val);}
 
   
   //-------------------------------

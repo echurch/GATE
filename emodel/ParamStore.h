@@ -249,9 +249,14 @@ namespace gate{
   public:
     //! Default constructor
     ParamStore(){}
+    //! Default constructor
+    //ParamStore(){}
     //! default destructor
     virtual ~ParamStore(){}
     
+    //! add params from a ParamStore
+    void store(const ParamStore& st,std::string prefix="");
+
     //! store a new double in the store
     void store(std::string name,double val){dstore_.store(name,val);}
     //! store a new int in the store 
@@ -265,6 +270,20 @@ namespace gate{
     //! store a new integer vector in the store
     void store(std::string name,gate::vint& val){ivstore_.store(name,val);}
     
+    //! store a new double in the store
+    void fstore(std::string name,double val){dstore_.sstore(name,val);}
+    //! sstore a new int in the store 
+    void fstore(std::string name,int val){istore_.sstore(name,val);}
+    //! sstore a new std::string in the store 
+    void fstore(std::string name,std::string val){sstore_.sstore(name,val);}
+    //! sstore a new histo definition in the store
+    void fstore(std::string name,gate::vdouble& val){dvstore_.sstore(name,val);}
+    //! sstore a new std::string vector in the store
+    void fstore(std::string name,gate::vstring& val){svstore_.sstore(name,val);}
+    //! sstore a new integer vector in the store
+    void fstore(std::string name,gate::vint& val){ivstore_.sstore(name,val);}
+    
+
      //! change a double in the store
     void change_dstore(std::string name,double val){dstore_.sstore(name,val);}
     //! change an int in the store

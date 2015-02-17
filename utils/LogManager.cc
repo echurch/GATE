@@ -83,11 +83,11 @@ void gate::_param_logger::write(gate::ParamStore logs,string group,
     }
   }
    // vector of doubles
-  for (size_t ikey = 0; ikey < logs.size_vstore(); ikey++ ){
+  for (size_t ikey = 0; ikey < logs.size_dvstore(); ikey++ ){
      
-    string key = logs.names_vstore()[ikey]; 
+    string key = logs.names_dvstore()[ikey]; 
      
-    gate::vdouble value = logs.fetch_vstore(key);
+    gate::vdouble value = logs.fetch_dvstore(key);
     
     logfile <<group<<" "<<key<<" DV "<<value.size()<<"\n";
     
@@ -198,7 +198,7 @@ bool gate::LogManager::erase(string group,string ilog){
   ok = _logs[group].erase_dstore(ilog); 
   ok = ok || _logs[group].erase_istore(ilog); 
   ok = ok || _logs[group].erase_sstore(ilog); 
-  ok = ok || _logs[group].erase_vstore(ilog); 
+  ok = ok || _logs[group].erase_dvstore(ilog); 
   ok = ok || _logs[group].erase_svstore(ilog); 
   ok = ok || _logs[group].erase_ivstore(ilog); 
     
@@ -217,7 +217,7 @@ bool gate::LogManager::find(string group, string name){
   ok = _logs[group].find_dstore(name); if (ok) return true; 
   ok = _logs[group].find_istore(name); if (ok) return true; 
   ok = _logs[group].find_sstore(name); if (ok) return true; 
-  ok = _logs[group].find_vstore(name); if (ok) return true; 
+  ok = _logs[group].find_dvstore(name); if (ok) return true; 
   ok = _logs[group].find_svstore(name); if (ok) return true; 
   ok = _logs[group].find_ivstore(name); if (ok) return true; 
 

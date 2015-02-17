@@ -4,9 +4,11 @@
 ClassImp(gate::IAlgo)
 
 //*************************************************************
-gate::IAlgo::IAlgo(gate::VLEVEL vl, string name,int ver, string label){
+gate::IAlgo::IAlgo(gate::VLEVEL vl, std::string name, 
+		   int ver, std::string label){
 //*************************************************************
    
+  _name = name;
   
   _label = label;
   
@@ -14,24 +16,26 @@ gate::IAlgo::IAlgo(gate::VLEVEL vl, string name,int ver, string label){
   
   _m = gate::Messenger(_label,vl);
     
-  _m.message(">>> Algorithm Generated:",name,gate::VERBOSE);
+  _m.message("Algorithm Generated:",name,gate::VERBOSE);
     
 }
 
 //*************************************************************
 gate::IAlgo::IAlgo(const gate::ParamStore& gs, gate::VLEVEL vl, 
-	     string name,int ver,string label){
+	     std::string name,int ver,std::string label){
 //*************************************************************
   
+  _name = name;
+
   _label = label;
 
   if (_label.empty()) _label = name;
   
   _m = gate::Messenger(_label,vl);
   
-  this->add_properties(gs);
+  this->store(gs);
 
-  _m.message(">>> Algorithm Generated:",name,gate::VERBOSE);
+  _m.message("Algorithm Generated:",name,gate::VERBOSE);
   
 }
 
