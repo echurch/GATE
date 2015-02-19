@@ -163,36 +163,9 @@ namespace gate{
 	  vitems.push_back(it->second);}
       return vitems;
     }
-
-    //! print interface
-    virtual void info(ostream& s = std::cout) const{
-      // if (level_ > MUTE){
-      // 	ostd::stringstream ostr;
-	
-      // 	typename map<std::string, T>::const_iterator pi;
-	
-      // 	for (pi = (m_store).begin(); pi!= (m_store).end(); ++pi)
-      // 	  {
-      // 	    ostr << pi->first<< " = " << pi->second << endl;  
-      // 	  } 
-	
-      // 	s << endl
-      // 	  << ostr.str() 
-      // 	  << endl;
-      // }
-      // else{
-      // 	;}
-    }
-    
-    ClassDef(tstore,1) 
-      //ClassDef(gate::tstore<double>,1)
-      // ClassDef(gate::tstore<std::string>,1)
-      //ClassDef(gate::tstore<TObject*>,1)
-  /* ClassDef(gate::tstore<vint>,1) */
-  /* ClassDef(gate::tstore<vdouble>,1) */
-  /* ClassDef(gate::tstore<gate::vstring>,1) */
-  /* ClassDef(gate::tstore<vtobject>,1) */
   
+    ClassDef(tstore,1) 
+     
   };
 
    //! a vector of doubles
