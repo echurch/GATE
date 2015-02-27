@@ -1,8 +1,7 @@
 #include "Waveform.h"
 
 //=======================================================
-//gate::Waveform::Waveform() : ParamStore("Waveform"), _sensorID(-1){
-gate::Waveform::Waveform() : _sensorID(-1){
+gate::Waveform::Waveform() : BObject(),_sensorID(-1){
 //=======================================================
 
 }
@@ -28,6 +27,8 @@ void gate::Waveform::Info(ostream& s) const{
 
     s << "=========Waveform instance ======="<< std::endl;
     
+    BObject::Info(s);
+
     s << "TO BE IMPLEMENTED"<< std::endl;
     
     s << "=============================="<< std::endl;

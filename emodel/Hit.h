@@ -23,15 +23,13 @@
 #include<TSystem.h>
 
 #include<Environment.h>
-#include<ParamStore.h>
 #include<Pulse.h>
 #include<Waveform.h>
-#include<Point3D.h>
+#include<BHit.h>
 
 namespace gate{class Hit;}
 
-//class gate::Hit : public gate::ParamStore {
-class gate::Hit {
+class gate::Hit : public gate::BHit {
 
  public:
 
@@ -49,21 +47,9 @@ class gate::Hit {
   //! sensor type (SIPM or PMT)
   gate::SENSORTYPE _sType;
   
-  //! data type (MC-THUTH, MC or DATA)
-  gate::DATATYPE _dType;
-  
   //! hit state (RAW, RECOED, CALIB) for MC or DATA
   gate::STATE _state;
   
-  //! sensor coordinates
-  gate::Point3D _pos;
-
-  //! hit amplitude ( ADC, Q, or PE, depending on STATE)
-  double _amp;
- 
-  //! hit time
-  double _time;
-
   //! waveform
   const gate::Waveform* _wform;
   
@@ -81,36 +67,12 @@ class gate::Hit {
   //! Set sensor type 
   void SetSensorType(gate::SENSORTYPE type);
 
-  //! Get data type 
-  gate::DATATYPE GetDataType() const;
-  
-  //! Set data type 
-  void SetDataType(gate::DATATYPE type);
-  
-  //! set position
-  void SetPosition(gate::Point3D);
-
-  //! get position
-  const gate::Point3D& GetPosition() const;
-
    //! Get hit state
   gate::STATE GetState() const;
   
   //! Set hit state 
   void SetState(gate::STATE state);
   
-  //! Get hit amplitude (ADC, Q or  PE depending to STATE) 
-  double GetAmplitude() const;
-  
-  //! Set hit ampliude 
-  void SetAmplitude(double amp);
-
-  //! Get hit time
-  double GetTime() const;
-  
-  //! Set hit time 
-  void SetTime(double time);
-
   //! Set waveform
   void SetWaveform(const Waveform& wf);
   
@@ -141,20 +103,8 @@ gate::Hit::GetPulses() const { return _wform->GetPulses();}
 inline void gate::Hit::SetSensorID(int id ) { _sensorID = id; }
 inline int gate::Hit::GetSensorID() const { return _sensorID; }
 
-inline void gate::Hit::SetPosition(gate::Point3D pos) { _pos = pos; }
-inline const gate::Point3D& gate::Hit::GetPosition() const { return _pos; }
-
-inline void gate::Hit::SetAmplitude(double amp) { _amp = amp; }
-inline double gate::Hit::GetAmplitude() const { return _amp; }
-
-inline void gate::Hit::SetTime(double time) { _time = time; }
-inline double gate::Hit::GetTime() const { return _time; }
-
 inline void gate::Hit::SetSensorType(gate::SENSORTYPE t) { _sType = t; }
 inline gate::SENSORTYPE gate::Hit::GetSensorType() const { return _sType; }
-
-inline void gate::Hit::SetDataType(gate::DATATYPE t) { _dType = t; }
-inline gate::DATATYPE gate::Hit::GetDataType() const { return _dType; }
 
 inline void gate::Hit::SetState(gate::STATE st) { _state = st; }
 inline gate::STATE gate::Hit::GetState() const { return _state; }

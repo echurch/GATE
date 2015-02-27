@@ -26,9 +26,10 @@ namespace gate{class HitMap;}
 #include<TSystem.h>
 
 #include<Environment.h>
+#include<BObject.h>
 
 
-class gate::HitMap {
+class gate::HitMap : public BObject {
   
  public:
   

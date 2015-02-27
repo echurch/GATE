@@ -3,8 +3,8 @@
 ClassImp(gate::HitMap)
 
 //=======================================================
-gate::HitMap::HitMap() : _sensType(gate::NOSTYPE),_sType(gate::NOSIGTYPE),
-    _sTime(-1),_eTime(-1),_tSample(-1) {
+gate::HitMap::HitMap() : BObject(),_sensType(gate::NOSTYPE),
+    _sType(gate::NOSIGTYPE),_sTime(-1),_eTime(-1),_tSample(-1) {
 //=======================================================
 
 }
@@ -44,6 +44,8 @@ void gate::HitMap::Info(ostream& s) const{
 
     s << "========= HitMap instance ======="<< std::endl;
     
+    BObject::Info(s);
+
     s << "TO BE IMPLEMENTED"<< std::endl;
     
     s << "=============================="<< std::endl;

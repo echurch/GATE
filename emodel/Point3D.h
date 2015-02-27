@@ -18,11 +18,13 @@
  *
  */
 
-namespace gate{class Point3D;}
+#include <iostream>
 
 #include<TSystem.h>
 
 #include<Environment.h>
+
+namespace gate{class Point3D;}
 
 class gate::Point3D {
 
@@ -59,6 +61,9 @@ class gate::Point3D {
   void z(double v);
   //! get z;
   double z() const;
+  
+  //! print info
+  void Info(ostream& s) const;
 
   ClassDef(gate::Point3D,1)
   
@@ -72,6 +77,8 @@ inline void gate::Point3D::y(double v){ _y = v; }
 
 inline double gate::Point3D::z() const { return _z; }
 inline void gate::Point3D::z(double v){ _z = v; }
+
+ostream& operator << (ostream& s, const gate::Point3D& p); 
 
 #endif
 

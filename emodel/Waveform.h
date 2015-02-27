@@ -25,13 +25,12 @@ namespace gate{class Pulse;}
 #include<TSystem.h>
 
 #include<Environment.h>
-#include<ParamStore.h>
+#include<BObject.h>
 #include<Pulse.h>
 
 namespace gate{class Waveform;}
 
-//class gate::Waveform : public gate::ParamStore {
-class gate::Waveform {
+class gate::Waveform : public gate::BObject {
 
  public:
 

@@ -22,24 +22,19 @@
 
 #include<TSystem.h>
 
-#include<ParamStore.h>
+#include<BObject.h>
 #include<Hit.h>
 #include<HitMap.h>
 
 namespace gate{class Event;}
 
-//class gate::Event : public gate::ParamStore {
-
-class gate::Event {
+class gate::Event : public gate::BObject {
 
 public:
   
   //! default contructor
   Event();
 
-  //! contructor with trigger ID
-  Event(int id);
-  
   //! default constructor
   virtual ~Event();
   
@@ -78,9 +73,6 @@ public:
 
 private:
 
-  //! trigger ID
-  int  _eventID;
-
    //! trigger time
   int  _time;
 
@@ -94,9 +86,9 @@ private:
 
 }; 
 
-inline int gate::Event::GetEventID() const { return _eventID; }
+inline int gate::Event::GetEventID() const { return this->GetID(); }
 
-inline void gate::Event::SetEventID(int id) { _eventID = id; }
+inline void gate::Event::SetEventID(int id) { this->SetID(id); }
 
 inline int gate::Event::GetTime() const { return _time; }
 

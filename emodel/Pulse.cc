@@ -3,11 +3,7 @@
 ClassImp(gate::Pulse);
 
 //=======================================================
-//gate::Pulse::Pulse() : gate::ParamStore("Pulse"),
-//                       _sensorID(-1), _wform(0),
-//                       _state(gate::NOSTATE), _amp(0),
-//                       _sTime(-1),  _eTime(-1), _mTime(-1){
-gate::Pulse::Pulse() : _sensorID(-1), _wform(0),
+gate::Pulse::Pulse() : BObject(),_sensorID(-1), _wform(0),
                        _state(gate::NOSTATE), _amp(0),
                        _sTime(-1),  _eTime(-1), _mTime(-1),_sType(gate::NOSIGTYPE){
 //=======================================================
@@ -18,7 +14,9 @@ void gate::Pulse::Info(ostream& s) const{
 //=======================================================
 
     s << "=========Pulse instance ======="<< std::endl;
-    
+
+    BObject::Info(s);
+
     s << " Sensor ID" << this->GetSensorID()<< std::endl;
     
     s << " Sensor state" << this->GetState()<< std::endl;

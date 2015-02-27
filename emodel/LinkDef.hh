@@ -20,10 +20,12 @@
 #pragma link C++ class gate::tstore<std::vector<TObject*> >+;
 
 #pragma link C++ class gate::ParamStore+;
+#pragma link C++ class gate::BObject+;
 #pragma link C++ class gate::Run+;
 #pragma link C++ class gate::Event+;
 #pragma link C++ class gate::Pulse+;
 #pragma link C++ class gate::Waveform+;
+#pragma link C++ class gate::BHit+;
 #pragma link C++ class gate::Hit+;
 #pragma link C++ class gate::HitMap+;
 #pragma link C++ class gate::Point3D+;
@@ -48,9 +50,12 @@
 //#pragma link C++ class std::pair<std::string, vector<int> >;
 //#pragma link C++ class std::pair<std::string, vector<TObject*> >;
 
+#pragma link C++ function operator << (ostream& , const gate::Point3D&);
 #pragma link C++ function operator << (ostream& , const gate::Run&);
 #pragma link C++ function operator << (ostream& , const gate::Event&);
 #pragma link C++ function operator << (ostream& , const gate::Hit&);
+#pragma link C++ function operator << (ostream& , const gate::BHit&);
+#pragma link C++ function operator << (ostream& , const gate::BObject&);
 #pragma link C++ function operator << (ostream& , const gate::HitMap&);
 #pragma link C++ function operator << (ostream& , const gate::Waveform&);
 #pragma link C++ function operator << (ostream& , const gate::Pulse&);
