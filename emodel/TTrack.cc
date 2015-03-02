@@ -10,9 +10,14 @@ gate::TTrack::TTrack() : BTrack(){}
 void gate::TTrack::Info(ostream& s) const{
 //=======================================================
 
+    s << "========== True track instance ========"<<std::endl;
+
     BTrack::Info(s);
     
     s << "True Particle:  "<<*_part<<std::endl;
+
+    s << "=========== End of True track ========="<<std::endl;
+    
 }
 
 //=======================================================

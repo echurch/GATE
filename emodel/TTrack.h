@@ -40,6 +40,9 @@ class gate::TTrack : public gate::BTrack {
   
   //! retrieve particle generating the track
   const Particle& GetParticle() const;
+
+  //! set particle generating the track
+  void SetParticle(const gate::Particle& p);
    
   //! print event into stream
   void Info(ostream& s) const;
@@ -47,13 +50,14 @@ class gate::TTrack : public gate::BTrack {
  protected:
   
   //! true particle responsible for the track
- const  Particle* _part;
+  const  gate::Particle* _part;
 
   ClassDef(gate::TTrack,1)
 
 };
 
 inline const gate::Particle& gate::TTrack::GetParticle() const {return *_part;}
+inline void gate::TTrack::SetParticle(const gate::Particle& p)  { _part = &p;}
 
 ostream& operator << (ostream& s, const gate::TTrack& trk) ;
 
