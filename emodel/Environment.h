@@ -32,7 +32,8 @@ namespace gate{
   enum SENSORTYPE{ NOSTYPE,SIPM,PMT};
   
   //! verbosity levels
-  enum VLEVEL{MUTE,CONCISE,NORMAL,WARNING,DETAILED,VERBOSE,VVERBOSE,DUMP};
+  enum VLEVEL{MUTE,CONCISE,NORMAL,WARNING,DETAILED,
+              VERBOSE,VVERBOSE,DUMP};
 
 
 } // end of gate namespace
