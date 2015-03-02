@@ -25,6 +25,10 @@
 #include<BObject.h>
 #include<Hit.h>
 #include<HitMap.h>
+#include<Track.h>
+#include<THit.h>
+#include<TTrack.h>
+#include<Particle.h>
 
 namespace gate{class Event;}
 
@@ -68,13 +72,36 @@ public:
   // add hit map
   void AddHitMap(gate::SENSORTYPE, gate::HitMap*);
 
+  //! retrieve all tracks
+  std::vector<gate::Track*> GetTracks() const;
+  
+  //! retrieve tracks of specific type
+  std::vector<gate::Track*> GetTracks(gate::SENSORTYPE type) const;
+  
+  // add track
+  void AddTrack(gate::SENSORTYPE, gate::Track*);
+  
+  //! retrieve all true tracks
+  std::vector<gate::TTrack*> GetTrueTracks() const;
+    
+  // add true track
+  void AddTrueTrack(gate::TTrack*);
+  
+  //! retrieve all true particles
+  std::vector<gate::Particle*> GetTrueParticles() const;
+    
+  // add true particle
+  void AddTrueParticle(gate::Particle*);
+
   //! print event into stream
   void Info(ostream& s) const;
 
 private:
 
-   //! trigger time
+  //! trigger time
   int  _time;
+  
+  /*------- Reconstructed info -----*/
 
   //! multimap of hits: key specificies type (PMT, SiPM, ...)
   std::multimap<gate::SENSORTYPE, gate::Hit*> _hits;
@@ -82,6 +109,20 @@ private:
   //! multimap of hit-maps
   std::multimap<gate::SENSORTYPE, gate::HitMap*> _hmaps;
   
+  //! multimap of tracks
+  std::multimap<gate::SENSORTYPE, gate::Track*> _tracks;
+  
+  /*------- MC true info -----*/
+  
+  //! vector of true particles in this event
+  std::vector<gate::Particle*> _tparts;
+
+  //! vector of true hits (energy deposits in bulk)
+  std::vector<gate::THit*> _thits;
+  
+  //! vector of true tracks (collection of true hits)
+  std::vector<gate::TTrack*> _ttracks;
+
   ClassDef(gate::Event,1)
 
 }; 

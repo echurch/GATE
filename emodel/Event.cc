@@ -77,11 +77,34 @@ std::vector<gate::HitMap*> gate::Event::GetHitMaps(gate::SENSORTYPE  type) const
 
 
 //=======================================================
+std::vector<gate::Track*> gate::Event::GetTracks() const{
+//=======================================================
+    
+    std::vector<gate::Track*> tracks;
+    std::multimap<gate::SENSORTYPE,gate::Track*>::const_iterator 
+        iter = _tracks.begin();
+    while(iter != _tracks.end()){ tracks.push_back(iter->second); ++iter;}
+    return tracks;
+  
+}
+
+//=======================================================
+std::vector<gate::Track*> gate::Event::GetTracks(gate::SENSORTYPE  type) const{
+//=======================================================
+    
+    std::vector<gate::Track*> tracks;
+    typedef std::multimap<gate::SENSORTYPE, gate::Track*>::const_iterator I;
+    std::pair<I,I> b = _tracks.equal_range(type);
+    for(I i=b.first; i !=b.second; ++i){ tracks.push_back((i->second)); }
+    return tracks;
+}
+
+
+//=======================================================
 void gate::Event::AddHit(gate::SENSORTYPE type, gate::Hit* hit){
 //=======================================================
     
     _hits.insert(std::make_pair(type,hit));
-
 }
 
 //=======================================================
@@ -89,7 +112,36 @@ void gate::Event::AddHitMap(gate::SENSORTYPE type, gate::HitMap* hmap){
 //=======================================================
     
     _hmaps.insert(std::make_pair(type,hmap));
+}
 
+//=======================================================
+void gate::Event::AddTrack(gate::SENSORTYPE type, gate::Track* trk){
+//=======================================================
+    
+    _tracks.insert(std::make_pair(type,trk));
+}
+
+
+
+//=======================================================
+std::vector<gate::TTrack*> gate::Event::GetTrueTracks() const{
+//=======================================================
+    
+    return _ttracks;
+}
+
+//=======================================================
+void gate::Event::AddTrueTrack(gate::TTrack* trk){
+//=======================================================
+   
+    _ttracks.push_back(trk);
+}
+
+//=======================================================
+std::vector<gate::Particle*> gate::Event::GetTrueParticles() const{
+//=======================================================
+  
+    return _tparts;
 }
 
 //=======================================================
