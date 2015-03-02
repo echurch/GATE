@@ -13,16 +13,34 @@ gate::Event::~Event(){
 //=======================================================
     
     // destroy hits
-
     typedef std::multimap<gate::SENSORTYPE, gate::Hit*>::const_iterator I;
     for(I i=_hits.begin(); i !=_hits.end(); ++i){ delete i->second; }
     _hits.clear();
     
     // destroy hit maps
-
-     typedef std::multimap<gate::SENSORTYPE, gate::HitMap*>::const_iterator II;
+    typedef std::multimap<gate::SENSORTYPE, gate::HitMap*>::const_iterator II;
     for(II i=_hmaps.begin(); i !=_hmaps.end(); ++i){ delete i->second; }
     _hmaps.clear();
+    
+    // destroy tracks
+    typedef std::multimap<gate::SENSORTYPE, gate::Track*>::const_iterator IT;
+    for(IT i=_tracks.begin(); i !=_tracks.end(); ++i){ delete i->second; }
+    _tracks.clear();
+
+    // destroy true hits
+    typedef std::vector<gate::THit*>::const_iterator ITH;
+    for(ITH i=_thits.begin(); i !=_thits.end(); ++i){ delete *i; }
+    _thits.clear();
+    
+    // destroy true tracks
+    typedef std::vector<gate::TTrack*>::const_iterator ITT;
+    for(ITT i=_ttracks.begin(); i !=_ttracks.end(); ++i){ delete *i; }
+    _ttracks.clear();
+    
+     // destroy true tracks
+    typedef std::vector<gate::Particle*>::const_iterator IP;
+    for(IP i=_tparts.begin(); i !=_tparts.end(); ++i){ delete *i; }
+    _tparts.clear();
 
 }
 
