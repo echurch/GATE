@@ -27,6 +27,7 @@
 #pragma link C++ class gate::Waveform+;
 #pragma link C++ class gate::BHit+;
 #pragma link C++ class gate::Hit+;
+#pragma link C++ class gate::THit+;
 #pragma link C++ class gate::HitMap+;
 #pragma link C++ class gate::Point3D+;
 #pragma link C++ class gate::Vector4D+;
@@ -37,6 +38,7 @@
 
 #pragma link C++ class std::vector<gate::Run*>;
 #pragma link C++ class std::vector<gate::BHit*>;
+#pragma link C++ class std::vector<gate::THit*>;
 #pragma link C++ class std::vector<gate::Hit*>;
 #pragma link C++ class std::vector<gate::Pulse*>;
 #pragma link C++ class std::vector<gate::HitMap*>;
@@ -66,6 +68,7 @@
 #pragma link C++ function operator << (ostream& , const gate::Run&);
 #pragma link C++ function operator << (ostream& , const gate::Event&);
 #pragma link C++ function operator << (ostream& , const gate::Hit&);
+#pragma link C++ function operator << (ostream& , const gate::THit&);
 #pragma link C++ function operator << (ostream& , const gate::BHit&);
 #pragma link C++ function operator << (ostream& , const gate::BObject&);
 #pragma link C++ function operator << (ostream& , const gate::HitMap&);
