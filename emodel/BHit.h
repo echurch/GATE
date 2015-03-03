@@ -48,6 +48,9 @@ class gate::BHit : public gate::BObject{
   //! hit time
   double _time;
   
+  //! vector of mirror hits
+  std::vector<BHit*> _mhits;
+
  public:
    
   //! set position
@@ -67,7 +70,13 @@ class gate::BHit : public gate::BObject{
   
   //! Set hit time 
   void SetTime(double time);
+  
+   //! add mirror hit
+  void AddMirrorHit(gate::BHit* h);
 
+  //! retrieve mirror hits 
+  const std::vector<gate::BHit*>& GetMirrorHits() const; 
+  
   //! print hit into stream
   void Info(ostream& s) const;
 
@@ -83,6 +92,13 @@ inline double gate::BHit::GetTime() const { return _time; }
 
 inline void gate::BHit::SetPosition(gate::Point3D pos) { _pos = pos; }
 inline const gate::Point3D& gate::BHit::GetPosition() const { return _pos; }
+
+inline void gate::BHit::AddMirrorHit(gate::BHit* h)
+{_mhits.push_back(h);}
+
+inline const std::vector<gate::BHit*>& gate::BHit::GetMirrorHits() const
+{ return _mhits;}
+
 
 ostream& operator << (ostream& s, const gate::BHit& bhit); 
 

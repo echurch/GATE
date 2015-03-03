@@ -45,13 +45,7 @@ class gate::Track : public gate::BTrack {
 
   //! Get hit state
   gate::STATE GetState() const;
-  
-  //! add hit
-  void AddHit(gate::Hit* hit);
-  
-  //! retrieve hits 
-  const std::vector<gate::Hit*>& GetHits() const; 
-   
+     
   //! Set hit state 
   void SetState(gate::STATE state);
 
@@ -69,10 +63,6 @@ class gate::Track : public gate::BTrack {
   ClassDef(gate::Track,1)
 
 };
-
-inline void gate::Track::AddHit(gate::Hit* hit){_hits.push_back((gate::BHit*) hit);}
-inline const std::vector<gate::Hit*>& gate::Track::GetHits() const
-{return (const std::vector<gate::Hit*>&)_hits;}
 
 inline void gate::Track::SetSensorType(gate::SENSORTYPE t) { _sType = t; }
 inline gate::SENSORTYPE gate::Track::GetSensorType() const { return _sType; }

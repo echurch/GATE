@@ -38,13 +38,13 @@ class gate::MCTrack : public gate::BTrack {
   MCTrack();
   
   //! destructor
-  virtual ~MCTrack(){}
+  virtual ~MCTrack(){} 
   
-  //! add MC true hit
-  void AddMCHit(gate::MCHit* hit);
+  //! add MC true hit (alias of AddHit with MCHit->BHit cast)
+  //void AddMCHit(gate::MCHit* hit);
   
-  //! retireve MC true hits
-  const std::vector<gate::MCHit*>& GetMCHits() const;
+  //! retireve MC true hits (alias of GetHits with BHit->MCHit cast)
+  // const std::vector<gate::MCHit*>& GetMCHits() const;
 
   //! retrieve particle generating the track
   const gate::MCParticle& GetMCParticle() const;
@@ -64,11 +64,10 @@ class gate::MCTrack : public gate::BTrack {
 
 };
 
-inline void gate::MCTrack::AddMCHit(gate::MCHit* hit)
-{ _hits.push_back( (gate::BHit*) hit );}
-                 
-inline const std::vector<gate::MCHit*>& gate::MCTrack::GetMCHits() const
-{return (const std::vector<gate::MCHit*>&) _hits;}
+//inline void gate::MCTrack::AddMCHit(gate::MCHit* hit)
+//{ _hits.push_back( (gate::BHit*) hit );}                
+//inline const std::vector<gate::MCHit*>& gate::MCTrack::GetMCHits() const
+//{return (const std::vector<gate::MCHit*>&) _hits;}
                  
 inline const gate::MCParticle& gate::MCTrack::GetMCParticle() const 
 {return *_part;}

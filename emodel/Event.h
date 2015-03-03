@@ -25,6 +25,7 @@
 #include<BObject.h>
 #include<Hit.h>
 #include<HitMap.h>
+#include<Cluster.h>
 #include<Track.h>
 #include<Particle.h>
 #include<MCHit.h>
@@ -64,6 +65,7 @@ public:
   // add hit
   void AddHit(gate::SENSORTYPE, gate::Hit*);
   
+
   //! retrieve all hit maps
   std::vector<gate::HitMap*> GetHitMaps() const;
   
@@ -72,7 +74,17 @@ public:
 
   // add hit map
   void AddHitMap(gate::SENSORTYPE, gate::HitMap*);
+  
 
+  //! retrieve all clusters
+  std::vector<gate::Cluster*> GetClusters() const;
+  
+  //! retrieve clusters of specific type
+  std::vector<gate::Cluster*> GetClusters(gate::SENSORTYPE type) const;
+
+  // add cluster
+  void AddCluster(gate::SENSORTYPE, gate::Cluster*);
+  
   //! retrieve all tracks
   std::vector<gate::Track*> GetTracks() const;
   
@@ -133,6 +145,9 @@ private:
 
   //! multimap of hit-maps
   std::multimap<gate::SENSORTYPE, gate::HitMap*> _hmaps;
+  
+  //! multimap of clusters: key specificies type (PMT, SiPM, ...)
+  std::multimap<gate::SENSORTYPE, gate::Cluster*> _clusters;
   
   //! multimap of tracks
   std::multimap<gate::SENSORTYPE, gate::Track*> _tracks;

@@ -39,7 +39,7 @@ class gate::Hit : public gate::BHit {
   //! default destructor
   virtual ~Hit();
 
- private:
+ protected:
   
   //! sensor ID
   int _sensorID;

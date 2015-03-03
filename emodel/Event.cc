@@ -32,6 +32,11 @@ void gate::Event::Clear() {
     for(II i=_hmaps.begin(); i !=_hmaps.end(); ++i){ delete i->second; }
     _hmaps.clear();
     
+    // destroy clusters
+    typedef std::multimap<gate::SENSORTYPE, gate::Cluster*>::const_iterator IC;
+    for(IC i=_clusters.begin(); i !=_clusters.end(); ++i){ delete i->second; }
+    _clusters.clear();
+
     // destroy tracks
     typedef std::multimap<gate::SENSORTYPE, gate::Track*>::const_iterator IT;
     for(IT i=_tracks.begin(); i !=_tracks.end(); ++i){ delete i->second; }
@@ -82,6 +87,30 @@ std::vector<gate::Hit*> gate::Event::GetHits(gate::SENSORTYPE  type) const{
 
 }
 
+
+//=======================================================
+std::vector<gate::Cluster*> gate::Event::GetClusters() const{
+//=======================================================
+    
+    std::vector<gate::Cluster*> clus;
+    std::multimap<gate::SENSORTYPE,gate::Cluster*>::const_iterator 
+        iter = _clusters.begin();
+    while(iter != _clusters.end()){ clus.push_back(iter->second); ++iter;}
+    return clus;
+  
+}
+
+//=======================================================
+std::vector<gate::Cluster*> gate::Event::GetClusters(gate::SENSORTYPE  type) const{
+//=======================================================
+    
+    std::vector<gate::Cluster*> clus;
+    typedef std::multimap<gate::SENSORTYPE, gate::Cluster*>::const_iterator I;
+    std::pair<I,I> b = _clusters.equal_range(type);
+    for(I i=b.first; i !=b.second; ++i){ clus.push_back((i->second)); }
+    return clus;
+
+}
 
 //=======================================================
 std::vector<gate::HitMap*> gate::Event::GetHitMaps() const{
@@ -137,6 +166,14 @@ void gate::Event::AddHit(gate::SENSORTYPE type, gate::Hit* hit){
 //=======================================================
     
     _hits.insert(std::make_pair(type,hit));
+}
+
+
+//=======================================================
+void gate::Event::AddCluster(gate::SENSORTYPE type, gate::Cluster* clus){
+//=======================================================
+    
+    _clusters.insert(std::make_pair(type,clus));
 }
 
 //=======================================================
