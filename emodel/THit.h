@@ -36,13 +36,13 @@ class gate::THit : public gate::BHit {
   THit();
 
   //! default destructor
-  virtual ~THit();
+  virtual ~THit(){};
   
   //! retrieve particle generating the hit
   const Particle& GetParticle() const;
 
   //! set particle generating the hit
-  void SetParticle(const gate::Particle& p);
+  void SetParticle(gate::Particle* p);
 
   //! print info
   void Info(ostream& s) const;
@@ -57,7 +57,8 @@ class gate::THit : public gate::BHit {
 };
 
 inline const gate::Particle& gate::THit::GetParticle() const {return *_part;}
-inline void gate::THit::SetParticle(const gate::Particle& p)  { _part = &p;}
+//inline void gate::THit::SetParticle(const gate::Particle& p)  { _part = &p;}
+inline void gate::THit::SetParticle(gate::Particle* p)  { _part = p;}
 
 ostream& operator << (ostream& s, const gate::THit& h); 
 

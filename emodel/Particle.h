@@ -36,7 +36,7 @@ class gate::Particle : public gate::BObject {
   Particle();
   
   //! destructor
-  virtual ~Particle();
+  virtual ~Particle(){};
 
   //! set initial momentum
   void SetInitialMom(gate::Vector4D); 

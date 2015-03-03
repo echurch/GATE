@@ -3,7 +3,7 @@
 ClassImp(gate::Event);
 
 //=======================================================
-gate::Event::Event(): gate::BObject(){
+gate::Event::Event(): gate::BObject(), _time(0){
 //=======================================================
 }
 
@@ -26,18 +26,18 @@ gate::Event::~Event(){
     typedef std::multimap<gate::SENSORTYPE, gate::Track*>::const_iterator IT;
     for(IT i=_tracks.begin(); i !=_tracks.end(); ++i){ delete i->second; }
     _tracks.clear();
-
-    // destroy true hits
-    typedef std::vector<gate::THit*>::const_iterator ITH;
-    for(ITH i=_thits.begin(); i !=_thits.end(); ++i){ delete *i; }
-    _thits.clear();
     
     // destroy true tracks
     typedef std::vector<gate::TTrack*>::const_iterator ITT;
     for(ITT i=_ttracks.begin(); i !=_ttracks.end(); ++i){ delete *i; }
     _ttracks.clear();
-    
-     // destroy true tracks
+
+    // destroy true hits
+    typedef std::vector<gate::THit*>::const_iterator ITH;
+    for(ITH i=_thits.begin(); i !=_thits.end(); ++i){ delete *i; }
+    _thits.clear();
+          
+     // destroy true particles
     typedef std::vector<gate::Particle*>::const_iterator IP;
     for(IP i=_tparts.begin(); i !=_tparts.end(); ++i){ delete *i; }
     _tparts.clear();
@@ -139,6 +139,19 @@ void gate::Event::AddTrack(gate::SENSORTYPE type, gate::Track* trk){
     _tracks.insert(std::make_pair(type,trk));
 }
 
+//=======================================================
+std::vector<gate::THit*> gate::Event::GetTrueHits() const{
+//=======================================================
+    
+    return _thits;
+}
+
+//=======================================================
+void gate::Event::AddTrueHit(gate::THit* hit){
+//=======================================================
+   
+    _thits.push_back(hit);
+}
 
 
 //=======================================================
@@ -163,16 +176,33 @@ std::vector<gate::Particle*> gate::Event::GetTrueParticles() const{
 }
 
 //=======================================================
+void gate::Event::AddTrueParticle(gate::Particle* p) {
+//=======================================================
+  
+    _tparts.push_back(p);
+}
+
+//=======================================================
 void gate::Event::Info(ostream& s) const{
 //=======================================================
 
-    s << "=============Event instance=========="<< std::endl;
+    s << "============= Event instance =========="<< std::endl;
     
     s << " Event number: " << this->GetEventID()<< std::endl;
 
     s << " Event time: " << this->GetTime()<< std::endl;
+
+    s << " Number of hits: " << this->GetHits().size()<< std::endl;
+
+    s << " Number of true hits: " << this->GetTrueHits().size()<< std::endl;
+
+    s << " Number of tracks: " << this->GetTracks().size()<< std::endl;
+
+    s << " Number of true tracks: " << this->GetTrueTracks().size()<< std::endl;
     
-    s << "=================================="<< std::endl;
+    s << " Number of true particles: " << this->GetTrueParticles().size()<< std::endl;
+
+    s << "======================================="<< std::endl;
 
 }
 

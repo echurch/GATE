@@ -81,6 +81,12 @@ public:
   // add track
   void AddTrack(gate::SENSORTYPE, gate::Track*);
   
+  //! retrieve all true hits
+  std::vector<gate::THit*> GetTrueHits() const;
+    
+  // add true hit
+  void AddTrueHit(gate::THit*);
+  
   //! retrieve all true tracks
   std::vector<gate::TTrack*> GetTrueTracks() const;
     
