@@ -3,13 +3,23 @@
 ClassImp(gate::Event);
 
 //=======================================================
-gate::Event::Event(): gate::BObject(), _time(0){
+gate::Event::Event(): gate::BObject(){
 //=======================================================
+    
+    this->Clear();
 }
 
 
 //=======================================================
 gate::Event::~Event(){
+//=======================================================
+    
+    this->Clear();
+
+}
+
+//=======================================================
+void gate::Event::Clear() {
 //=======================================================
     
     // destroy hits
@@ -28,19 +38,23 @@ gate::Event::~Event(){
     _tracks.clear();
     
     // destroy true tracks
-    typedef std::vector<gate::TTrack*>::const_iterator ITT;
+    typedef std::vector<gate::MCTrack*>::const_iterator ITT;
     for(ITT i=_ttracks.begin(); i !=_ttracks.end(); ++i){ delete *i; }
     _ttracks.clear();
 
     // destroy true hits
-    typedef std::vector<gate::THit*>::const_iterator ITH;
+    typedef std::vector<gate::MCHit*>::const_iterator ITH;
     for(ITH i=_thits.begin(); i !=_thits.end(); ++i){ delete *i; }
     _thits.clear();
           
      // destroy true particles
-    typedef std::vector<gate::Particle*>::const_iterator IP;
+    typedef std::vector<gate::MCParticle*>::const_iterator IP;
     for(IP i=_tparts.begin(); i !=_tparts.end(); ++i){ delete *i; }
     _tparts.clear();
+    
+    _time = -1;
+    
+    BObject::Clear();
 
 }
 
@@ -139,15 +153,31 @@ void gate::Event::AddTrack(gate::SENSORTYPE type, gate::Track* trk){
     _tracks.insert(std::make_pair(type,trk));
 }
 
+
 //=======================================================
-std::vector<gate::THit*> gate::Event::GetTrueHits() const{
+std::vector<gate::Particle*> gate::Event::GetParticles() const{
+//=======================================================
+  
+    return _parts;
+}
+
+//=======================================================
+void gate::Event::AddParticle(gate::Particle* p) {
+//=======================================================
+  
+    _parts.push_back(p);
+}
+
+
+//=======================================================
+std::vector<gate::MCHit*> gate::Event::GetMCHits() const{
 //=======================================================
     
     return _thits;
 }
 
 //=======================================================
-void gate::Event::AddTrueHit(gate::THit* hit){
+void gate::Event::AddMCHit(gate::MCHit* hit){
 //=======================================================
    
     _thits.push_back(hit);
@@ -155,28 +185,28 @@ void gate::Event::AddTrueHit(gate::THit* hit){
 
 
 //=======================================================
-std::vector<gate::TTrack*> gate::Event::GetTrueTracks() const{
+std::vector<gate::MCTrack*> gate::Event::GetMCTracks() const{
 //=======================================================
     
     return _ttracks;
 }
 
 //=======================================================
-void gate::Event::AddTrueTrack(gate::TTrack* trk){
+void gate::Event::AddMCTrack(gate::MCTrack* trk){
 //=======================================================
    
     _ttracks.push_back(trk);
 }
 
 //=======================================================
-std::vector<gate::Particle*> gate::Event::GetTrueParticles() const{
+std::vector<gate::MCParticle*> gate::Event::GetMCParticles() const{
 //=======================================================
   
     return _tparts;
 }
 
 //=======================================================
-void gate::Event::AddTrueParticle(gate::Particle* p) {
+void gate::Event::AddMCParticle(gate::MCParticle* p) {
 //=======================================================
   
     _tparts.push_back(p);
@@ -194,13 +224,15 @@ void gate::Event::Info(ostream& s) const{
 
     s << " Number of hits: " << this->GetHits().size()<< std::endl;
 
-    s << " Number of true hits: " << this->GetTrueHits().size()<< std::endl;
+    s << " Number of true hits: " << this->GetMCHits().size()<< std::endl;
 
     s << " Number of tracks: " << this->GetTracks().size()<< std::endl;
 
-    s << " Number of true tracks: " << this->GetTrueTracks().size()<< std::endl;
+    s << " Number of true tracks: " << this->GetMCTracks().size()<< std::endl;
     
-    s << " Number of true particles: " << this->GetTrueParticles().size()<< std::endl;
+    s << " Number of particles: " << this->GetParticles().size()<< std::endl;
+
+    s << " Number of true particles: " << this->GetMCParticles().size()<< std::endl;
 
     s << "======================================="<< std::endl;
 

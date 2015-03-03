@@ -26,9 +26,10 @@
 #include<Hit.h>
 #include<HitMap.h>
 #include<Track.h>
-#include<THit.h>
-#include<TTrack.h>
 #include<Particle.h>
+#include<MCHit.h>
+#include<MCTrack.h>
+#include<MCParticle.h>
 
 namespace gate{class Event;}
 
@@ -81,30 +82,48 @@ public:
   // add track
   void AddTrack(gate::SENSORTYPE, gate::Track*);
   
+  //! retrieve all recosntructed particles
+  std::vector<gate::Particle*> GetParticles() const;
+    
+  //! add reconstructed particle
+  void AddParticle(gate::Particle*);
+  
   //! retrieve all true hits
-  std::vector<gate::THit*> GetTrueHits() const;
+  std::vector<gate::MCHit*> GetMCHits() const;
     
   // add true hit
-  void AddTrueHit(gate::THit*);
+  void AddMCHit(gate::MCHit*);
   
   //! retrieve all true tracks
-  std::vector<gate::TTrack*> GetTrueTracks() const;
+  std::vector<gate::MCTrack*> GetMCTracks() const;
     
   // add true track
-  void AddTrueTrack(gate::TTrack*);
+  void AddMCTrack(gate::MCTrack*);
   
   //! retrieve all true particles
-  std::vector<gate::Particle*> GetTrueParticles() const;
+  std::vector<gate::MCParticle*> GetMCParticles() const;
     
   // add true particle
-  void AddTrueParticle(gate::Particle*);
+  void AddMCParticle(gate::MCParticle*);
+  
+  //! Get  state
+  gate::STATE GetState() const;
+  
+  //! Set  state 
+  void SetState(gate::STATE state);
 
   //! print event into stream
   void Info(ostream& s) const;
+  
+  //! clear info
+  void Clear();
 
 private:
-
-  //! trigger time
+    
+  //! state 
+  gate::STATE _state;
+  
+   //! trigger time
   int  _time;
   
   /*------- Reconstructed info -----*/
@@ -118,16 +137,19 @@ private:
   //! multimap of tracks
   std::multimap<gate::SENSORTYPE, gate::Track*> _tracks;
   
+  //! vector of reconstructed particles in this event
+  std::vector<gate::Particle*> _parts;
+
   /*------- MC true info -----*/
   
   //! vector of true particles in this event
-  std::vector<gate::Particle*> _tparts;
+  std::vector<gate::MCParticle*> _tparts;
 
   //! vector of true hits (energy deposits in bulk)
-  std::vector<gate::THit*> _thits;
+  std::vector<gate::MCHit*> _thits;
   
   //! vector of true tracks (collection of true hits)
-  std::vector<gate::TTrack*> _ttracks;
+  std::vector<gate::MCTrack*> _ttracks;
 
   ClassDef(gate::Event,1)
 
@@ -140,6 +162,10 @@ inline void gate::Event::SetEventID(int id) { this->SetID(id); }
 inline int gate::Event::GetTime() const { return _time; }
 
 inline void gate::Event::SetTime(double t) { _time = t; }
+
+inline void gate::Event::SetState(gate::STATE st) { _state = st; }
+
+inline gate::STATE gate::Event::GetState() const { return _state; }
 
 ostream& operator << (ostream& s, const gate::Event& evt); 
 

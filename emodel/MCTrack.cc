@@ -1,27 +1,27 @@
-#include<TTrack.h>
+#include<MCTrack.h>
 
-ClassImp(gate::TTrack)
-
-//=======================================================
-gate::TTrack::TTrack() : BTrack(){}
-//=======================================================
+ClassImp(gate::MCTrack)
 
 //=======================================================
-void gate::TTrack::Info(ostream& s) const{
+gate::MCTrack::MCTrack() : BTrack(){}
 //=======================================================
 
-    s << "========== True track instance ========"<<std::endl;
+//=======================================================
+void gate::MCTrack::Info(ostream& s) const{
+//=======================================================
+
+    s << "========== MCTack instance ========"<<std::endl;
 
     BTrack::Info(s);
     
-    s << "True Particle:  "<<*_part<<std::endl;
+    s << "MC Particle:  "<<*_part<<std::endl;
 
-    s << "=========== End of True track ========="<<std::endl;
+    s << "======================= ========="<<std::endl;
     
 }
 
 //=======================================================
-ostream& operator << (ostream& s, const gate::TTrack& trk) {
+ostream& operator << (ostream& s, const gate::MCTrack& trk) {
 //=======================================================
 
     trk.Info(s);

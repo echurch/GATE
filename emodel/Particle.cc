@@ -3,7 +3,7 @@
 ClassImp(gate::Particle)
 
 //===========================================================
-gate::Particle::Particle() : BObject(),_pdg(0), _ivtx(),_fvtx(),_ip4(),_fp4(),_mother(0){
+gate::Particle::Particle() : BParticle(){
 //===========================================================
 }
 
@@ -12,13 +12,13 @@ gate::Particle::Particle() : BObject(),_pdg(0), _ivtx(),_fvtx(),_ip4(),_fp4(),_m
 void gate::Particle::Info(ostream& s) const{
 //===========================================================
     
-    s << " Particle: " << std::endl;
+    s << "============ Particle instance =============" << std::endl;
 
-    BObject::Info(s);
+    BParticle::Info(s);
+       
+    s << "Number of tracks: " << this->GetTracks().size() << std::endl;
     
-    s << " pdg = " << this->GetPDG() << std::endl;
-    
-    //! TO BE IMPLEMENTED
+    s << "======================================" << std::endl;
 
 }
 

@@ -55,6 +55,9 @@ class gate::BObject {
   //! print info
   void Info(ostream& s) const;
  
+  //! clear info
+  void Clear();
+
   protected:
   
   //! identifier
@@ -71,6 +74,8 @@ inline int gate::BObject::GetID() const { return _id; }
 
 inline void gate::BObject::SetDataType(gate::DATATYPE t) { _dType = t; }
 inline gate::DATATYPE gate::BObject::GetDataType() const { return _dType; }
+
+inline void gate::BObject::Clear(){_id = -1; _dType = gate::NODTYPE;}
 
 ostream& operator << (ostream& s, const gate::BObject& obj); 
 

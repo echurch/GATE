@@ -15,31 +15,35 @@
         evt->AddHit(gate::PMT,hit);
     }
 
-    gate::Particle* p = new gate::Particle();
+    gate::MCParticle* p = new gate::MCParticle();
     
     p->SetInitialVtx(0,0,0);
     
-    evt->AddTrueParticle(p);
-    
-    gate::TTrack* ttrk = new gate::TTrack();
-    
-    ttrk.SetParticle(p);
+    p->SetID(1000);
 
-    evt->AddTrueTrack(ttrk);
+    evt->AddMCParticle(p);
+    
+    gate::MCTrack* ttrk = new gate::MCTrack();
+    
+    ttrk->SetMCParticle(p);
+
+    evt->AddMCTrack(ttrk);
 
     int nthits = 4;
 
     for (int i =0; i<nthits; i++ ){
         
-        gate::THit* thit = new gate::THit();
+        gate::MCHit* thit = new gate::MCHit();
         
-        thit->SetParticle(p);
+        thit->SetMCParticle(p);
         
-        ttrk->AddHit(thit);
+        ttrk->AddMCHit(thit);
 
-        evt->AddTrueHit(thit);
+        evt->AddMCHit(thit);
     }
     
+    std::cout << ttrk->GetMCHits()[0].GetMCParticle().GetID() << std::endl;
+
     std::cout<<*evt<<std::endl;
     
     delete evt;
