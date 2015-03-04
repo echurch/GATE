@@ -2,20 +2,23 @@
 #define __BHit_H__
 
 /**
- * @file Hit.h
+ * @file BHit.h
  *
- * @class Hit
+ * @class BHit
  * 
- * @brief Sensor type and response signal
+ * @brief Base class for a hit
  *
- * @details Contains sensor and response (waveform, pulse, amplitude, time) information. It can be associated to a waveform and a vector of reconstructed pulses. 
- *    
+ * @details Holds 3D position, amplitude, time and mirror hits
+ * 
+ * @ingroup emodel
+ *  
  * @author Pau Novella  <pau.novella@ific.uv.es>
  *
  * @version Revision 1.0.0
  *
  * @date January 2015
  *
+ * @ingroup emodel
  */
 
 #include <iostream>

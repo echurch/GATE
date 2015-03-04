@@ -2,6 +2,10 @@
 #define __Event_H__
 
 /**
+ *\defgroup emodel Event model classes
+ */
+
+/**
  * @file Event.h
  * 
  * @class Event
@@ -16,6 +20,7 @@
  *
  * @date January 2015
  *
+ * @ingroup emodel
  */
 
 #include <iostream>
@@ -31,7 +36,7 @@
 #include<MCHit.h>
 #include<MCTrack.h>
 #include<MCParticle.h>
-
+ 
 namespace gate{class Event;}
 
 class gate::Event : public gate::BObject {

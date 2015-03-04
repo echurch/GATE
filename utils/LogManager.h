@@ -15,30 +15,30 @@
 #include <TSystem.h>
 
 /**
- * \class LogManager
- *
- * \ingroup tools
- *
- * \brief Manager to generate and read log files
- *
- * \author Pau Novella
- *
- * \version $Revision: 1.0 $
+ * @file LogManager.h
  * 
- * Contact: pau.novella@ciemat.es
  *
+ * @brief Classes to generate and read log files
+ *
+ * @details Defines LogManager and base classes (_logIO, _param_logger)
+ *    
+ * @author Pau Novella  <pau.novella@ific.uv.es>
+ *
+ * @version Revision 1.0.0
+ *
+ * @date January 2015
+ *
+ * @ingroup utils
  */
+
 
 namespace gate{class _log_IO;}
 namespace gate{class _param_logger;}
 namespace gate{class LogManager;}
 
+
 class gate::_log_IO{
-
-  /*
-    Base class for a log manager
-   */
-
+ 
  protected:
 
   string _oLogFile; 
@@ -109,7 +109,21 @@ public:
   
 };
 
-
+/**
+ * @class LogManager
+ * 
+ * @brief Class to generate and read log files
+ *
+ * @details Writes/Reader parameters in ParaStores into/from ascii files
+ *    
+ * @author Pau Novella  <pau.novella@ific.uv.es>
+ *
+ * @version Revision 1.0.0
+ *
+ * @date January 2015
+ *
+ * @ingroup utils
+ */
 
 class gate::LogManager{
 

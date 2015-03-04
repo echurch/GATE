@@ -6,16 +6,7 @@
 /// Utility classes taken from old irene library
 /* 
  * J.J. Gomez-Cadenas, J.A. Hernando, A. Cervera, A. Tornero      
- * 
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or (at
- * your option) any later version.
- * 
- * This program is distributed in the hope that it will be useful, but
- * WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * General Public License for more details.
+ 
  * 
  */
 
@@ -26,10 +17,26 @@
 
 #include <Error.h>
 #include <ParamStore.h>
-//#include <Messenger.h>
 
 #include <Utilities.h>
 #include <system_of_units.h>
+
+/**
+ * @file Irene.h
+ * 
+ * @brief Utility classes taken from old irene library
+ *
+ * @details Base classes and parameter reader 
+ *    
+ * @author Pau Novella  <pau.novella@ific.uv.es>, from irene authors
+ *
+ * @version Revision 1.0.0
+ *
+ * @date January 2015
+ *
+ * @ingroup utils
+ */
+
 
 namespace gate{
   
@@ -38,7 +45,7 @@ namespace gate{
   /** A control panel is a set of switches whose configuration 
    * defines the state of the machine controlled by the panel. A switch has only
    * two possible states, open or closed 
-   *\ingroup irene
+   *\ingroup utils
    */
 
   class control_panel {

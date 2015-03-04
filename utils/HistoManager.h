@@ -3,17 +3,21 @@
 
 /**
  * @file HistoManager.h
- * 
+ *
  * @class HistoManager
+ * 
+ * @brief Histogram manager class
  *
- * \brief Histogram manager class
+ * @details Creates, fills, operate and store (in both persistent and transient maners) ROOT histograms
  *    
- * \author Pau Novella <pau.novella@ific.uv.es>
+ * @author Pau Novella  <pau.novella@ific.uv.es>
  *
- * \version $Revision: 1.0 $
+ * @version Revision 1.0.0
  *
+ * @date January 2015
+ *
+ * @ingroup utils
  */
-
 
 #include<map>
 

@@ -5,13 +5,16 @@
  * @file ParamStore.h
  * 
  * @brief Classes to define generic stores of paramters
- *    
+ *   
+ * @details Stores for different data types are difiened, along with a general store holding stores for each data type.
+ *
  * @author J.J. Gomez-Cadenas, Pau Novella  <pau.novella@ific.uv.es>
  *
  * @version Revision 1.0.0
  *
  * @date January 2015
  *
+ * @ingroup emodel
  */
 
 #include <sstream>
@@ -38,6 +41,7 @@ namespace gate{
  *
  * @date January 2015
  *
+ * @ingroup emodel
  */
   
   template <class T>
@@ -206,6 +210,7 @@ namespace gate{
  *
  * @date January 2015
  *
+ * @ingroup emodel
  */
 
   class ParamStore{

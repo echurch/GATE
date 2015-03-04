@@ -12,6 +12,7 @@
  *
  * @date January 2015
  *
+ * @ingroup emodel
  */
 
 namespace gate{  

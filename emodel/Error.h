@@ -26,10 +26,6 @@
 #include <stdexcept>
 #include <string>  
 
-/**
- *\defgroup error Exception handling 
- */
-
 //!Global namespace for the library
 namespace gate{
 

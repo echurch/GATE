@@ -16,6 +16,7 @@
  *
  * @date Februaryary 2015
  *
+ * @ingroup emodel
  */
 
 #include<iostream>

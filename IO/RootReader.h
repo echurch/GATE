@@ -10,6 +10,24 @@
 #include<TFile.h> 
 #include<TTree.h> 
 
+/**
+ * @file RootReader.h
+ * 
+ * @class RootReader
+ *
+ * @brief GATE reader based on ROOT serialization
+ *
+ * @details Reads GATE events from a ROOT file with a TTree of gate events  
+ *    
+ * @author Pau Novella  <pau.novella@ific.uv.es>
+ *
+ * @version Revision 1.0.0
+ *
+ * @date January 2015
+ *
+ * @ingroup IO
+ */
+
 namespace gate{class RootReader;}
 
 class gate::RootReader : public gate::IReader {
