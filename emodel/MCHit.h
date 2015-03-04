@@ -39,10 +39,10 @@ class gate::MCHit : public gate::BHit {
   virtual ~MCHit(){};
   
   //! retrieve particle generating the hit
-  const gate::MCParticle& GetMCParticle() const;
+  const gate::MCParticle& GetParticle() const;
 
   //! set particle generating the hit
-  void SetMCParticle(gate::MCParticle* p);
+  void SetParticle(gate::MCParticle* p);
 
   //! print info
   void Info(ostream& s) const;
@@ -56,9 +56,9 @@ class gate::MCHit : public gate::BHit {
 
 };
 
-inline const gate::MCParticle& gate::MCHit::GetMCParticle() const {return *_part;}
+inline const gate::MCParticle& gate::MCHit::GetParticle() const {return *_part;}
 
-inline void gate::MCHit::SetMCParticle(gate::MCParticle* p)  { _part = p;}
+inline void gate::MCHit::SetParticle(gate::MCParticle* p)  { _part = p;}
 
 ostream& operator << (ostream& s, const gate::MCHit& h); 
 

@@ -31,7 +31,7 @@
     
     gate::MCTrack* ttrk = new gate::MCTrack();
     
-    ttrk->SetMCParticle(p);
+    ttrk->SetParticle(p);
 
     evt->AddMCTrack(ttrk);
 
@@ -41,7 +41,7 @@
         
         gate::MCHit* thit = new gate::MCHit();
         
-        thit->SetMCParticle(p);
+        thit->SetParticle(p);
         
         ttrk->AddHit(thit); 
        

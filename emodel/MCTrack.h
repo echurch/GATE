@@ -38,10 +38,10 @@ class gate::MCTrack : public gate::BTrack {
   virtual ~MCTrack(){} 
   
   //! retrieve particle generating the track
-  const gate::MCParticle& GetMCParticle() const;
+  const gate::MCParticle& GetParticle() const;
 
   //! set particle generating the track
-  void SetMCParticle(gate::MCParticle* p);
+  void SetParticle(gate::MCParticle* p);
    
   //! print event into stream
   void Info(ostream& s) const;
@@ -55,10 +55,10 @@ class gate::MCTrack : public gate::BTrack {
 
 };
 
-inline const gate::MCParticle& gate::MCTrack::GetMCParticle() const 
+inline const gate::MCParticle& gate::MCTrack::GetParticle() const 
 {return *_part;}
 
-inline void gate::MCTrack::SetMCParticle(gate::MCParticle* p)  { _part = p;}
+inline void gate::MCTrack::SetParticle(gate::MCParticle* p)  { _part = p;}
 
 ostream& operator << (ostream& s, const gate::MCTrack& trk) ;
 
