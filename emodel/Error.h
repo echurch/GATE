@@ -33,7 +33,7 @@ namespace gate{
   //! Assert function    
   /** 
    *If the condition "assert" is not true raises exception e
-   *\ingroup error
+   *\ingroup emodel
    */
   template<class E> 
   inline void Assert (bool assert, E  e)
@@ -50,7 +50,7 @@ namespace gate{
   /** 
    *If the condition "assert" is not true raises exception e. Prints
    *file and line where error occurrs
-   *\ingroup error
+   *\ingroup emodel
    */
   template<class E> 
   inline void Assert (bool assert, const char* file, int line, E  e)
@@ -71,7 +71,7 @@ namespace gate{
   //! This exception is raised when an internal logic error occurs
   /** For example, one tries to perform an "ilogical" operation 
    *such as trying to retrieve a name that is not in a given container
-   *\ingroup error
+   *\ingroup emodel
    */
   struct internal_logic: public std::logic_error {
     //! Constructor
@@ -88,7 +88,7 @@ namespace gate{
 
 //! This exception is raised when a bad argument is supplied
 /** For example the user calls a given function with an invalid argument 
- *\ingroup error
+ *\ingroup emodel
 */
     struct bad_argument: public std::invalid_argument {
 //! Constructor
@@ -105,7 +105,7 @@ namespace gate{
 
 //! This exception is raised when a given object has bad size
 /** For example one tries to multiply to matrices with non-conformant
- *\ingroup error
+ *\ingroup emodel
  * dimensions */
     struct bad_size: public std::domain_error {
 //! Constructor
@@ -123,7 +123,7 @@ namespace gate{
     
 //! This exception is raised to signal a bad index
 /** For example one tries to access a vector outside allowed range 
- *\ingroup error
+ *\ingroup emodel
 */
     struct bad_index: public std::out_of_range {
 //! Constructor
@@ -155,7 +155,7 @@ namespace gate{
 
   //! This exception is raised to signal a division by zero	    
   /** 
-   *\ingroup error
+   *\ingroup emodel
    */
   struct divide_by_zero: public std::runtime_error {
     /// Constructor
