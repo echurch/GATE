@@ -18,20 +18,18 @@
 /**
  * \class EventManager
  *
- * \ingroup Tools
  *
  * \brief Manager for gate events
  *
- *  Manages input and output files.
- *  Provides straightforward access to events in a list
- *  of files
+ * \details Manages input and output files. Provides straightforward access to events in a list of files
  *
  * \author Pau Novella
  *
  * \version $Revision: 1.0 $
  * 
  * Contact: pau.novella@ific.uv.es
- *
+ * 
+ * @ingroup utils 
  */
 
 namespace gate{class EventManager;}

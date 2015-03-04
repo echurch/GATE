@@ -27,6 +27,11 @@
  * 
  * Contact: pau.novella@ciemat.es
  *
+ * @ingroup utils
+ */
+
+/**
+ *\defgroup utils Analysys framework
  */
 
 namespace gate{class Centella;}
@@ -38,22 +43,20 @@ private:
   
  
   //! constructor with verbosity level
-  Centella(gate::VLEVEL vl=gate::NORMAL);
+  Centella(gate::VLEVEL vl = gate::NORMAL);
   
  
   //! constructor with verbosity level and data
-  Centella(const gate::ParamStore& data,gate::VLEVEL vl=gate::NORMAL);
+  Centella(const gate::ParamStore& data,gate::VLEVEL vl = gate::NORMAL);
   
   //! constructor with parameter file and verbosity level
   //Centella(string param, string group,gate::VLEVEL vl=gate::NORMAL);
 
 
 public:
-
  
-  
   /// create or retrieve centella singleton
-  static gate::Centella* instance(gate::VLEVEL = gate::NORMAL); 
+  static gate::Centella* instance(gate::VLEVEL vl = gate::NORMAL); 
 
   /// create or retrieve centella singleton
   //static Centella* instance(string param,string group,

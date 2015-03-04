@@ -6,6 +6,28 @@
 
 #include<TSystem.h>
 
+/**
+ *\defgroup IO Classes to create and read GATE data files 
+ */
+
+/**
+ * @file IReader.h
+ * 
+ * @class IReader
+ *
+ * @brief Base class for GATE data readers
+ *
+ * @details Defines common functions and memebers for any reader  
+ *    
+ * @author Pau Novella  <pau.novella@ific.uv.es>
+ *
+ * @version Revision 1.0.0
+ *
+ * @date January 2015
+ *
+ * @ingroup IO
+ */
+
 namespace gate{
 
   class IReader{

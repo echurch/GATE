@@ -8,6 +8,24 @@
 
 #include <TSystem.h>
 
+/**
+ * @file IAlgo.h
+ * 
+ * @class IAlgo
+ *
+ * @brief Base class for algorithm analyzing GATE events
+ *
+ * @details Contains basic functions (initialize, execute, finalize) and utils  
+ *    
+ * @author Pau Novella  <pau.novella@ific.uv.es>
+ *
+ * @version Revision 1.0.0
+ *
+ * @date January 2015
+ *
+ * @ingroup utils
+ */
+
 namespace gate{class IAlgo;}
 
 class gate::IAlgo : public gate::ParamStore {

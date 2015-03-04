@@ -14,7 +14,7 @@
 /**
  * \class RunManager
  *
- * \ingroup Tools
+ * \ingroup utils
  *
  * \brief Manager for gate events and RUN information
  *

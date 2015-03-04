@@ -9,6 +9,24 @@
 #include<Event.h> 
 #include<Run.h> 
 
+/**
+ * @file RootWriter.h
+ * 
+ * @class RootWriter
+ *
+ * @brief GATE data writer base of ROOT serialization.
+ *
+ * @details Writes GATE events into a TTree stored in a ROOT file  
+ *    
+ * @author Pau Novella  <pau.novella@ific.uv.es>
+ *
+ * @version Revision 1.0.0
+ *
+ * @date January 2015
+ *
+ * @ingroup IO
+ */
+
 namespace gate{
 
   class RootWriter : public IWriter {
