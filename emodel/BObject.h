@@ -27,13 +27,14 @@
 
 namespace gate{class BObject;}
 
-//class gate::BObject : public gate::ParamStore {
-class gate::BObject {
+class gate::BObject : public gate::ParamStore {
+  //class gate::BObject {
   
  public:
   
   //! default contructor
- BObject() : _id(-1), _dType(gate::NODTYPE) {}
+  //BObject() : _id(-1), _dType(gate::NODTYPE) {}
+ BObject() : ParamStore(),_id(-1), _dType(gate::NODTYPE) {}
 
   //! default destructor
   virtual ~BObject(){}

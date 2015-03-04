@@ -19,6 +19,7 @@
 #pragma link C++ class gate::tstore<std::vector<std::string> >+;
 #pragma link C++ class gate::tstore<std::vector<TObject*> >+;
 
+#pragma link C++ class gate::Messenger+;
 #pragma link C++ class gate::ParamStore+;
 #pragma link C++ class gate::BObject+;
 #pragma link C++ class gate::Run+;
@@ -53,21 +54,21 @@
 #pragma link C++ class std::vector<gate::MCParticle*>;
 #pragma link C++ class std::vector<gate::Particle*>;
 
+#pragma link C++ class std::multimap<gate::SENSORTYPE,gate::Hit*>;
+#pragma link C++ class std::multimap<gate::SENSORTYPE,gate::HitMap*>;
+#pragma link C++ class std::multimap<gate::SENSORTYPE,gate::Cluster*>;
+#pragma link C++ class std::multimap<gate::SENSORTYPE,gate::Track*>;
+
+//! links for pairs are requested by art (warnings) !!!!???!!??!!!!!--
 #pragma link C++ class std::pair<gate::SENSORTYPE,gate::Hit*>;
 #pragma link C++ class std::pair<gate::SENSORTYPE,gate::HitMap*>;
-#pragma link C++ class std::vector<std::map<int,double> >;
-#pragma link C++ class std::map<int,double>;
-#pragma link C++ class std::vector<std::pair<double,double> >;
-#pragma link C++ class std::vector<std::pair<int,double> >;
-
-#pragma link C++ class gate::Messenger+;
-
-// why the hell does CINT need this dictionaries for ParamStore?????????
-//#pragma link C++ class std::pair<std::string,std::string>;
-//#pragma link C++ class std::pair<std::string,TObject*>;
-//#pragma link C++ class std::pair<std::string, vector<double> >;
-//#pragma link C++ class std::pair<std::string, vector<int> >;
-//#pragma link C++ class std::pair<std::string, vector<TObject*> >;
+#pragma link C++ class std::pair<gate::SENSORTYPE,gate::Cluster*>;
+#pragma link C++ class std::pair<gate::SENSORTYPE,gate::Track*>;
+#pragma link C++ class std::pair<std::string,std::string>;
+#pragma link C++ class std::pair<std::string, std::vector<std::string> >;
+#pragma link C++ class std::pair<std::string, vector<double> >;//std::vector!!!
+#pragma link C++ class std::pair<std::string, vector<int> >;//std::vector!!!
+//------------------------------------------------------------------
 
 #pragma link C++ function operator << (ostream& , const gate::Point3D&);
 #pragma link C++ function operator << (ostream& , const gate::Vector4D&);
