@@ -8,7 +8,7 @@
  * 
  * @brief Class for reconstructed particle 
  *
- * @details  Basic particle porperties and detector response, like tracks and hits
+ * @details  Basic particle porperties and detector response
  *    
  * @author Pau Novella  <pau.novella@ific.uv.es>
  *
@@ -36,30 +36,27 @@ class gate::Particle : public gate::BParticle {
   
   //! destructor
   virtual ~Particle(){};
-
-  //! add track
-  void AddTrack(Track* trk);
   
-  //! retrieve  tracks
-  const std::vector<const Track*>& GetTracks() const;
+  //! set state
+  void SetState(gate::STATE s);
+
+  //! get state
+ gate::STATE GetState() const;
 
   //! print info
   void Info(ostream& s) const;
 
 protected:
   
-  //! vector of true tracks
-  std::vector<const gate::Track*> _tracks;
+  //! reconstruction state
+  gate::STATE _state;
 
   ClassDef(gate::Particle,1)
 
 };
 
-inline  void  gate::Particle::AddTrack(Track* trk){
-  _tracks.push_back(trk);}
-
-inline const std::vector<const gate::Track*>&  
-gate::Particle::GetTracks() const { return _tracks;}
+inline void gate::Particle::SetState(gate::STATE s){_state = s;}
+inline gate::STATE gate::Particle::GetState()const{return _state;}
   
 ostream& operator << (ostream& s, const gate::Particle& p);
 

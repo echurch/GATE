@@ -8,7 +8,7 @@
  * 
  * @brief Base class for particle objects
  *
- * @details Contains basic particle properties, not related to detection/simulation
+ * @details Contains basic particle properties and tracks
  *    
  * @author Pau Novella  <pau.novella@ific.uv.es>
  *
@@ -25,6 +25,7 @@
 #include<BObject.h>
 #include<Vector4D.h>
 #include<Point3D.h>
+#include<BTrack.h>
 
 namespace gate{class BParticle;}
 
@@ -80,6 +81,12 @@ class gate::BParticle : public gate::BObject {
   //! get PDG
   int GetPDG() const;
   
+  //! add track
+  void AddTrack(BTrack* trk);
+  
+  //! retrieve tracks
+  const std::vector<const BTrack*>& GetTracks() const;
+
   //! add mirror particle
   void AddMirrorParticle(gate::BParticle* p);
 
@@ -105,7 +112,10 @@ protected:
   
   //! final momentum
   gate::Vector4D _fp4;
-  
+   
+  //! vector of  tracks
+  std::vector<const gate::BTrack*> _tracks;
+
   //! vector of mirror particles (i,e, representantions in MC or DATA)
   std::vector<const BParticle*> _mparts;
 
@@ -133,18 +143,24 @@ inline  void gate::BParticle::SetFinalVtx(gate::Point3D v) { _fvtx = v;}
 inline   void gate::BParticle::SetFinalVtx(double x, double y, double z){
   _fvtx=gate::Point3D(x,y,z);}
 
-inline  const gate::Vector4D& gate::BParticle::GetInitialMom() const { return _ip4; } 
+inline  const gate::Vector4D& gate::BParticle::GetInitialMom() const {return _ip4;} 
 
-inline  const gate::Vector4D& gate::BParticle::GetFinalMom() const { return _fp4; } 
+inline  const gate::Vector4D& gate::BParticle::GetFinalMom() const { return _fp4;} 
 
-inline  const gate::Point3D& gate::BParticle::GetInitialVtx() const { return _ivtx; } 
+inline  const gate::Point3D& gate::BParticle::GetInitialVtx() const { return _ivtx;} 
 
-inline  const gate::Point3D& gate::BParticle::SetFinalVtx() const { return _fvtx; } 
+inline  const gate::Point3D& gate::BParticle::SetFinalVtx() const { return _fvtx;} 
 
 inline  void gate::BParticle::SetPDG(int pdg) { _pdg = pdg; }
 
 inline  int gate::BParticle:: GetPDG() const { return _pdg; }
   
+inline  void  gate::BParticle::AddTrack(BTrack* trk){
+  _tracks.push_back(trk);}
+
+inline const std::vector<const gate::BTrack*>&  
+gate::BParticle::GetTracks() const { return _tracks;}
+
 inline void gate::BParticle::AddMirrorParticle(gate::BParticle* p)
 {_mparts.push_back(p);}
 

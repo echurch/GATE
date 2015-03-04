@@ -24,11 +24,8 @@
 
 #include<BTrack.h>
 #include<MCParticle.h>
-#include<MCHit.h>
 
-namespace gate{class MCParticle;}
 namespace gate{class MCTrack;}
-namespace gate{class MCHit;}
 
 class gate::MCTrack : public gate::BTrack {
 
@@ -40,12 +37,6 @@ class gate::MCTrack : public gate::BTrack {
   //! destructor
   virtual ~MCTrack(){} 
   
-  //! add MC true hit (alias of AddHit with MCHit->BHit cast)
-  //void AddMCHit(gate::MCHit* hit);
-  
-  //! retireve MC true hits (alias of GetHits with BHit->MCHit cast)
-  // const std::vector<gate::MCHit*>& GetMCHits() const;
-
   //! retrieve particle generating the track
   const gate::MCParticle& GetMCParticle() const;
 
@@ -64,11 +55,6 @@ class gate::MCTrack : public gate::BTrack {
 
 };
 
-//inline void gate::MCTrack::AddMCHit(gate::MCHit* hit)
-//{ _hits.push_back( (gate::BHit*) hit );}                
-//inline const std::vector<gate::MCHit*>& gate::MCTrack::GetMCHits() const
-//{return (const std::vector<gate::MCHit*>&) _hits;}
-                 
 inline const gate::MCParticle& gate::MCTrack::GetMCParticle() const 
 {return *_part;}
 

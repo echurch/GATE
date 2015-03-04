@@ -26,7 +26,6 @@
 #include<BHit.h>
 #include<MCParticle.h>
 
-namespace gate{class MCParticle;}
 namespace gate{class MCHit;}
 
 class gate::MCHit : public gate::BHit {

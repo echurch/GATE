@@ -23,9 +23,7 @@
 #include<TSystem.h>
 
 #include<BParticle.h>
-#include<MCTrack.h>
 
-namespace gate{class MCTrack;}
 namespace gate{class MCParticle;}
 
 class gate::MCParticle : public gate::BParticle {
@@ -49,13 +47,7 @@ class gate::MCParticle : public gate::BParticle {
 
   //! return vector of daughters
   const std::vector<const gate::MCParticle*>&  GetDaughters() const;
-  
-  //! add true track
-  void AddMCTrack(MCTrack* trk);
-  
-  //! retrieve true tracks
-  const std::vector<const MCTrack*>& GetMCTracks() const;
-
+   
   //! set GEANT4 code
   void SetG4(int g4) ;
   
@@ -93,9 +85,6 @@ protected:
   //! vector of daughter particles
   std::vector<const gate::MCParticle*> _daughters;
   
-  //! vector of true tracks
-  std::vector<const gate::MCTrack*> _ttracks;
-
   ClassDef(gate::MCParticle,1)
 
 };
@@ -120,12 +109,6 @@ inline  void  gate::MCParticle::AddDaughter(gate::MCParticle* dau){
 inline const std::vector<const gate::MCParticle*>&  
 gate::MCParticle::GetDaughters() const{ return _daughters;}
   
-inline  void  gate::MCParticle::AddMCTrack(MCTrack* trk){
-  _ttracks.push_back(trk);}
-
-inline const std::vector<const gate::MCTrack*>&  
-gate::MCParticle::GetMCTracks() const { return _ttracks;}
-
 ostream& operator << (ostream& s, const gate::MCParticle& p);
 
 #endif

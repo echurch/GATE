@@ -21,7 +21,7 @@ void gate::MCParticle::Info(ostream& s) const{
 
     s << "Primary particle?: "<< this->IsPrimary() <<std::endl;
     
-    s << "Number of true tracks: " << this->GetMCTracks().size() << std::endl;
+    s << "Number of true tracks: " << this->GetTracks().size() << std::endl;
     
     s << "======================================" << std::endl;
 
