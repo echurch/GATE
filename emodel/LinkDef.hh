@@ -59,13 +59,15 @@
 #pragma link C++ class std::multimap<gate::SENSORTYPE,gate::Cluster*>;
 #pragma link C++ class std::multimap<gate::SENSORTYPE,gate::Track*>;
 
+#pragma link C++ class std::vector< pair<double,double> >;//waveforms
+
 //! links for pairs are requested by art (warnings) !!!!???!!??!!!!!--
 #pragma link C++ class std::pair<gate::SENSORTYPE,gate::Hit*>;
 #pragma link C++ class std::pair<gate::SENSORTYPE,gate::HitMap*>;
 #pragma link C++ class std::pair<gate::SENSORTYPE,gate::Cluster*>;
 #pragma link C++ class std::pair<gate::SENSORTYPE,gate::Track*>;
 #pragma link C++ class std::pair<std::string,std::string>;
-#pragma link C++ class std::pair<std::string, std::vector<std::string> >;
+#pragma link C++ class std::pair<std::string, vector<std::string> >;
 #pragma link C++ class std::pair<std::string, vector<double> >;//std::vector!!!
 #pragma link C++ class std::pair<std::string, vector<int> >;//std::vector!!!
 //------------------------------------------------------------------
