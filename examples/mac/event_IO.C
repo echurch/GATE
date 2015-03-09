@@ -20,6 +20,10 @@
         
         evt->SetID(i);
 
+        gate::MCTrack* gtrk = new gate::MCTrack(); 
+        
+        evt->AddMCTrack(gtrk);
+
         wr->Write(*evt);
     }
 

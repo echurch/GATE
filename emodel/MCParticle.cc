@@ -3,7 +3,8 @@
 ClassImp(gate::MCParticle)
 
 //===========================================================
-gate::MCParticle::MCParticle() : BParticle(), _G4(0), _primary(true){
+gate::MCParticle::MCParticle() : BParticle(), 
+    _G4(0), _primary(true),_mother(0){
 //===========================================================
   
 }

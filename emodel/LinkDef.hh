@@ -65,7 +65,7 @@
 #pragma link C++ class std::pair<gate::SENSORTYPE,gate::Cluster*>;
 #pragma link C++ class std::pair<gate::SENSORTYPE,gate::Track*>;
 #pragma link C++ class std::pair<std::string,std::string>;
-#pragma link C++ class std::pair<std::string, std::vector<std::string> >;
+//#pragma link C++ class std::pair<std::string, vector<std::string> >;
 #pragma link C++ class std::pair<std::string, vector<double> >;//std::vector!!!
 #pragma link C++ class std::pair<std::string, vector<int> >;//std::vector!!!
 //------------------------------------------------------------------
