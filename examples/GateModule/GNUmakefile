@@ -7,7 +7,7 @@ DICT  = GateModuleCint
 SHLIB = libGateModule.so
 SOURCES = $(wildcard *.cc)
 #HEADERS = $(wildcard *.h)
-HEADERS = $(filter-out GATEModuleCint.h,$(wildcard *.h))
+HEADERS = $(filter-out GateModuleCint.h,$(wildcard *.h))
 #OBJECTS = $(SOURCES:.cc=.o)
 OBJECTS = $(filter-out RunGateAlgo.o, $(SOURCES:.cc=.o))
 
