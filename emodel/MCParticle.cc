@@ -11,7 +11,7 @@ gate::MCParticle::MCParticle() : BParticle(),
 
 
 //===========================================================
-void gate::MCParticle::Info(ostream& s) const{
+void gate::MCParticle::Info(std::ostream& s) const{
 //===========================================================
     
     s << "===========MCParticle instance ==============" << std::endl;
@@ -29,7 +29,7 @@ void gate::MCParticle::Info(ostream& s) const{
 }
 
 //=======================================================
-ostream& operator << (ostream& s, const gate::MCParticle& p) {
+std::ostream& operator << (std::ostream& s, const gate::MCParticle& p) {
 //=======================================================
 
     p.Info(s);

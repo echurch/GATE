@@ -23,10 +23,10 @@
 
 #include <iostream>
 
-#include<TSystem.h>
+#include <TSystem.h>
 
-#include<BObject.h>
-#include<Point3D.h>
+#include <BObject.h>
+#include <Point3D.h>
 
 namespace gate{class BHit;}
 
@@ -81,7 +81,7 @@ class gate::BHit : public gate::BObject{
   const std::vector<gate::BHit*>& GetMirrorHits() const; 
   
   //! print hit into stream
-  void Info(ostream& s) const;
+  void Info(std::ostream& s) const;
 
   ClassDef(gate::BHit,1)
 
@@ -103,6 +103,6 @@ inline const std::vector<gate::BHit*>& gate::BHit::GetMirrorHits() const
 { return _mhits;}
 
 
-ostream& operator << (ostream& s, const gate::BHit& bhit); 
+std::ostream& operator << (std::ostream& s, const gate::BHit& bhit); 
 
 #endif

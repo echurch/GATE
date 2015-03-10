@@ -21,12 +21,12 @@
 
 #include <iostream>
 
-#include<TSystem.h>
+#include <TSystem.h>
 
-#include<BObject.h>
-#include<Vector4D.h>
-#include<Point3D.h>
-#include<BTrack.h>
+#include <BObject.h>
+#include <Vector4D.h>
+#include <Point3D.h>
+#include <BTrack.h>
 
 namespace gate{class BParticle;}
 
@@ -95,7 +95,7 @@ class gate::BParticle : public gate::BObject {
   const std::vector<const gate::BParticle*>& GetMirrorParticles() const; 
 
   //! print info
-  void Info(ostream& s) const;
+  void Info(std::ostream& s) const;
 
 protected:
   
@@ -168,6 +168,6 @@ inline void gate::BParticle::AddMirrorParticle(gate::BParticle* p)
 inline const std::vector<const gate::BParticle*>& 
 gate::BParticle::GetMirrorParticles()const { return _mparts;}
 
-ostream& operator << (ostream& s, const gate::BParticle& p);
+std::ostream& operator << (std::ostream& s, const gate::BParticle& p);
 
 #endif

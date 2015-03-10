@@ -1,5 +1,5 @@
 
-#include<BHit.h>
+#include <BHit.h>
 
 ClassImp(gate::BHit);
 
@@ -15,7 +15,7 @@ gate::BHit::~BHit(){}
 
    
 //=======================================================
-void gate::BHit::Info(ostream& s) const{
+void gate::BHit::Info(std::ostream& s) const{
 //=======================================================
 
     BObject::Info(s);
@@ -29,7 +29,7 @@ void gate::BHit::Info(ostream& s) const{
 }
 
 //=======================================================
-ostream& operator << (ostream& s, const gate::BHit& bhit) {
+std::ostream& operator << (std::ostream& s, const gate::BHit& bhit) {
 //=======================================================
 
     bhit.Info(s);

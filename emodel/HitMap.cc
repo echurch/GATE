@@ -39,7 +39,7 @@ std::vector<double> gate::HitMap::GetAmplitudes(size_t isample) const{
 
 
 //=======================================================
-void gate::HitMap::Info(ostream& s) const{
+void gate::HitMap::Info(std::ostream& s) const{
 //=======================================================
 
     s << "========= HitMap instance ======="<< std::endl;
@@ -53,7 +53,7 @@ void gate::HitMap::Info(ostream& s) const{
 }
 
 //=======================================================
-ostream& operator << (ostream& s, const gate::HitMap& hit) {
+std::ostream& operator << (std::ostream& s, const gate::HitMap& hit) {
 //=======================================================
 
     hit.Info(s);

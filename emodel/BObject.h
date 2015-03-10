@@ -21,10 +21,10 @@
 
 #include <iostream>
 
-#include<TSystem.h>
+#include <TSystem.h>
 
-#include<Environment.h>
-#include<ParamStore.h>
+#include <Environment.h>
+#include <ParamStore.h>
 
 namespace gate{class BObject;}
 
@@ -55,7 +55,7 @@ class gate::BObject : public gate::ParamStore {
   void SetDataType(gate::DATATYPE type);
   
   //! print info
-  void Info(ostream& s) const;
+  void Info(std::ostream& s) const;
  
   //! clear info
   void Clear();
@@ -79,6 +79,6 @@ inline gate::DATATYPE gate::BObject::GetDataType() const { return _dType; }
 
 inline void gate::BObject::Clear(){_id = -1; _dType = gate::NODTYPE;}
 
-ostream& operator << (ostream& s, const gate::BObject& obj); 
+std::ostream& operator << (std::ostream& s, const gate::BObject& obj); 
 
 #endif

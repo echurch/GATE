@@ -21,10 +21,10 @@
 
 #include <iostream>
 
-#include<TSystem.h>
+#include <TSystem.h>
 
-#include<BParticle.h>
-#include<Track.h>
+#include <BParticle.h>
+#include <Track.h>
 
 namespace gate{class Particle;}
 
@@ -45,7 +45,7 @@ class gate::Particle : public gate::BParticle {
  gate::STATE GetState() const;
 
   //! print info
-  void Info(ostream& s) const;
+  void Info(std::ostream& s) const;
 
 protected:
   
@@ -59,6 +59,6 @@ protected:
 inline void gate::Particle::SetState(gate::STATE s){_state = s;}
 inline gate::STATE gate::Particle::GetState()const{return _state;}
   
-ostream& operator << (ostream& s, const gate::Particle& p);
+std::ostream& operator << (std::ostream& s, const gate::Particle& p);
 
 #endif

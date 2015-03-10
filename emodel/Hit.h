@@ -21,12 +21,12 @@
 
 #include <iostream>
 
-#include<TSystem.h>
+#include <TSystem.h>
 
-#include<Environment.h>
-#include<Pulse.h>
-#include<Waveform.h>
-#include<BHit.h>
+#include <Environment.h>
+#include <Pulse.h>
+#include <Waveform.h>
+#include <BHit.h>
 
 namespace gate{class Hit;}
 
@@ -87,7 +87,7 @@ class gate::Hit : public gate::BHit {
   const std::vector<gate::Pulse*>&  GetPulses() const;
 
   //! print hit into stream
-  void Info(ostream& s) const;
+  void Info(std::ostream& s) const;
 
   ClassDef(gate::Hit,1)
 
@@ -110,6 +110,6 @@ inline gate::SENSORTYPE gate::Hit::GetSensorType() const { return _sType; }
 inline void gate::Hit::SetState(gate::STATE st) { _state = st; }
 inline gate::STATE gate::Hit::GetState() const { return _state; }
 
-ostream& operator << (ostream& s, const gate::Hit& h); 
+std::ostream& operator << (std::ostream& s, const gate::Hit& h); 
 
 #endif

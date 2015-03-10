@@ -1,4 +1,4 @@
-#include<Cluster.h>
+#include <Cluster.h>
 
 ClassImp(gate::Cluster);
 
@@ -12,7 +12,7 @@ gate::Cluster::~Cluster(){ delete _wform; }
 //=======================================================
     
 //=======================================================
-void gate::Cluster::Info(ostream& s) const{
+void gate::Cluster::Info(std::ostream& s) const{
 //=======================================================
 
     s << "========= Cluster instance ======="<< std::endl;
@@ -26,7 +26,7 @@ void gate::Cluster::Info(ostream& s) const{
 }
 
 //=======================================================
-ostream& operator << (ostream& s, const gate::Cluster& c) {
+std::ostream& operator << (std::ostream& s, const gate::Cluster& c) {
 //=======================================================
 
     c.Info(s);

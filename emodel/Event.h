@@ -25,17 +25,17 @@
 
 #include <iostream>
 
-#include<TSystem.h>
+#include <TSystem.h>
 
-#include<BObject.h>
-#include<Hit.h>
-#include<HitMap.h>
-#include<Cluster.h>
-#include<Track.h>
-#include<Particle.h>
-#include<MCHit.h>
-#include<MCTrack.h>
-#include<MCParticle.h>
+#include <BObject.h>
+#include <Hit.h>
+#include <HitMap.h>
+#include <Cluster.h>
+#include <Track.h>
+#include <Particle.h>
+#include <MCHit.h>
+#include <MCTrack.h>
+#include <MCParticle.h>
  
 namespace gate{class Event;}
 
@@ -130,7 +130,7 @@ public:
   void SetState(gate::STATE state);
 
   //! print event into stream
-  void Info(ostream& s) const;
+  void Info(std::ostream& s) const;
   
   //! clear info
   void Clear();
@@ -187,6 +187,6 @@ inline void gate::Event::SetState(gate::STATE st) { _state = st; }
 
 inline gate::STATE gate::Event::GetState() const { return _state; }
 
-ostream& operator << (ostream& s, const gate::Event& evt); 
+std::ostream& operator << (std::ostream& s, const gate::Event& evt); 
 
 #endif

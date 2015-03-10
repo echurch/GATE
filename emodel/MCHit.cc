@@ -8,7 +8,7 @@ gate::MCHit::MCHit() : BHit(), _part(0){}
 //=======================================================
 
 //=======================================================
-void gate::MCHit::Info(ostream& s) const{
+void gate::MCHit::Info(std::ostream& s) const{
 //=======================================================
 
     s << "========== MC hit instance ========"<<std::endl;
@@ -21,7 +21,7 @@ void gate::MCHit::Info(ostream& s) const{
 }
 
 //=======================================================
-ostream& operator << (ostream& s, const gate::MCHit& h) {
+std::ostream& operator << (std::ostream& s, const gate::MCHit& h) {
 //=======================================================
 
     h.Info(s);

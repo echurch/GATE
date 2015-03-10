@@ -21,11 +21,11 @@
 
 #include <iostream>
 
-#include<TSystem.h>
+#include <TSystem.h>
 
-#include<Environment.h>
-#include<BHit.h>
-#include<MCParticle.h>
+#include <Environment.h>
+#include <BHit.h>
+#include <MCParticle.h>
 
 namespace gate{class MCHit;}
 
@@ -46,7 +46,7 @@ class gate::MCHit : public gate::BHit {
   void SetParticle(gate::MCParticle* p);
 
   //! print info
-  void Info(ostream& s) const;
+  void Info(std::ostream& s) const;
   
  private:
   
@@ -61,6 +61,6 @@ inline const gate::MCParticle& gate::MCHit::GetParticle() const {return *_part;}
 
 inline void gate::MCHit::SetParticle(gate::MCParticle* p)  { _part = p;}
 
-ostream& operator << (ostream& s, const gate::MCHit& h); 
+std::ostream& operator << (std::ostream& s, const gate::MCHit& h); 
 
 #endif

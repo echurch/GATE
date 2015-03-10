@@ -1,7 +1,7 @@
-#include<BObject.h>
+#include <BObject.h>
 
 //=======================================================
-void gate::BObject::Info(ostream& s) const{
+void gate::BObject::Info(std::ostream& s) const{
 //=======================================================
     
     s << " Data type" << this->GetDataType()<< std::endl;
@@ -11,7 +11,7 @@ void gate::BObject::Info(ostream& s) const{
 }
 
 //=======================================================
-ostream& operator << (ostream& s, const gate::BObject& obj) {
+std::ostream& operator << (std::ostream& s, const gate::BObject& obj) {
 //=======================================================
 
     obj.Info(s);

@@ -1,4 +1,4 @@
-#include<Point3D.h>
+#include <Point3D.h>
 
 ClassImp(gate::Point3D);
 
@@ -9,7 +9,7 @@ gate::Point3D::Point3D(double x, double y, double z) : _x(x),_y(y),_z(z){
 
 
 //=======================================================
-void gate::Point3D::Info(ostream& s) const{
+void gate::Point3D::Info(std::ostream& s) const{
 //=======================================================
     
     s << " Point3D: ( " << _x <<", "<<_y<<", "<<_z<< " )"<<std::endl;
@@ -17,7 +17,7 @@ void gate::Point3D::Info(ostream& s) const{
 }
 
 //=======================================================
-ostream& operator << (ostream& s, const gate::Point3D& p) {
+std::ostream& operator << (std::ostream& s, const gate::Point3D& p) {
 //=======================================================
 
     p.Info(s);
