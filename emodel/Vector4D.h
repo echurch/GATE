@@ -10,7 +10,7 @@
  *
  * @details Contains x,y,z coodinates/components and energy/time
  *    
- * @author Pau Novella  <pau.novella@ific.uv.es>, from BHEP
+ * @author J.J. Gomez-Cadenas, Pau Novella  <pau.novella@ific.uv.es>
  *
  * @version Revision 1.0.0
  *
@@ -23,7 +23,7 @@
 #include <cmath>
 #include <Error.h>
 
-#include<TSystem.h>
+#include<Rtypes.h>
 
 namespace gate{
 

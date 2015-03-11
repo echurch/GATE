@@ -19,10 +19,6 @@
  * @ingroup emodel
  */
 
-#include <iostream>
-
-#include <TSystem.h>
-
 #include <BParticle.h>
 #include <Track.h>
 

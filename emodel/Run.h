@@ -19,16 +19,11 @@
  * @ingroup emodel
  */
 
-#include <iostream>
-
-#include <Environment.h>
-
-#include <TSystem.h>
+#include <BObject.h>
 
 namespace gate{class Run;}
 
-
-class gate::Run{
+class gate::Run : BObject{
 
  public:
   

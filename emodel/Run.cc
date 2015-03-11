@@ -4,8 +4,8 @@
 ClassImp(gate::Run)
 
 //===============================================================
-gate::Run::Run(gate::DATATYPE dt, int id) : _dType(dt), _runID(id),
-  _sTime(-1),_eTime(-1){
+gate::Run::Run(gate::DATATYPE dt, int id) : BObject(), 
+_dType(dt), _runID(id),_sTime(-1),_eTime(-1){
 //===============================================================
 
   

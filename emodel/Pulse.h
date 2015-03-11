@@ -22,11 +22,6 @@
 
 namespace gate{class Waveform;}
 
-#include <iostream>
-
-#include <TSystem.h>
-
-#include <Environment.h>
 #include <BObject.h>
 #include <Waveform.h>
 

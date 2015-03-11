@@ -21,12 +21,8 @@
 
 namespace gate{class HitMap;}
 
-#include <iostream>
-#include <map>
+//#include <map>
 
-#include <TSystem.h>
-
-#include <Environment.h>
 #include <BObject.h>
 
 

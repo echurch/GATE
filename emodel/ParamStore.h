@@ -24,7 +24,7 @@
 
 #include <Error.h>
 
-#include<TSystem.h>
+#include<Rtypes.h>
 
 namespace gate{
   

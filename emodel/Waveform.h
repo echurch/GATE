@@ -21,11 +21,6 @@
 
 namespace gate{class Pulse;}
 
-#include <iostream>
-
-#include <TSystem.h>
-
-#include <Environment.h>
 #include <BObject.h>
 #include <Pulse.h>
 

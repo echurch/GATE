@@ -1,14 +1,15 @@
 #ifndef __MESSENGER__
 #define __MESSENGER__
 
+/* @author J.J. Gomez-Cadenas, Pau Novella  <pau.novella@ific.uv.es>
+ */
+
 #include <iostream>
 #include <string>
 
 #include <Environment.h>
 
-#include <TSystem.h>
-
-//using namespace std;
+#include <Rtypes.h>
 
 namespace gate{
 

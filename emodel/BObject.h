@@ -21,7 +21,7 @@
 
 #include <iostream>
 
-#include <TSystem.h>
+#include <Rtypes.h>
 
 #include <Environment.h>
 #include <ParamStore.h>

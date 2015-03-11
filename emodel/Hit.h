@@ -19,11 +19,6 @@
  * @ingroup emodel
  */
 
-#include <iostream>
-
-#include <TSystem.h>
-
-#include <Environment.h>
 #include <Pulse.h>
 #include <Waveform.h>
 #include <BHit.h>

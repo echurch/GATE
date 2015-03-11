@@ -19,12 +19,7 @@
  * @ingroup emodel
  */
 
-#include <iostream>
-
-#include <TSystem.h>
-
 #include <BHit.h>
-
 
 namespace gate{class BTrack;}
 

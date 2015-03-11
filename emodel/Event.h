@@ -14,7 +14,7 @@
  *
  * @details Contains low or high level objects, according to configuration  
  *    
- * @author Pau Novella  <pau.novella@ific.uv.es>
+ * @author J.J. Gomez-Cadenas, Pau Novella  <pau.novella@ific.uv.es>
  *
  * @version Revision 1.0.0
  *
@@ -23,9 +23,6 @@
  * @ingroup emodel
  */
 
-#include <iostream>
-
-#include <TSystem.h>
 
 #include <BObject.h>
 #include <Hit.h>
