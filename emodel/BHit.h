@@ -77,7 +77,7 @@ class gate::BHit : public gate::BObject{
   const std::vector<gate::BHit*>& GetMirrorHits() const; 
   
   //! print hit into stream
-  void Info(std::ostream& s) const;
+  void Info(std::ostream& s=std::cout) const;
 
   ClassDef(gate::BHit,1)
 

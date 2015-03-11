@@ -64,7 +64,7 @@ class gate::Point3D {
   double z() const;
   
   //! print info
-  void Info(std::ostream& s) const;
+  void Info(std::ostream& s=std::cout) const;
 
   ClassDef(gate::Point3D,1)
   

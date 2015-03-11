@@ -55,7 +55,7 @@ class gate::BObject : public gate::ParamStore {
   void SetDataType(gate::DATATYPE type);
   
   //! print info
-  void Info(std::ostream& s) const;
+  void Info(std::ostream& s=std::cout) const;
  
   //! clear info
   void Clear();

@@ -74,7 +74,7 @@ class gate::Run : BObject{
   void SetEndTime(double t);
   
   //! print event into stream
-  void Info(std::ostream& s) const;
+  void Info(std::ostream& s=std::cout) const;
 
   ClassDef(gate::Run,1)
 

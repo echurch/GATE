@@ -41,7 +41,7 @@ class gate::Particle : public gate::BParticle {
  gate::STATE GetState() const;
 
   //! print info
-  void Info(std::ostream& s) const;
+  void Info(std::ostream& s=std::cout) const;
 
 protected:
   

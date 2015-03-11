@@ -47,7 +47,7 @@ class gate::Track : public gate::BTrack {
   void SetState(gate::STATE state);
 
   //! print event into stream
-  void Info(std::ostream& s) const;
+  void Info(std::ostream& s=std::cout) const;
   
  protected:
   

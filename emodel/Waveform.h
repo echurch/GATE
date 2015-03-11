@@ -68,7 +68,7 @@ class gate::Waveform : public gate::BObject {
   const std::vector<gate::Pulse*>&  GetPulses() const;
 
   //! print pulse into stream
-  void Info(std::ostream& s) const;
+  void Info(std::ostream& s=std::cout) const;
 
   ClassDef(gate::Waveform,1)
 

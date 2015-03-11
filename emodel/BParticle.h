@@ -91,7 +91,7 @@ class gate::BParticle : public gate::BObject {
   const std::vector<const gate::BParticle*>& GetMirrorParticles() const; 
 
   //! print info
-  void Info(std::ostream& s) const;
+  void Info(std::ostream& s=std::cout) const;
 
 protected:
   

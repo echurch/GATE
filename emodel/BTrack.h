@@ -46,7 +46,7 @@ class gate::BTrack : public gate::BObject {
   const std::vector<gate::BTrack*>& GetMirrorTracks() const; 
   
   //! print event into stream
-  void Info(std::ostream& s) const;
+  void Info(std::ostream& s=std::cout) const;
 
  protected:
   

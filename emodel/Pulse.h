@@ -114,7 +114,7 @@ class gate::Pulse : public gate::BObject {
   gate::SIGNALTYPE GetSignalType() const;
 
   //! print pulse into stream
-  void Info(std::ostream& s) const;
+  void Info(std::ostream& s=std::cout) const;
   
  private:
 

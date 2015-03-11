@@ -85,7 +85,7 @@ class gate::Hit : public gate::BHit {
   const std::vector<gate::Pulse*>&  GetPulses() const;
 
   //! print hit into stream
-  void Info(std::ostream& s) const;
+  void Info(std::ostream& s=std::cout) const;
 
   ClassDef(gate::Hit,1)
 

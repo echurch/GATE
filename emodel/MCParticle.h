@@ -58,7 +58,7 @@ class gate::MCParticle : public gate::BParticle {
   bool IsPrimary() const;
 
   //! print info
-  void Info(std::ostream& s) const;
+  void Info(std::ostream& s=std::cout) const;
 
 protected:
   

@@ -42,7 +42,7 @@ class gate::Cluster : public gate::Hit{
   const std::vector<gate::Hit*>& GetHits() const;
 
   //! print hit into stream
-  void Info(std::ostream& s) const;
+  void Info(std::ostream& s=std::cout) const;
 
  protected:
   

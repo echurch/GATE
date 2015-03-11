@@ -41,7 +41,7 @@ class gate::MCHit : public gate::BHit {
   void SetParticle(gate::MCParticle* p);
 
   //! print info
-  void Info(std::ostream& s) const;
+  void Info(std::ostream& s=std::cout) const;
   
  private:
   

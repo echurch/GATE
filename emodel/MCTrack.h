@@ -41,7 +41,7 @@ class gate::MCTrack : public gate::BTrack {
   void SetParticle(gate::MCParticle* p);
    
   //! print event into stream
-  void Info(std::ostream& s) const;
+  void Info(std::ostream& s=std::cout) const;
 
  protected:
   
