@@ -16,7 +16,7 @@ int main(){
   gate::Centella::instance()->run();
   
   gate::Centella::instance()->destroy();
-  delete algo1; delete algo2;
+  delete algo1;
 
   return 0;
 
