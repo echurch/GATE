@@ -147,9 +147,9 @@ TH1F* NDivide1D( TH1F *num, TH1F *den ){
 TH2F* NAverage3D_to_2D( TH3F *object, std::string axis1, std::string axis2 ){
 
   int xbins=0, ybins=0, zbins=0;
-  double* x_bins;
-  double* y_bins;
-  double* z_bins;
+  double* x_bins = 0;
+  double* y_bins = 0;
+  double* z_bins = 0;
   std::string axis3;
   std::string axes;
 
