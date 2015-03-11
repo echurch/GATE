@@ -52,7 +52,7 @@ class gate::Hit : public gate::BHit {
   gate::STATE _state;
   
   //! waveform
-  const gate::Waveform* _wform;
+  gate::Waveform* _wform;
   
  public:
   
@@ -75,10 +75,13 @@ class gate::Hit : public gate::BHit {
   void SetState(gate::STATE state);
   
   //! Set waveform
-  void SetWaveform(const Waveform& wf);
+  void SetWaveform(Waveform& wf);
   
   //! Get waveform
   const Waveform& GetWaveform() const;
+  
+  //! Get waveform
+  Waveform& GetWaveform();
 
   //! Add  pulse
   void AddPulse(gate::Pulse* p);
@@ -93,8 +96,9 @@ class gate::Hit : public gate::BHit {
 
     };
 
-inline void gate::Hit::SetWaveform(const gate::Waveform& wf ) { _wform = &wf; }
+inline void gate::Hit::SetWaveform(gate::Waveform& wf ) { _wform = &wf; }
 inline const gate::Waveform& gate::Hit::GetWaveform() const { return *_wform; }
+inline gate::Waveform& gate::Hit::GetWaveform() { return *_wform; }
 
 inline void gate::Hit::AddPulse(gate::Pulse* p) { 
   ((gate::Waveform*) _wform)->AddPulse(p); }
