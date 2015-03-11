@@ -7,7 +7,7 @@
 #pragma link C++ namespace gate;
 
 #pragma link C++ class gate::tstore<TH1*>+;
-
+#pragma link C++ class gate::Messenger+;
 #pragma link C++ class gate::IAlgo+;
 #pragma link C++ class gate::AlgoManager+;
 #pragma link C++ class gate::_log_IO+;

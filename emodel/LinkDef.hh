@@ -19,7 +19,6 @@
 #pragma link C++ class gate::tstore<std::vector<std::string> >+;
 #pragma link C++ class gate::tstore<std::vector<TObject*> >+;
 
-#pragma link C++ class gate::Messenger+;
 #pragma link C++ class gate::ParamStore+;
 #pragma link C++ class gate::BObject+;
 #pragma link C++ class gate::Run+;
