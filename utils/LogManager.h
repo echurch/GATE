@@ -62,10 +62,10 @@ class gate::_log_IO{
   /// set name of input log file
   void setInName(string name){_iLogFile=name;}
   
-  /// set name of output log file
+  /// get name of output log file
   string getOutName()const {return _oLogFile;}
   
-  /// set name of input log file
+  /// get name of input log file
   string getInName()const {return _iLogFile;}
   
 

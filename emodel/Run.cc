@@ -13,7 +13,7 @@ gate::Run::Run(gate::DATATYPE dt, int id) : _dType(dt), _runID(id),
 
 
 //=======================================================
-void gate::Run::Info(ostream& s) const{
+void gate::Run::Info(std::ostream& s) const{
 //=======================================================
 
     s << "============= Event instance =========="<< std::endl;
@@ -29,7 +29,7 @@ void gate::Run::Info(ostream& s) const{
 }
 
 //=======================================================
-ostream& operator << (ostream& s, const gate::Run& run) {
+std::ostream& operator << (std::ostream& s, const gate::Run& run) {
 //=======================================================
 
     run.Info(s);

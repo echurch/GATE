@@ -21,9 +21,9 @@
 
 #include <iostream>
 
-#include<TSystem.h>
+#include <TSystem.h>
 
-#include<BHit.h>
+#include <BHit.h>
 
 
 namespace gate{class BTrack;}
@@ -51,7 +51,7 @@ class gate::BTrack : public gate::BObject {
   const std::vector<gate::BTrack*>& GetMirrorTracks() const; 
   
   //! print event into stream
-  void Info(ostream& s) const;
+  void Info(std::ostream& s) const;
 
  protected:
   
@@ -74,6 +74,6 @@ inline void gate::BTrack::AddMirrorTrack(gate::BTrack* trk)
 inline const std::vector<gate::BTrack*>& gate::BTrack::GetMirrorTracks() const
 { return _mtracks;}
 
-ostream& operator << (ostream& s, const gate::BTrack& btrk) ;
+std::ostream& operator << (std::ostream& s, const gate::BTrack& btrk) ;
 
 #endif

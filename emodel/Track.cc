@@ -1,4 +1,4 @@
-#include<Track.h>
+#include <Track.h>
 
 ClassImp(gate::Track)
 
@@ -7,7 +7,7 @@ gate::Track::Track() : BTrack(){}
 //=======================================================
 
 //=======================================================
-void gate::Track::Info(ostream& s) const{
+void gate::Track::Info(std::ostream& s) const{
 //=======================================================
 
     s << "Track instance: "<<std::endl;
@@ -20,7 +20,7 @@ void gate::Track::Info(ostream& s) const{
 }
 
 //=======================================================
-ostream& operator << (ostream& s, const gate::Track& trk) {
+std::ostream& operator << (std::ostream& s, const gate::Track& trk) {
 //=======================================================
 
     trk.Info(s);

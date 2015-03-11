@@ -21,10 +21,10 @@
 
 #include <iostream>
 
-#include<TSystem.h>
+#include <TSystem.h>
 
-#include<BTrack.h>
-#include<MCParticle.h>
+#include <BTrack.h>
+#include <MCParticle.h>
 
 namespace gate{class MCTrack;}
 
@@ -45,7 +45,7 @@ class gate::MCTrack : public gate::BTrack {
   void SetParticle(gate::MCParticle* p);
    
   //! print event into stream
-  void Info(ostream& s) const;
+  void Info(std::ostream& s) const;
 
  protected:
   
@@ -61,6 +61,6 @@ inline const gate::MCParticle& gate::MCTrack::GetParticle() const
 
 inline void gate::MCTrack::SetParticle(gate::MCParticle* p)  { _part = p;}
 
-ostream& operator << (ostream& s, const gate::MCTrack& trk) ;
+std::ostream& operator << (std::ostream& s, const gate::MCTrack& trk) ;
 
 #endif

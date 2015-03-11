@@ -206,7 +206,7 @@ namespace gate{
     inline double GetModule() const { return sqrt(_x*_x + _y*_y + _z*_z); }
     
     //! print info into output stream
-    void info(ostream& s = std::cout) const{
+    void info(std::ostream& s = std::cout) const{
       s << std::endl;
        s << "(" << this->x() << "," <<this->y() <<","<<this->z() <<")";
    
@@ -267,7 +267,7 @@ namespace gate{
     return v;
   }
 
-inline ostream& operator << (ostream& s, const gate::Vector4D& ip){
+inline std::ostream& operator << (std::ostream& s, const gate::Vector4D& ip){
 
   ip.info(s);
   return s;

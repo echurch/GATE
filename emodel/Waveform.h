@@ -23,11 +23,11 @@ namespace gate{class Pulse;}
 
 #include <iostream>
 
-#include<TSystem.h>
+#include <TSystem.h>
 
-#include<Environment.h>
-#include<BObject.h>
-#include<Pulse.h>
+#include <Environment.h>
+#include <BObject.h>
+#include <Pulse.h>
 
 namespace gate{class Waveform;}
 
@@ -73,7 +73,7 @@ class gate::Waveform : public gate::BObject {
   const std::vector<gate::Pulse*>&  GetPulses() const;
 
   //! print pulse into stream
-  void Info(ostream& s) const;
+  void Info(std::ostream& s) const;
 
   ClassDef(gate::Waveform,1)
 
@@ -91,6 +91,6 @@ gate::Waveform::GetPulses() const { return _pulses;}
 inline void gate::Waveform::SetSensorID(int id ) { _sensorID = id; }
 inline int gate::Waveform::GetSensorID() const { return _sensorID; }
 
-ostream& operator << (ostream& s, const gate::Waveform& wf); 
+std::ostream& operator << (std::ostream& s, const gate::Waveform& wf); 
 
 #endif

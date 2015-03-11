@@ -19,11 +19,11 @@
  * @ingroup emodel
  */
 
-#include<iostream>
+#include <iostream>
 
-#include<Environment.h>
+#include <Environment.h>
 
-#include<TSystem.h>
+#include <TSystem.h>
 
 namespace gate{class Run;}
 
@@ -79,7 +79,7 @@ class gate::Run{
   void SetEndTime(double t);
   
   //! print event into stream
-  void Info(ostream& s) const;
+  void Info(std::ostream& s) const;
 
   ClassDef(gate::Run,1)
 
@@ -97,6 +97,6 @@ inline double gate::Run::GetStartTime() const { return _sTime;}
 inline void gate::Run::SetEndTime(double t){ _eTime = t;}
 inline double gate::Run::GetEndTime() const { return _eTime;}
 
-ostream& operator << (ostream& s, const gate::Run& run); 
+std::ostream& operator << (std::ostream& s, const gate::Run& run); 
 
 #endif

@@ -1,4 +1,4 @@
-#include<Hit.h>
+#include <Hit.h>
 
 ClassImp(gate::Hit);
 
@@ -17,7 +17,7 @@ gate::Hit::~Hit(){
 }
 
 //=======================================================
-void gate::Hit::Info(ostream& s) const{
+void gate::Hit::Info(std::ostream& s) const{
 //=======================================================
 
     s << "========= Hit instance ======="<< std::endl;
@@ -37,7 +37,7 @@ void gate::Hit::Info(ostream& s) const{
 }
 
 //=======================================================
-ostream& operator << (ostream& s, const gate::Hit& hit) {
+std::ostream& operator << (std::ostream& s, const gate::Hit& hit) {
 //=======================================================
 
     hit.Info(s);

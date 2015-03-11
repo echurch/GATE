@@ -21,9 +21,9 @@
 
 #include <iostream>
 
-#include<TSystem.h>
-#include<Hit.h>
-#include<BTrack.h>
+#include <TSystem.h>
+#include <Hit.h>
+#include <BTrack.h>
 
 
 namespace gate{class Track;}
@@ -51,7 +51,7 @@ class gate::Track : public gate::BTrack {
   void SetState(gate::STATE state);
 
   //! print event into stream
-  void Info(ostream& s) const;
+  void Info(std::ostream& s) const;
   
  protected:
   
@@ -71,6 +71,6 @@ inline gate::SENSORTYPE gate::Track::GetSensorType() const { return _sType; }
 inline void gate::Track::SetState(gate::STATE st) { _state = st; }
 inline gate::STATE gate::Track::GetState() const { return _state; }
 
-ostream& operator << (ostream& s, const gate::Track& trk) ;
+std::ostream& operator << (std::ostream& s, const gate::Track& trk) ;
 
 #endif

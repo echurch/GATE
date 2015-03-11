@@ -30,7 +30,7 @@ namespace gate{
   enum STATE{ NOSTATE, RAW,RECOED,CALIB};
   
   //! sensor type: SiPM or PMT
-  enum SENSORTYPE{ NOSTYPE,SIPM,PMT};
+  enum SENSORTYPE{ NOSTYPE,SIPM,PMT,TPC};
   
   //! verbosity levels
   enum VLEVEL{MUTE,CONCISE,NORMAL,WARNING,DETAILED,

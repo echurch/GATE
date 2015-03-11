@@ -22,7 +22,7 @@ void gate::Waveform::SetData(std::vector< std::pair<double,double> >data){
     _data=data;}
 
 //=======================================================
-void gate::Waveform::Info(ostream& s) const{
+void gate::Waveform::Info(std::ostream& s) const{
 //=======================================================
 
     s << "=========Waveform instance ======="<< std::endl;
@@ -36,7 +36,7 @@ void gate::Waveform::Info(ostream& s) const{
 }
 
 //=======================================================
-ostream& operator << (ostream& s, const gate::Waveform& wf) {
+std::ostream& operator << (std::ostream& s, const gate::Waveform& wf) {
 //=======================================================
 
     wf.Info(s);

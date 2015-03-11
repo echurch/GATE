@@ -21,9 +21,9 @@
 
 #include <iostream>
 
-#include<TSystem.h>
+#include <TSystem.h>
 
-#include<BParticle.h>
+#include <BParticle.h>
 
 namespace gate{class MCParticle;}
 
@@ -62,7 +62,7 @@ class gate::MCParticle : public gate::BParticle {
   bool IsPrimary() const;
 
   //! print info
-  void Info(ostream& s) const;
+  void Info(std::ostream& s) const;
 
 protected:
   
@@ -110,6 +110,6 @@ inline  void  gate::MCParticle::AddDaughter(gate::MCParticle* dau){
 inline const std::vector<const gate::MCParticle*>&  
 gate::MCParticle::GetDaughters() const{ return _daughters;}
   
-ostream& operator << (ostream& s, const gate::MCParticle& p);
+std::ostream& operator << (std::ostream& s, const gate::MCParticle& p);
 
 #endif

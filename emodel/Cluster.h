@@ -21,9 +21,9 @@
 
 #include <iostream>
 
-#include<TSystem.h>
+#include <TSystem.h>
 
-#include<Hit.h>
+#include <Hit.h>
 
 namespace gate{class Cluster;}
 
@@ -44,7 +44,7 @@ class gate::Cluster : public gate::Hit{
   const std::vector<gate::Hit*>& GetHits() const;
 
   //! print hit into stream
-  void Info(ostream& s) const;
+  void Info(std::ostream& s) const;
 
  protected:
   
@@ -58,6 +58,6 @@ class gate::Cluster : public gate::Hit{
 inline void gate::Cluster::AddHit(gate::Hit* h){ _hits.push_back(h);}
 inline const std::vector<gate::Hit*>& gate::Cluster::GetHits()const {return _hits;}
 
-ostream& operator << (ostream& s, const gate::Cluster& c); 
+std::ostream& operator << (std::ostream& s, const gate::Cluster& c); 
 
 #endif

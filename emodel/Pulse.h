@@ -24,11 +24,11 @@ namespace gate{class Waveform;}
 
 #include <iostream>
 
-#include<TSystem.h>
+#include <TSystem.h>
 
-#include<Environment.h>
-#include<BObject.h>
-#include<Waveform.h>
+#include <Environment.h>
+#include <BObject.h>
+#include <Waveform.h>
 
 namespace gate{class Pulse;}
 
@@ -119,7 +119,7 @@ class gate::Pulse : public gate::BObject {
   gate::SIGNALTYPE GetSignalType() const;
 
   //! print pulse into stream
-  void Info(ostream& s) const;
+  void Info(std::ostream& s) const;
   
  private:
 
@@ -150,6 +150,6 @@ inline double gate::Pulse::GetMaxTime() const { return _mTime; }
 inline void gate::Pulse::SetSignalType(gate::SIGNALTYPE t) {  _sType = t; }
 inline gate::SIGNALTYPE gate::Pulse::GetSignalType() const { return _sType; }
 
-ostream& operator << (ostream& s, const gate::Pulse& pulse); 
+std::ostream& operator << (std::ostream& s, const gate::Pulse& pulse); 
 
 #endif

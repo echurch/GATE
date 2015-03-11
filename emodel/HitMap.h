@@ -24,10 +24,10 @@ namespace gate{class HitMap;}
 #include <iostream>
 #include <map>
 
-#include<TSystem.h>
+#include <TSystem.h>
 
-#include<Environment.h>
-#include<BObject.h>
+#include <Environment.h>
+#include <BObject.h>
 
 
 class gate::HitMap : public BObject {
@@ -109,7 +109,7 @@ class gate::HitMap : public BObject {
  public:
 
   //! print pulse into stream
-  void Info(ostream& s) const;
+  void Info(std::ostream& s) const;
   
   ClassDef(HitMap,1)
 
@@ -138,6 +138,6 @@ inline std::vector<std::map<int,double> > gate::HitMap::GetTimeMap() const {
 inline std::map<int,double> gate::HitMap::GetMap(size_t isample) const { 
   return _tmap[isample];}
 
-ostream& operator << (ostream& s, const gate::HitMap& hmap); 
+std::ostream& operator << (std::ostream& s, const gate::HitMap& hmap); 
 
 #endif

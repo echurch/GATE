@@ -1,4 +1,4 @@
-#include<BTrack.h>
+#include <BTrack.h>
 
 ClassImp(gate::BTrack)
 
@@ -7,7 +7,7 @@ gate::BTrack::BTrack() : BObject(){}
 //=======================================================
 
 //=======================================================
-void gate::BTrack::Info(ostream& s) const{
+void gate::BTrack::Info(std::ostream& s) const{
 //=======================================================
 
     BObject::Info(s);
@@ -27,7 +27,7 @@ void gate::BTrack::Info(ostream& s) const{
 }
 
 //=======================================================
-ostream& operator << (ostream& s, const gate::BTrack& btrk) {
+std::ostream& operator << (std::ostream& s, const gate::BTrack& btrk) {
 //=======================================================
 
     btrk.Info(s);

@@ -1,4 +1,4 @@
-#include<Event.h>
+#include <Event.h>
 
 ClassImp(gate::Event);
 
@@ -250,7 +250,7 @@ void gate::Event::AddMCParticle(gate::MCParticle* p) {
 }
 
 //=======================================================
-void gate::Event::Info(ostream& s) const{
+void gate::Event::Info(std::ostream& s) const{
 //=======================================================
 
     s << "============= Event instance =========="<< std::endl;
@@ -276,7 +276,7 @@ void gate::Event::Info(ostream& s) const{
 }
 
 //=======================================================
-ostream& operator << (ostream& s, const gate::Event& evt) {
+std::ostream& operator << (std::ostream& s, const gate::Event& evt) {
 //=======================================================
 
     evt.Info(s);

@@ -1,4 +1,4 @@
-#include<Pulse.h>
+#include <Pulse.h>
 
 ClassImp(gate::Pulse);
 
@@ -10,7 +10,7 @@ gate::Pulse::Pulse() : BObject(),_sensorID(-1), _wform(0),
 }
 
 //=======================================================
-void gate::Pulse::Info(ostream& s) const{
+void gate::Pulse::Info(std::ostream& s) const{
 //=======================================================
 
     s << "=========Pulse instance ======="<< std::endl;
@@ -34,7 +34,7 @@ void gate::Pulse::Info(ostream& s) const{
 }
 
 //=======================================================
-ostream& operator << (ostream& s, const gate::Pulse& pulse) {
+std::ostream& operator << (std::ostream& s, const gate::Pulse& pulse) {
 //=======================================================
 
     pulse.Info(s);

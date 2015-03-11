@@ -7,7 +7,7 @@ gate::MCTrack::MCTrack() : BTrack(),_part(0){}
 //=======================================================
 
 //=======================================================
-void gate::MCTrack::Info(ostream& s) const{
+void gate::MCTrack::Info(std::ostream& s) const{
 //=======================================================
 
     s << "========== MCTack instance ========"<<std::endl;
@@ -21,7 +21,7 @@ void gate::MCTrack::Info(ostream& s) const{
 }
 
 //=======================================================
-ostream& operator << (ostream& s, const gate::MCTrack& trk) {
+std::ostream& operator << (std::ostream& s, const gate::MCTrack& trk) {
 //=======================================================
 
     trk.Info(s);

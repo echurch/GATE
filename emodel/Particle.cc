@@ -9,7 +9,7 @@ gate::Particle::Particle() : BParticle(){
 
 
 //===========================================================
-void gate::Particle::Info(ostream& s) const{
+void gate::Particle::Info(std::ostream& s) const{
 //===========================================================
     
     s << "============ Particle instance =============" << std::endl;
@@ -23,7 +23,7 @@ void gate::Particle::Info(ostream& s) const{
 }
 
 //=======================================================
-ostream& operator << (ostream& s, const gate::Particle& p) {
+std::ostream& operator << (std::ostream& s, const gate::Particle& p) {
 //=======================================================
 
     p.Info(s);
