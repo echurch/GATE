@@ -55,6 +55,9 @@ class gate::BHit : public gate::BObject{
   //! set position
   void SetPosition(gate::Point3D);
 
+  //! set position
+  void SetPosition(double x, double y, double z);
+
   //! get position
   const gate::Point3D& GetPosition() const;
 
@@ -90,6 +93,8 @@ inline void gate::BHit::SetTime(double time) { _time = time; }
 inline double gate::BHit::GetTime() const { return _time; }
 
 inline void gate::BHit::SetPosition(gate::Point3D pos) { _pos = pos; }
+inline void gate::BHit::SetPosition(double x, double y, double z) { 
+  _pos = gate::Point3D(x,y,z); }
 inline const gate::Point3D& gate::BHit::GetPosition() const { return _pos; }
 
 inline void gate::BHit::AddMirrorHit(gate::BHit* h)
