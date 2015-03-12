@@ -35,7 +35,7 @@ Common:
     setupRequired(cetpkgsupport)
     #exeActionRequired(GetFQDir)
     prodDir( _FQ_DIR, ${${UPS_PROD_NAME_UC}_FQ} )
-    envSet(${UPS_PROD_NAME_UC}_INC, ${UPS_PROD_DIR}include) 
+    envSet(${UPS_PROD_NAME_UC}_INC, ${UPS_PROD_DIR}) 
 
     exeActionRequired(GetProducts)
 
