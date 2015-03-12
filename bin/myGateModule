@@ -106,6 +106,8 @@ for line in fileinput.input(files,inplace=1):
 
     line = line.replace('../../../lib/',"$(GATE_DIR)/lib/")
 
+    line = line.replace('../../lib',"$(GATE_DIR)/lib/")
+
     sys.stdout.write(line)
 
 fileinput.close()
