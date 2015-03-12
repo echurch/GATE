@@ -19,7 +19,7 @@
  * @ingroup emodel
  */
 
-#include <BObject.h>
+#include <GATE/BObject.h>
 
 namespace gate{class Run;}
 

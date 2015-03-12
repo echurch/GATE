@@ -22,8 +22,8 @@
 
 namespace gate{class Waveform;}
 
-#include <BObject.h>
-#include <Waveform.h>
+#include <GATE/BObject.h>
+#include <GATE/Waveform.h>
 
 namespace gate{class Pulse;}
 

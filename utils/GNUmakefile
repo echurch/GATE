@@ -14,9 +14,7 @@ OBJECTS = $(SOURCES:.cc=.o)
 
 # include options for this package
 INCFLAGS = -I.
-INCFLAGS += -I../include
-INCFLAGS += -I../emodel
-INCFLAGS += -I../IO
+INCFLAGS += -I./../
 
 # platform-specific options
 OSNAME          = $(shell uname -s)

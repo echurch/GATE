@@ -3,7 +3,7 @@ SUBDIRS := emodel IO utils
 
 GATELIBDIR := lib
 
-GATEINCDIR := include
+GATEINCDIR := GATE
 
 GATEDOCDIR := doc
 

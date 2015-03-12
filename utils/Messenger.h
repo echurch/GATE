@@ -1,13 +1,13 @@
 #ifndef __MESSENGER__
 #define __MESSENGER__
 
-/* @author J.J. Gomez-Cadenas, Pau Novella  <pau.novella@ific.uv.es>
+/* @author J.J. Gomez-Cadenas
  */
 
 #include <iostream>
 #include <string>
 
-#include <Environment.h>
+#include <GATE/Environment.h>
 
 #include <Rtypes.h>
 

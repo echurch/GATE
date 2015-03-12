@@ -19,10 +19,10 @@
  * @ingroup emodel
  */
 
-#include <BObject.h>
-#include <Vector4D.h>
-#include <Point3D.h>
-#include <BTrack.h>
+#include <GATE/BObject.h>
+#include <GATE/Vector4D.h>
+#include <GATE/Point3D.h>
+#include <GATE/BTrack.h>
 
 namespace gate{class BParticle;}
 

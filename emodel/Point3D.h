@@ -23,7 +23,7 @@
 
 #include <Rtypes.h>
 
-#include <Environment.h>
+#include <GATE/Environment.h>
 
 namespace gate{class Point3D;}
 

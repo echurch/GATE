@@ -21,20 +21,18 @@
 
 #include<map>
 
-#include<ParamStore.h>
-#include<Messenger.h>
+#include<GATE/ParamStore.h>
+#include<GATE/Messenger.h>
 
-#include<HistoPlotter.h>
-#include<HistoFunctions.h>
+#include<GATE/HistoPlotter.h>
+#include<GATE/HistoFunctions.h>
 
 #include<TH1F.h>
 #include<TH2F.h>
 #include<TH3F.h>
 #include<TFile.h>
 #include<TObjArray.h>
-#include<TSystem.h>
 #include<TDirectory.h>
-
 
 namespace gate{class HistoManager;}
 

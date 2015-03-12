@@ -19,8 +19,8 @@
  * @ingroup emodel
  */
 
-#include <BParticle.h>
-#include <Track.h>
+#include <GATE/BParticle.h>
+#include <GATE/Track.h>
 
 namespace gate{class Particle;}
 

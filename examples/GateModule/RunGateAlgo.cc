@@ -1,4 +1,4 @@
-#include <Centella.h>
+#include <GATE/Centella.h>
 #include <GateAlgo.h>
 
 int main(){

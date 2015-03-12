@@ -6,13 +6,11 @@
 
 #include <stdlib.h>
 
-#include <RootWriter.h>
-#include <ParamStore.h>
+#include <GATE/RootWriter.h>
+#include <GATE/ParamStore.h>
 
-#include <Messenger.h>
-#include <Irene.h> // sreader class
-
-#include <TSystem.h>
+#include <GATE/Messenger.h>
+#include <GATE/Irene.h> // sreader class
 
 /**
  * @file LogManager.h

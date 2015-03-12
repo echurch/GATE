@@ -19,7 +19,7 @@
  * @ingroup emodel
  */
 
-#include <BParticle.h>
+#include <GATE/BParticle.h>
 
 namespace gate{class MCParticle;}
 

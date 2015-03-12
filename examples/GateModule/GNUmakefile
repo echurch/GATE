@@ -14,7 +14,7 @@ OBJECTS = $(filter-out RunGateAlgo.o, $(SOURCES:.cc=.o))
 
 # include options for this package
 INCFLAGS = -I.
-INCFLAGS += -I../../include
+INCFLAGS += -I../../
 
 # platform-specific options
 OSNAME          = $(shell uname -s)

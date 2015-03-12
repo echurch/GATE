@@ -4,13 +4,13 @@
 
 #include<time.h>
 
-#include <ParamStore.h>
-#include <Messenger.h>
+#include <GATE/ParamStore.h>
+#include <GATE/Messenger.h>
 
-#include <AlgoManager.h>
-#include <RunManager.h>
-#include <LogManager.h>
-#include <HistoManager.h>
+#include <GATE/AlgoManager.h>
+#include <GATE/RunManager.h>
+#include <GATE/LogManager.h>
+#include <GATE/HistoManager.h>
 
 #include<TSystem.h>
 

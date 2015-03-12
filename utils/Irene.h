@@ -15,11 +15,11 @@
 #include <vector>
 #include <iostream>
 
-#include <Error.h>
-#include <ParamStore.h>
+#include <GATE/Error.h>
+#include <GATE/ParamStore.h>
 
-#include <Utilities.h>
-#include <system_of_units.h>
+#include <GATE/Utilities.h>
+#include <GATE/system_of_units.h>
 
 /**
  * @file Irene.h

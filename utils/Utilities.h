@@ -22,9 +22,9 @@
 #include <vector>
 #include <sstream>
 
-#include <Environment.h>
-#include <system_of_units.h>
-#include <Error.h>
+#include <GATE/Environment.h>
+#include <GATE/system_of_units.h>
+#include <GATE/Error.h>
 
 using namespace std;  
 

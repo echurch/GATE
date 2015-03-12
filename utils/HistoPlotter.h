@@ -18,8 +18,8 @@
 
 #include<map>
 
-#include<ParamStore.h>
-#include<Messenger.h>
+#include<GATE/ParamStore.h>
+#include<GATE/Messenger.h>
 
 #include<TH1F.h>
 #include<TH2F.h>
@@ -28,9 +28,6 @@
 #include<TText.h>
 #include<TPaveText.h>
 #include<TCanvas.h>
-
-#include<TSystem.h>
-
 
 /**
  * \class HistoPlotter

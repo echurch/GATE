@@ -23,8 +23,8 @@
 
 #include <Rtypes.h>
 
-#include <Environment.h>
-#include <ParamStore.h>
+#include <GATE/Environment.h>
+#include <GATE/ParamStore.h>
 
 namespace gate{class BObject;}
 

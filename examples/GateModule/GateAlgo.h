@@ -1,9 +1,7 @@
 #ifndef _GateAlgo__
 #define _GateAlgo__
 
-#include <TSystem.h>
-
-#include <Centella.h>
+#include <GATE/Centella.h>
 
 class GateAlgo : public gate::IAlgo {
 

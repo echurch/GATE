@@ -21,7 +21,8 @@
 
 #include <iostream>
 #include <cmath>
-#include <Error.h>
+
+#include <GATE/Error.h>
 
 #include<Rtypes.h>
 

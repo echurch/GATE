@@ -5,15 +5,12 @@
 
 #include <stdlib.h>
 
-#include <ParamStore.h>
-
-#include <Messenger.h>
-#include <RootReader.h>
-#include <RootWriter.h>
-#include <IReader.h>
-#include <Irene.h>
-
-#include <TSystem.h>
+#include <GATE/ParamStore.h>
+#include <GATE/Messenger.h>
+#include <GATE/RootReader.h>
+#include <GATE/RootWriter.h>
+#include <GATE/IReader.h>
+#include <GATE/Irene.h>
 
 /**
  * \class EventManager

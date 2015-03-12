@@ -2,11 +2,9 @@
 #ifndef _ialgo___
 #define _ialgo___
 
-#include <Event.h>
-#include <ParamStore.h>
-#include <Messenger.h>
-
-#include <TSystem.h>
+#include <GATE/Event.h>
+#include <GATE/ParamStore.h>
+#include <GATE/Messenger.h>
 
 /**
  * @file IAlgo.h

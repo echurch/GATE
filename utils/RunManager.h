@@ -3,13 +3,11 @@
 #define _run_man___
 
 
-#include <ParamStore.h>
-#include <Run.h>
+#include <GATE/ParamStore.h>
+#include <GATE/Run.h>
 //#include <dst.h>
 
-#include <EventManager.h>
-
-#include<TSystem.h>
+#include <GATE/EventManager.h>
 
 /**
  * \class RunManager
@@ -22,7 +20,7 @@
  *
  * \version $Revision: 1.0 $
  * 
- * Contact: pau.novella@ciemat.es
+ * Contact: pau.novella@ific.uv.es
  *
  */
 

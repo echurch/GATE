@@ -94,7 +94,7 @@ for line in fileinput.input(files,inplace=1):
 
     line = line.replace('GATELIBDIR = ../../lib',"GATELIBDIR = $(GATE_DIR)/lib")
 
-    line = line.replace('-I../../include',"-I$(GATE_DIR)/include")
+    line = line.replace('-I../../',"-I$(GATE_DIR)")
 
     line = line.replace('#pragma link C++ class gate::GateAlgo+;','')#!!!
 

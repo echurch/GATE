@@ -1,13 +1,12 @@
 #ifndef __RooWriter_h
 #define __RooWriter_h
 
-#include<TSystem.h>
 #include<TFile.h> 
 #include<TTree.h> 
 
-#include<IWriter.h> 
-#include<Event.h> 
-#include<Run.h> 
+#include<GATE/IWriter.h> 
+#include<GATE/Event.h> 
+#include<GATE/Run.h> 
 
 /**
  * @file RootWriter.h

@@ -21,8 +21,8 @@
  * @ingroup emodel
  */
 
-#include <BObject.h>
-#include <Point3D.h>
+#include <GATE/BObject.h>
+#include <GATE/Point3D.h>
 
 namespace gate{class BHit;}
 

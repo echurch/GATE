@@ -19,10 +19,8 @@
  * @ingroup IO
  */
 
-#include<Event.h> 
-#include<Run.h> 
-
-#include<TSystem.h>
+#include<GATE/Event.h> 
+#include<GATE/Run.h> 
 
 namespace gate{
 

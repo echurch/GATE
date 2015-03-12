@@ -19,8 +19,8 @@
  * @ingroup emodel
  */
 
-#include <Hit.h>
-#include <BTrack.h>
+#include <GATE/Hit.h>
+#include <GATE/BTrack.h>
 
 namespace gate{class Track;}
 
