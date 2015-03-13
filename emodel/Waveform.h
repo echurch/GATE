@@ -69,6 +69,9 @@ class gate::Waveform : public gate::BObject {
 
   //! Set data (not passed by reference, but copied!!!)
   void SetData(std::vector< std::pair<unsigned short,unsigned short> > data);
+  
+  //! Clear data (once reconstructed, wf might not be needed)
+  void ClearData();
 
   //! Add  pulse
   void AddPulse(gate::Pulse* p);
@@ -97,6 +100,8 @@ inline int gate::Waveform::GetSensorID() const { return _sensorID; }
 
 inline void gate::Waveform::SetSampWidth(double w) { _sampWidth = w; }
 inline double gate::Waveform::GetSampWidth() const { return _sampWidth; }
+
+inline void gate::Waveform::ClearData(){ _data.clear(); }
 
 std::ostream& operator << (std::ostream& s, const gate::Waveform& wf); 
 
