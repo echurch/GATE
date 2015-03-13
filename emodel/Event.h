@@ -53,11 +53,23 @@ public:
   void SetEventID(int id);
   
   //! retrieve trigger time
-  int GetTime() const;
+  double GetTime() const;
   
   //! set trigger time
   void SetTime(double t);
+
+  //! set reconstructed energy
+  void SetEnergy(double e);
   
+  //! get reconstructed enrgy
+  double GetEnergy() const;
+  
+  //! set MC energy
+  void SetMCEnergy(double e);
+  
+  //! get MC enrgy
+  double GetMCEnergy() const;
+
   //! retrieve all hits
   std::vector<gate::Hit*> GetHits() const;
   
@@ -67,7 +79,6 @@ public:
   // add hit
   void AddHit(gate::SENSORTYPE, gate::Hit*);
   
-
   //! retrieve all hit maps
   std::vector<gate::HitMap*> GetHitMaps() const;
   
@@ -138,8 +149,14 @@ private:
   gate::STATE _state;
   
    //! trigger time
-  int  _time;
+  double  _time;
   
+  //! MC energy
+  double _MCenergy;
+  
+  //! Reconstructed
+  double _energy;
+
   /*------- Reconstructed info -----*/
 
   //! multimap of hits: key specificies type (PMT, SiPM, ...)
@@ -176,9 +193,17 @@ inline int gate::Event::GetEventID() const { return this->GetID(); }
 
 inline void gate::Event::SetEventID(int id) { this->SetID(id); }
 
-inline int gate::Event::GetTime() const { return _time; }
+inline double gate::Event::GetTime() const { return _time; }
 
 inline void gate::Event::SetTime(double t) { _time = t; }
+
+inline double gate::Event::GetEnergy() const { return _energy; }
+
+inline void gate::Event::SetEnergy(double e) { _energy = e; }
+
+inline double gate::Event::GetMCEnergy() const { return _MCenergy; }
+
+inline void gate::Event::SetMCEnergy(double e) { _MCenergy = e; }
 
 inline void gate::Event::SetState(gate::STATE st) { _state = st; }
 
