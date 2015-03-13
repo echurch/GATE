@@ -45,11 +45,17 @@ class gate::BTrack : public gate::BObject {
   //! retrieve mirror tracks 
   const std::vector<gate::BTrack*>& GetMirrorTracks() const; 
   
+  //! get total energy (sum of hit amplitudes)
+  double GetEnergy() const;
+
   //! print event into stream
   void Info(std::ostream& s=std::cout) const;
 
  protected:
   
+  //! total energy of the track
+  double _energy;
+
   //! vector of hits
   std::vector<BHit*> _hits;
   
