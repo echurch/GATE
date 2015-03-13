@@ -200,7 +200,7 @@ void gate::Centella::finalize(){
 void gate::Centella::execute(){
 //*************************************************************
   
-  _m.message("+++ Executing Centella +++",gate::VERBOSE);
+  _m.message("+++ Executing Centella +++",gate::NORMAL);
   
   if (_log) {this->runLog(); this->dataLog(); }
   
