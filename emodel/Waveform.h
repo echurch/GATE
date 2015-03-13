@@ -41,11 +41,14 @@ class gate::Waveform : public gate::BObject {
   //! sensor ID
   int _sensorID;
   
+  //! sampling width
+  double _sampWidth;
+
   //! pulses found within waveform
   std::vector<gate::Pulse*> _pulses;
   
   //! waveform data, as a vector of pair<time,amp>
-  std::vector< std::pair<double,double> > _data;
+  std::vector< std::pair<unsigned short, unsigned short> > _data;
 
  public:
   
@@ -55,11 +58,17 @@ class gate::Waveform : public gate::BObject {
   //! Set sensor ID 
   void SetSensorID(int id);
   
-  //! Get  data
-  const std::vector< std::pair<double,double> >& GetData() const;
+  //! Get sampling width
+  double GetSampWidth() const;
 
-  //! Set datat (not passed by reference, but copied!!!)
-  void SetData(std::vector< std::pair<double,double> > data);
+  //! Set sampling width
+  void SetSampWidth(double w);
+  
+  //! Get  data
+  const std::vector< std::pair<unsigned short,unsigned short> >& GetData()const;
+
+  //! Set data (not passed by reference, but copied!!!)
+  void SetData(std::vector< std::pair<unsigned short,unsigned short> > data);
 
   //! Add  pulse
   void AddPulse(gate::Pulse* p);
@@ -75,7 +84,7 @@ class gate::Waveform : public gate::BObject {
     };
 
 
-inline const std::vector< std::pair<double,double> >& 
+inline const std::vector< std::pair<unsigned short,unsigned short> >& 
   gate::Waveform::GetData() const {return _data;}
 
 inline void gate::Waveform::AddPulse( gate::Pulse* p) { 
@@ -85,6 +94,9 @@ gate::Waveform::GetPulses() const { return _pulses;}
 
 inline void gate::Waveform::SetSensorID(int id ) { _sensorID = id; }
 inline int gate::Waveform::GetSensorID() const { return _sensorID; }
+
+inline void gate::Waveform::SetSampWidth(double w) { _sampWidth = w; }
+inline double gate::Waveform::GetSampWidth() const { return _sampWidth; }
 
 std::ostream& operator << (std::ostream& s, const gate::Waveform& wf); 
 

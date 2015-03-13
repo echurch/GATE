@@ -17,7 +17,7 @@ gate::Waveform::~Waveform() {
 }
 
 //=======================================================
-void gate::Waveform::SetData(std::vector< std::pair<double,double> >data){
+void gate::Waveform::SetData(std::vector< std::pair<unsigned short,unsigned short> >data){
 //=======================================================
     _data=data;}
 
