@@ -88,7 +88,6 @@ public:
   // add hit map
   void AddHitMap(gate::SENSORTYPE, gate::HitMap*);
   
-
   //! retrieve all clusters
   std::vector<gate::Cluster*> GetClusters() const;
   
@@ -136,6 +135,12 @@ public:
   
   //! Set  state 
   void SetState(gate::STATE state);
+  
+  //! get total energy from tracks
+  double GetTracksEnergy(gate::SENSORTYPE type) const;
+  
+  //! get total energy from MC tracks
+  double GetMCTracksEnergy() const;
 
   //! print event into stream
   void Info(std::ostream& s=std::cout) const;

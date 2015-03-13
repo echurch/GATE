@@ -249,6 +249,29 @@ void gate::Event::AddMCParticle(gate::MCParticle* p) {
     _tparts.push_back(p);
 }
 
+
+//=======================================================
+double gate::Event::GetTracksEnergy(gate::SENSORTYPE type) const{
+//=======================================================
+    
+    double energy = 0;
+    typedef std::multimap<gate::SENSORTYPE, gate::Track*>::const_iterator I;
+    std::pair<I,I> b = _tracks.equal_range(type);
+    for(I i=b.first; i !=b.second; ++i){ energy += i->second->GetEnergy(); }
+    return energy;
+
+}
+
+//=======================================================
+double gate::Event::GetMCTracksEnergy() const{
+//=======================================================
+    
+    double energy = 0;
+    typedef std::vector<gate::MCTrack*>::const_iterator ITT;
+    for(ITT i=_ttracks.begin(); i !=_ttracks.end(); ++i){energy+=(*i)->GetEnergy();}    
+    return energy;
+}
+
 //=======================================================
 void gate::Event::Info(std::ostream& s) const{
 //=======================================================
