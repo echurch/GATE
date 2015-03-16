@@ -59,6 +59,9 @@ class gate::Pulse : public gate::BObject {
   
   //! maximum amplitude  time
   double _mTime;
+
+  //! maximum amplitude 
+  double _mAmp;
   
   //! pulse type
   gate::SIGNALTYPE _sType;
@@ -107,6 +110,12 @@ class gate::Pulse : public gate::BObject {
   //! Set maximum amplitude time
   void SetMaxTime(double t);
 
+  //! Get maximum ADC
+  int GetMaxADC() const;
+  
+  //! Set maximum ADC 
+  void SetMaxADC(int a);
+
   //! Set pulse type (S1 or S2)
   void SetSignalType(gate::SIGNALTYPE type);
   
@@ -118,7 +127,7 @@ class gate::Pulse : public gate::BObject {
   
  private:
 
-  ClassDef(gate::Pulse,1)
+  ClassDef(gate::Pulse,2)
 };
 
 inline void gate::Pulse::SetSensorID(int id ) { _sensorID = id; }
@@ -141,6 +150,9 @@ inline double gate::Pulse::GetEndTime() const { return _eTime; }
 
 inline void gate::Pulse::SetMaxTime(double t) {  _mTime = t; }
 inline double gate::Pulse::GetMaxTime() const { return _mTime; }
+
+inline void gate::Pulse::SetMaxADC(int a ) { _mAmp = a; }
+inline int gate::Pulse::GetMaxADC() const { return _mAmp; }
 
 inline void gate::Pulse::SetSignalType(gate::SIGNALTYPE t) {  _sType = t; }
 inline gate::SIGNALTYPE gate::Pulse::GetSignalType() const { return _sType; }
