@@ -5,7 +5,8 @@ ClassImp(gate::Pulse);
 //=======================================================
 gate::Pulse::Pulse() : BObject(),_sensorID(-1), _wform(0),
                        _state(gate::NOSTATE), _amp(0),
-                       _sTime(-1),  _eTime(-1), _mTime(-1),_sType(gate::NOSIGTYPE){
+                       _sTime(-1),  _eTime(-1), _mTime(-1),
+                       _mAmp(-1),_sType(gate::NOSIGTYPE){
 //=======================================================
 }
 
