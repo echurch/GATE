@@ -4,7 +4,7 @@ ClassImp(gate::MCParticle)
 
 //===========================================================
 gate::MCParticle::MCParticle() : BParticle(), 
-    _G4(0), _primary(true),_mother(0), _creatProc(""){
+    _G4(0), _primary(true), _creatProc(""),_mother(0){
 //===========================================================
   
 }
