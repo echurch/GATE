@@ -47,6 +47,12 @@ class gate::BTrack : public gate::BObject {
   
   //! get total energy (sum of hit amplitudes)
   double GetEnergy() const;
+  
+  //! get track length
+  double GetLength() const;
+  
+  //! set track length
+  void SetLength(double l);
 
   //! print event into stream
   void Info(std::ostream& s=std::cout) const;
@@ -55,6 +61,9 @@ class gate::BTrack : public gate::BObject {
   
   //! total energy of the track
   double _energy;
+  
+  //! track length
+  double _length;
 
   //! vector of hits
   std::vector<BHit*> _hits;
@@ -74,6 +83,9 @@ inline void gate::BTrack::AddMirrorTrack(gate::BTrack* trk)
 
 inline const std::vector<gate::BTrack*>& gate::BTrack::GetMirrorTracks() const
 { return _mtracks;}
+
+inline void gate::BTrack::SetLength(double l){_length=l;}
+inline double gate::BTrack::GetLength() const{return _length;}
 
 std::ostream& operator << (std::ostream& s, const gate::BTrack& btrk) ;
 
