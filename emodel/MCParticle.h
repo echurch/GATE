@@ -56,6 +56,12 @@ class gate::MCParticle : public gate::BParticle {
   
   //! get primary flag
   bool IsPrimary() const;
+  
+  //! set creation process
+  void SetCreatorProc(std::string p);
+  
+  //! get creation process
+  std::string GetCreatorProc()const;
 
   //! print info
   void Info(std::ostream& s=std::cout) const;
@@ -68,13 +74,8 @@ protected:
   //! primary particle?
   bool _primary;
   
-  //! particle name ? ( BPartiicle?)
-
-  //! creation process ?
-  
-  //! initial volume ?
-
-  //! final volume ?
+  //! creation process 
+  std::string _creatProc;
 
   //! pointer to its mother particle if any
   const gate::MCParticle* _mother;
@@ -106,6 +107,9 @@ inline  void  gate::MCParticle::AddDaughter(gate::MCParticle* dau){
 inline const std::vector<const gate::MCParticle*>&  
 gate::MCParticle::GetDaughters() const{ return _daughters;}
   
+inline void gate::MCParticle::SetCreatorProc(std::string p){ _creatProc=p;}
+inline std::string gate::MCParticle::GetCreatorProc()const{return _creatProc;}
+
 std::ostream& operator << (std::ostream& s, const gate::MCParticle& p);
 
 #endif
