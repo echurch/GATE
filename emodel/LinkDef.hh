@@ -77,6 +77,7 @@
 #pragma link C++ function operator << (ostream& , const gate::Point3D&);
 #pragma link C++ function operator << (ostream& , const gate::Vector4D&);
 #pragma link C++ function operator << (ostream& , const gate::Run&);
+#pragma link C++ function operator << (ostream& , const gate::Sensor&);
 #pragma link C++ function operator << (ostream& , const gate::Event&);
 #pragma link C++ function operator << (ostream& , const gate::Hit&);
 #pragma link C++ function operator << (ostream& , const gate::Cluster&);

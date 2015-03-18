@@ -115,8 +115,8 @@ namespace gate{
   inline double Sensor::GetBaselineSig() const {return _blineSig;}
   inline void Sensor::SetBaselineSig(double s){ _blineSig = s;}
   
-  std::ostream& operator << (std::ostream& s, const Sensor& sens); 
+}// end of namespace gate
 
-};// end of namespace gate
+std::ostream& operator << (std::ostream& s, const gate::Sensor& sens); 
 
 #endif
