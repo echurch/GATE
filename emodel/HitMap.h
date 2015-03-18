@@ -62,6 +62,12 @@ class gate::HitMap : public BObject {
 
   //! get time sample size
   double GetTimeSample() const; 
+
+  //! set amplitude
+  void SetAmplitude(double a); 
+
+  //! get amplitude
+  double GetAmplitude() const; 
   
   //! get time map
   std::vector<std::map<int,double> > GetTimeMap() const;
@@ -86,6 +92,9 @@ class gate::HitMap : public BObject {
 
   //! signal type (S1 or S2)
   gate::SIGNALTYPE _sType;
+  
+  //! signal amplitude 
+  double _amp;
 
   //! signal start  time
   double _sTime;
@@ -113,6 +122,9 @@ inline gate::SENSORTYPE gate::HitMap::GetSensorType() const{ return _sensType;}
 
 inline void gate::HitMap::SetSignalType(gate::SIGNALTYPE t) { _sType = t; }
 inline gate::SIGNALTYPE gate::HitMap::GetSignalType()  const { return _sType;}
+
+inline void gate::HitMap::SetAmplitude(double a) { _amp = a; }
+inline double gate::HitMap::GetAmplitude() const { return _amp;}
 
 inline void gate::HitMap::SetStartTime(double t) { _sTime = t; }
 inline double gate::HitMap::GetStartTime()  const { return _sTime;}
