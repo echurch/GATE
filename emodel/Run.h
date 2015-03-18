@@ -19,7 +19,7 @@
  * @ingroup emodel
  */
 
-#include <GATE/BObject.h>
+#include <GATE/Sensor.h>
 
 namespace gate{class Run;}
 
@@ -46,8 +46,13 @@ class gate::Run : BObject{
 
   //! run end time
   int _eTime;
+  
+  //! vector of sensors
+  std::map<int,gate::Sensor*> _sensors;
+  //std::multimap<gate::SENSORTYPE, gate::Sensor*> _sensors;
+  
 
- public:
+public:
   
   //! Get data type
   gate::DATATYPE GetDataType() const;
@@ -73,6 +78,19 @@ class gate::Run : BObject{
   //! Set run end time
   void SetEndTime(double t);
   
+  //! retrieve all sensors
+  //std::vector<gate::Sensor*> GetSensors() const;
+  
+  //! retrieve tracks of specific type
+  //std::vector<gate::Sensor*> GetSensors(gate::SENSORTYPE type) const;
+  
+  //! add sensor
+  void AddSensor(gate::Sensor*);
+  //void AddSensor(gate::SENSORTYPE, gate::Sensor*);
+  
+  //! get sensor 
+  const gate::Sensor* GetSensor(int id); 
+
   //! print event into stream
   void Info(std::ostream& s=std::cout) const;
 
@@ -91,6 +109,9 @@ inline double gate::Run::GetStartTime() const { return _sTime;}
 
 inline void gate::Run::SetEndTime(double t){ _eTime = t;}
 inline double gate::Run::GetEndTime() const { return _eTime;}
+
+inline const gate::Sensor* gate::Run::GetSensor(int id){
+  return _sensors[id];}
 
 std::ostream& operator << (std::ostream& s, const gate::Run& run); 
 
