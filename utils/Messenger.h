@@ -301,17 +301,26 @@ namespace gate{
     
     ///Sends an error message
     inline void error(const std::string msg) const{
-      this->message(msg,MUTE,"ERROR");
+      this->message(msg,MUTE,"<<ERROR>>");
     }
-    
     
     ///Sends an error message followed by variable d
     template <class T> inline
     void error(const std::string msg, const T& d) const{
-      this->message(msg,d,MUTE,"ERROR");
+      this->message(msg,d,MUTE,"<<ERROR>>");
+    }
     
-  }
-
+    ///Sends an error message
+    inline void warning(const std::string msg) const{
+      this->message(msg,MUTE,"<<WARNING>>");
+    }
+    
+    ///Sends an error message followed by variable d
+    template <class T> inline
+    void warning(const std::string msg, const T& d) const{
+      this->message(msg,d,MUTE,"<<WARNING>>");
+    }
+    
     ClassDef(Messenger,1)
 
   };
