@@ -78,7 +78,7 @@ public:
   bool isNewFile();
 
   /// write event into file
-  void write(gate::Event& e){EventManager::write(e);} 
+  void write(gate::Event& e){EventManager::write(e);} // why like this?
   
   /// write run info into file
   void write(gate::Run&); 

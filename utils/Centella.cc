@@ -51,6 +51,7 @@ gate::Centella::Centella(gate::VLEVEL vl):RunManager(vl),AlgoManager(vl){
     this->init();
     
     _hman = new gate::HistoManager("centella_histos.root",vl);
+
 }
 
 
@@ -74,8 +75,6 @@ gate::Centella::Centella(const gate::ParamStore& data, gate::VLEVEL vl):
 
     _hman = new gate::HistoManager(data,vl);
 
-    
-
 }
 
 //*************************************************************
@@ -96,7 +95,7 @@ void gate::Centella::init(){
 
   _fevent = 0;
 
-
+  _run = 0;
 }
 
 
@@ -203,10 +202,12 @@ void gate::Centella::execute(){
   _m.message("+++ Executing Centella +++",gate::NORMAL);
   
   if (_log) {this->runLog(); this->dataLog(); }
-  
+   
   // run algorithms
   
   if (_fevent){ 
+    
+    if (this->isNewFile()){ this->updateRunInfo(); }
 
     this->read(_fevent-1); // serach for event in dst list
 
@@ -223,7 +224,9 @@ void gate::Centella::execute(){
     if (i%_ndebug==0 && i) 
       
       _m.message("Number of events read:",i,gate::NORMAL);
-
+    
+    if (this->isNewFile()){ this->updateRunInfo(); }
+    
     gate::Event& e = this->read(); 
 	
     bool algoOK = gate::AlgoManager::execute(e);
@@ -236,6 +239,19 @@ void gate::Centella::execute(){
   
   if (_log) { this->algoLog(); }
  
+  
+}
+
+
+//*************************************************************
+void gate::Centella::updateRunInfo(){
+//*************************************************************
+  
+   _m.message("New file: reading run info...",gate::NORMAL);
+
+   if (this->getNumRunsFile()) _run =  &this->read_irun_info();
+   
+   else{ _m.warning("No Run info in file"); _run = 0; };
   
 }
 

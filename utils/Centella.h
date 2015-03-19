@@ -117,6 +117,9 @@ public:
 	    (greader->eof(ievent+1) && cifile==nifiles));
   }
   
+  //! get current run info
+  inline gate::Run& getRun(){return *_run;}
+
   //! clear
   inline void clear(){AlgoManager::clear();EventManager::clear();}
   
@@ -153,6 +156,8 @@ protected:
   //! create tiem log
   void timeLog();
   
+  //! update run info 
+  void updateRunInfo();
 
 protected:
 
@@ -164,6 +169,9 @@ protected:
 
   /// histogram manager
   gate::HistoManager* _hman;
+  
+  //! current run info
+  gate::Run* _run;
 
 private:
   
