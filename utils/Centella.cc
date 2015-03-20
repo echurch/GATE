@@ -182,9 +182,7 @@ void gate::Centella::finalize(){
 
   RunManager::finalize();
     
-  if (_log) { this->nevtLog(); 
-    
-    _logMan.write();}
+  if (_log) { this->nevtLog(); _logMan.write();}
   
   else _m.message("not writing log file",gate::NORMAL);
 
@@ -233,7 +231,12 @@ void gate::Centella::execute(){
     
     //TODO: abort or keep on according to return value
     
-    if (_write && algoOK) gate::EventManager::write(e); 
+    if (_write && algoOK){ 
+      
+      gate::EventManager::write(e); 
+      
+      if (this->isLastEventFile()) gate::RunManager::write(*_run); 
+    }
     
   }
   
