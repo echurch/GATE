@@ -159,7 +159,7 @@ void gate::HistoManager::divide2D(std::string name1,std::string name2,std::strin
 void gate::HistoManager::save(){
 //************************************************************************  
   
-  _m.message("++ Histogram Manager saving histos...",gate::NORMAL);
+  _m.message("Saving histos in:",_hfile,gate::NORMAL);
   
   _ofile = new TFile(_hfile.c_str(),"RECREATE");
   
