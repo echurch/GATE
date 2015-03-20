@@ -27,6 +27,11 @@ void gate::Event::Clear() {
     for(I i=_hits.begin(); i !=_hits.end(); ++i){ delete i->second; }
     _hits.clear();
     
+    // destroy signals
+    typedef std::vector<gate::Signal*>::const_iterator IS;
+    for(IS i=_signals.begin(); i !=_signals.end(); ++i){ delete *i; }
+    _signals.clear();
+
     // destroy hit maps
     typedef std::multimap<gate::SENSORTYPE, gate::HitMap*>::const_iterator II;
     for(II i=_hmaps.begin(); i !=_hmaps.end(); ++i){ delete i->second; }
@@ -42,6 +47,11 @@ void gate::Event::Clear() {
     for(IT i=_tracks.begin(); i !=_tracks.end(); ++i){ delete i->second; }
     _tracks.clear();
     
+    // destroy particles
+    typedef std::vector<gate::Particle*>::const_iterator IP;
+    for(IP i=_parts.begin(); i !=_parts.end(); ++i){ delete *i; }
+    _parts.clear();
+    
     // destroy true tracks
     typedef std::vector<gate::MCTrack*>::const_iterator ITT;
     for(ITT i=_ttracks.begin(); i !=_ttracks.end(); ++i){ delete *i; }
@@ -52,9 +62,9 @@ void gate::Event::Clear() {
     for(ITH i=_thits.begin(); i !=_thits.end(); ++i){ delete *i; }
     _thits.clear();
           
-     // destroy true particles
-    typedef std::vector<gate::MCParticle*>::const_iterator IP;
-    for(IP i=_tparts.begin(); i !=_tparts.end(); ++i){ delete *i; }
+    // destroy true particles
+    typedef std::vector<gate::MCParticle*>::const_iterator ITP;
+    for(ITP i=_tparts.begin(); i !=_tparts.end(); ++i){ delete *i; }
     _tparts.clear();
     
     _time = -1;
@@ -192,6 +202,22 @@ void gate::Event::AddTrack(gate::SENSORTYPE type, gate::Track* trk){
 
 
 //=======================================================
+std::vector<gate::Signal*> gate::Event::GetSignals() const{
+//=======================================================
+  
+    return _signals;
+}
+
+//=======================================================
+void gate::Event::AddSignal(gate::Signal* sig) {
+//=======================================================
+  
+    _signals.push_back(sig);
+}
+
+
+
+//=======================================================
 std::vector<gate::Particle*> gate::Event::GetParticles() const{
 //=======================================================
   
@@ -283,13 +309,15 @@ void gate::Event::Info(std::ostream& s) const{
     s << " Event time: " << this->GetTime()<< std::endl;
 
     s << " Number of hits: " << this->GetHits().size()<< std::endl;
-
+    
     s << " Number of true hits: " << this->GetMCHits().size()<< std::endl;
-
+    
     s << " Number of tracks: " << this->GetTracks().size()<< std::endl;
 
     s << " Number of true tracks: " << this->GetMCTracks().size()<< std::endl;
     
+    s << " Number of signals: " << this->GetSignals().size()<< std::endl;
+
     s << " Number of particles: " << this->GetParticles().size()<< std::endl;
 
     s << " Number of true particles: " << this->GetMCParticles().size()<< std::endl;

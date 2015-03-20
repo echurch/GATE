@@ -6,9 +6,9 @@
  *
  * @class HitMap
  *
- * @brief Time hit-map for reconstructed signals 
+ * @brief Time hit-map for reconstructed sensor plane signals 
  *
- * @details For each reconstructed signal time, contains a time vector with waveform amplitudes for each sensor. Such data are represeted as a vector of <sensor,amplitude> maps. Waveform zones with  no amplitue are rejected.
+ * @details For each reconstructed signal in a sensor plane, contains a time vector with waveform amplitudes for each sensor. Such data are represeted as a vector of <sensor,amplitude> maps. Waveform zones with  no amplitue are rejected.
  *    
  * @author Pau Novella  <pau.novella@ific.uv.es>, from Art product
  *

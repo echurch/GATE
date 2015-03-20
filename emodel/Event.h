@@ -27,6 +27,7 @@
 #include <GATE/BObject.h>
 #include <GATE/Hit.h>
 #include <GATE/HitMap.h>
+#include <GATE/Signal.h>
 #include <GATE/Cluster.h>
 #include <GATE/Track.h>
 #include <GATE/Particle.h>
@@ -105,7 +106,13 @@ public:
   
   // add track
   void AddTrack(gate::SENSORTYPE, gate::Track*);
+    
+  //! retrieve signals
+  std::vector<gate::Signal*> GetSignals() const;
   
+  // add track
+  void AddSignal(gate::Signal*);
+
   //! retrieve all recosntructed particles
   std::vector<gate::Particle*> GetParticles() const;
     
@@ -169,12 +176,15 @@ private:
 
   //! multimap of hit-maps
   std::multimap<gate::SENSORTYPE, gate::HitMap*> _hmaps;
-  
+
   //! multimap of clusters: key specificies type (PMT, SiPM, ...)
   std::multimap<gate::SENSORTYPE, gate::Cluster*> _clusters;
   
   //! multimap of tracks
   std::multimap<gate::SENSORTYPE, gate::Track*> _tracks;
+  
+  //! vector of signals
+  std::vector<gate::Signal*> _signals;
   
   //! vector of reconstructed particles in this event
   std::vector<gate::Particle*> _parts;
