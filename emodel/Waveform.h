@@ -44,6 +44,12 @@ class gate::Waveform : public gate::BObject {
   //! sampling width
   double _sampWidth;
 
+  //! baseline mean
+  double _baseline;
+  
+  //! baseline RMS
+  double _baselineRMS;
+
   //! pulses found within waveform
   std::vector<gate::Pulse*> _pulses;
   
@@ -64,8 +70,23 @@ class gate::Waveform : public gate::BObject {
   //! Set sampling width
   void SetSampWidth(double w);
   
+  //! Get baseline
+  double GetBaseline() const;
+
+  //! Set baseline
+  void SetBaseline(double b);
+  
+  //! Get baseline RMS
+  double GetBaselineRMS() const;
+
+  //! Set baseline RMS
+  void SetBaselineRMS(double rms);
+
   //! Get  data
   const std::vector< std::pair<unsigned short,unsigned short> >& GetData()const;
+  
+  //! Get amlitude  in time sample isamp
+  double GetAmplitude(unsigned short isamp) const;
 
   //! Set data (not passed by reference, but copied!!!)
   void SetData(std::vector< std::pair<unsigned short,unsigned short> > data);
@@ -82,7 +103,7 @@ class gate::Waveform : public gate::BObject {
   //! print pulse into stream
   void Info(std::ostream& s=std::cout) const;
 
-  ClassDef(gate::Waveform,1)
+  ClassDef(gate::Waveform,2)
 
     };
 
@@ -100,6 +121,12 @@ inline int gate::Waveform::GetSensorID() const { return _sensorID; }
 
 inline void gate::Waveform::SetSampWidth(double w) { _sampWidth = w; }
 inline double gate::Waveform::GetSampWidth() const { return _sampWidth; }
+
+inline void gate::Waveform::SetBaseline(double b) { _baseline = b; }
+inline double gate::Waveform::GetBaseline() const { return _baseline; }
+
+inline void gate::Waveform::SetBaselineRMS(double rms) { _baselineRMS = rms; }
+inline double gate::Waveform::GetBaselineRMS() const { return _baselineRMS; }
 
 inline void gate::Waveform::ClearData(){ _data.clear(); }
 
