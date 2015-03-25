@@ -53,6 +53,12 @@ class gate::BTrack : public gate::BObject {
   
   //! set track length
   void SetLength(double l);
+  
+  //! set extreme hits (as index in vector of hits)
+  void SetExtrems(size_t first, size_t last);
+
+  //! get extreme hits 
+  const std::pair<gate::BHit*,gate::BHit*>& GetExtrems() const;
 
   //! print event into stream
   void Info(std::ostream& s=std::cout) const;
@@ -68,9 +74,12 @@ class gate::BTrack : public gate::BObject {
   //! vector of hits
   std::vector<BHit*> _hits;
   
+  //! track extrems ("first" and "last" hits in track) 
+  std::pair<BHit*,BHit*> _exhits;
+
   //! vector of mirror tracks
   std::vector<BTrack*> _mtracks;
-
+  
   ClassDef(gate::BTrack,1)
 
 };
@@ -86,6 +95,8 @@ inline const std::vector<gate::BTrack*>& gate::BTrack::GetMirrorTracks() const
 
 inline void gate::BTrack::SetLength(double l){_length=l;}
 inline double gate::BTrack::GetLength() const{return _length;}
+
+inline const std::pair<gate::BHit*,gate::BHit*>& gate::BTrack::GetExtrems()const{ return _exhits; }
 
 std::ostream& operator << (std::ostream& s, const gate::BTrack& btrk) ;
 

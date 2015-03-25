@@ -14,9 +14,25 @@ double gate::BTrack::GetEnergy() const{
 
     std::vector<gate::BHit*>::const_iterator it;
 
-    for (it = _hits.begin() ; it !=_hits.end(); ++it){ energy+=(*it)->GetAmplitude(); }
+    for (it = _hits.begin(); it!=_hits.end();++it){
+      
+      energy+=(*it)->GetAmplitude();}
 
     return energy;
+}
+
+//=======================================================
+void gate::BTrack::SetExtrems(size_t first, size_t last){
+//=======================================================
+  
+  gate::Assert( (first<_hits.size() && last<_hits.size()),
+		
+		__FILE__,__LINE__,
+		
+		gate::internal_logic("Hit index out of bounds"));
+
+  std::pair<gate::BHit*,gate::BHit*>(_hits[first],_hits[last]); 
+  
 }
 
 //=======================================================
