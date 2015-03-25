@@ -25,7 +25,7 @@ namespace gate{
   
   //! Signal type: S1 or S2
   enum SIGNALTYPE{ NOSIGTYPE, S1,S2};
-  
+ 
   //! hit state: raw, recosntructed or calibrated
   enum STATE{ NOSTATE, RAW,RECOED,CALIB};
   
@@ -35,7 +35,9 @@ namespace gate{
   //! verbosity levels
   enum VLEVEL{MUTE,CONCISE,NORMAL,WARNING,DETAILED,
               VERBOSE,VVERBOSE,DUMP};
-
+  
+  //! Event type
+  enum EVENTTYPE{ NOETYPE, BB2NU, BB0NU, BKG }; // Bi214, Tl208,...
 
 } // end of gate namespace
 
