@@ -221,12 +221,9 @@ namespace gate{
     /// set the verbosity level 
     void set_info_level(std::string info){
       if(info == "MUTE")  info_level(MUTE);
-      if(info == "CONCISE")  info_level(CONCISE);
       if(info == "NORMAL")  info_level(NORMAL);
-      if(info == "WARNING")  info_level(WARNING);
       if(info == "DETAILED")  info_level(DETAILED);
       if(info == "VERBOSE")  info_level(VERBOSE);
-      if(info == "VVERBOSE")  info_level(VVERBOSE);
       if(info == "DUMP")  info_level(DUMP);
     }
     
@@ -279,7 +276,7 @@ namespace gate{
       Assert(!m_dataFile.fail(),__FILE__,__LINE__,
 	     internal_logic("Failed to open file "+m_fileName)); 
 
-      m_.message("sreader initialized with file ",m_fileName,VVERBOSE);
+      m_.message("sreader initialized with file ",m_fileName,VERBOSE);
 
     }
     
@@ -302,7 +299,7 @@ namespace gate{
       m_groupName = groupName;
       panel_.close_switch("group");
 
-      m_.message("sreader initialized with group ",m_groupName,VVERBOSE);
+      m_.message("sreader initialized with group ",m_groupName,VERBOSE);
 
     }
 
@@ -330,7 +327,7 @@ namespace gate{
       Assert(panel_.switch_closed("group"),__FILE__,__LINE__,
 	     internal_logic("--sreader group not set to reader"));    	
       
-      m_.message("reading...",VVERBOSE);
+      m_.message("reading...",VERBOSE);
       
       std::string dummy;
 
@@ -356,9 +353,9 @@ namespace gate{
 	
 	if (!words.size()) continue;
 
-	m_.message("new group: ",words[0],VVERBOSE);
+	m_.message("new group: ",words[0],VERBOSE);
 	if (compare_string(words[0],m_groupName)== false){
-	  m_.message("sreader skipping group ",words[0],VVERBOSE);
+	  m_.message("sreader skipping group ",words[0],VERBOSE);
 	  continue;}
 
 	if (words.size()==1) continue;//vector elements from another gorup
@@ -370,7 +367,7 @@ namespace gate{
 	
 	if (words.size()==5) unit = unit_from_string(words[4]); 
 
-	m_.message(" test = ",test,"label = ", label,VVERBOSE);
+	m_.message(" test = ",test,"label = ", label,VERBOSE);
       
 	Assert(test =="S" || test =="D" || test =="I" 
 	       || test =="V"

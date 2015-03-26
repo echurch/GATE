@@ -78,7 +78,7 @@ bool gate::IAlgo::run(gate::Event& evt){
   bool ok2 = this->execute(evt);
   
   if (!ok2) _m.message("++ execute failed:",this->getAlgoName(),
-		       gate::VVERBOSE);
+		       gate::DUMP);
 
   bool ok3 = this->finalize();
   

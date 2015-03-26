@@ -299,7 +299,7 @@ size_t gate::EventManager::getNumEventsFile(){
 bool gate::EventManager::status(){
 //*************************************************************    
     
-    m.message("EventManager status function",gate::VVERBOSE);
+    m.message("EventManager status function",gate::VERBOSE);
     if (!greader) return false;
     bool file=true;
     bool end = greader->eof(ievent+1);

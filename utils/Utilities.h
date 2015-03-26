@@ -33,13 +33,10 @@ namespace gate{
   inline VLEVEL to_VLEVEL(int level ){
 
     if(level == 0)  return MUTE;
-    if(level == 1)  return CONCISE;
-    if(level == 2)  return NORMAL;
-    if(level == 3)  return WARNING;
-    if(level == 4)  return DETAILED;
-    if(level == 5)  return VERBOSE;
-    if(level == 6)  return VVERBOSE;
-    if(level == 7)  return DUMP;
+    if(level == 1)  return NORMAL;
+    if(level == 2)  return DETAILED;
+    if(level == 3)  return VERBOSE;
+    if(level == 4)  return DUMP;
     else return NORMAL;
   
   }
@@ -47,12 +44,9 @@ namespace gate{
   inline VLEVEL get_info_level( string info )
   {
     if(info == "MUTE")  return MUTE;
-    if(info == "CONCISE")  return CONCISE;
     if(info == "NORMAL")  return NORMAL;
-    if(info == "WARNING")  return WARNING;
     if(info == "DETAILED")  return DETAILED;
     if(info == "VERBOSE")  return VERBOSE;
-    if(info == "VVERBOSE")  return VVERBOSE;
     if(info == "DUMP")  return DUMP;
     else return NORMAL;
   }
