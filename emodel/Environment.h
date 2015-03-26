@@ -33,8 +33,7 @@ namespace gate{
   enum SENSORTYPE{ NOSTYPE,SIPM,PMT,TPC};
   
   //! verbosity levels
-  enum VLEVEL{MUTE,CONCISE,NORMAL,WARNING,DETAILED,
-              VERBOSE,VVERBOSE,DUMP};
+  enum VLEVEL{MUTE,NORMAL,DETAILED,VERBOSE,DUMP};
   
   //! Event type
   enum EVENTTYPE{ NOETYPE, BB2NU, BB0NU, BKG }; // Bi214, Tl208,...
