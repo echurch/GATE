@@ -148,7 +148,19 @@ public:
   
   //! get total energy from MC tracks
   double GetMCTracksEnergy() const;
+  
+  //! get recoed event type
+  gate::EVENTTYPE GetEventType() const;
+  
+  //! get recoed event type
+  void SetEventType(gate::EVENTTYPE);
 
+   //! get MC event type
+  gate::EVENTTYPE GetMCEventType() const;
+  
+  //! get MC event type
+  void SetMCEventType(gate::EVENTTYPE);
+  
   //! print event into stream
   void Info(std::ostream& s=std::cout) const;
   
@@ -160,6 +172,12 @@ private:
   //! state 
   gate::STATE _state;
   
+  //! Recoed event type 
+  gate::EVENTTYPE _etype;
+  
+  //! MC event type 
+  gate::EVENTTYPE _emctype;
+  
    //! trigger time
   double  _time;
   
@@ -168,7 +186,7 @@ private:
   
   //! Reconstructed
   double _energy;
-
+  
   /*------- Reconstructed info -----*/
 
   //! multimap of hits: key specificies type (PMT, SiPM, ...)
@@ -223,6 +241,14 @@ inline void gate::Event::SetMCEnergy(double e) { _MCenergy = e; }
 inline void gate::Event::SetState(gate::STATE st) { _state = st; }
 
 inline gate::STATE gate::Event::GetState() const { return _state; }
+
+inline void gate::Event::SetEventType(gate::EVENTTYPE type) { _etype = type; }
+
+inline gate::EVENTTYPE gate::Event::GetEventType() const { return _etype; }
+
+inline void gate::Event::SetMCEventType(gate::EVENTTYPE type) { _emctype = type; }
+
+inline gate::EVENTTYPE gate::Event::GetMCEventType() const { return _emctype; }
 
 std::ostream& operator << (std::ostream& s, const gate::Event& evt); 
 

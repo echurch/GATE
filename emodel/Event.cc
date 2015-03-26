@@ -69,6 +69,16 @@ void gate::Event::Clear() {
     
     _time = -1;
     
+    _state = gate::NOSTATE;
+  
+    _etype = gate::NOETYPE;
+  
+    _emctype = gate::NOETYPE;
+  
+    _MCenergy = -1;
+ 
+    _energy = -1;
+
     BObject::Clear();
 
 }
