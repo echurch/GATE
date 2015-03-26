@@ -19,6 +19,7 @@
 #include <GATE/ParamStore.h>
 
 #include <GATE/Utilities.h>
+#include <GATE/GateUtilities.h>
 #include <GATE/system_of_units.h>
 
 /**
