@@ -3,8 +3,12 @@
 ClassImp(gate::BTrack)
 
 //=======================================================
-gate::BTrack::BTrack() : BObject(), _length(0){}
+gate::BTrack::BTrack() : BObject(), _length(0){
 //=======================================================
+
+  _exhits = std::make_pair((BHit*) NULL,(BHit*) NULL);// ???
+
+}
 
 //=======================================================
 double gate::BTrack::GetEnergy() const{
