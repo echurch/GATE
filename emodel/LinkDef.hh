@@ -66,6 +66,7 @@
 #pragma link C++ class std::pair<unsigned short,unsigned short>;
 
 //! links for pairs are requested by art (warnings) !!!!???!!??!!!!!--
+#pragma link C++ class std::pair<gate::BHit*,gate::BHit*>
 #pragma link C++ class std::pair<gate::SENSORTYPE,gate::Hit*>;
 #pragma link C++ class std::pair<gate::SENSORTYPE,gate::HitMap*>;
 #pragma link C++ class std::pair<gate::SENSORTYPE,gate::Cluster*>;
