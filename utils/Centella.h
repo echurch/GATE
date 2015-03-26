@@ -119,6 +119,9 @@ public:
   
   //! get current run info
   inline gate::Run& getRun(){return *_run;}
+  
+  //! set current run info
+  inline void setRun(gate::Run* run){_run = run;}
 
   //! clear
   inline void clear(){AlgoManager::clear();EventManager::clear();}
