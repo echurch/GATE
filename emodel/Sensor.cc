@@ -28,17 +28,17 @@ void gate::Sensor::Info(std::ostream& s) const{
   
   BObject::Info(s);
   
-  s << " Sensor type" << this->GetType()<< std::endl;
+  s << " Sensor type: " << this->GetType()<< std::endl;
 
-  s << " Sensor gain" << this->GetGain()<< std::endl;
+  s << " Sensor gain: " << this->GetGain()<< std::endl;
   
-  s << " Sensor gain sigma" << this->GetGainSig()<< std::endl;
+  s << " Sensor gain sigma: " << this->GetGainSig()<< std::endl;
   
-  s << " Sensor baseline" << this->GetBaseline()<< std::endl;
+  s << " Sensor baseline: " << this->GetBaseline()<< std::endl;
   
   s << " Sensor baseline noise" << this->GetBaselineSig()<< std::endl;
   
-  s << " Sensor is dead?" << this->IsDead()<< std::endl;
+  s << " Sensor dead: " << this->IsDead()<< std::endl;
 
   s << "=============================="<< std::endl;
 }

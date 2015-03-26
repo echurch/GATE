@@ -55,7 +55,7 @@ void gate::Run::AddSensor(gate::Sensor* sens){
 void gate::Run::Info(std::ostream& s) const{
 //=======================================================
 
-    s << "============= Event instance =========="<< std::endl;
+    s << "============== Run instance ==========="<< std::endl;
     
     s << " Run number: " << this->GetRunID()<< std::endl;
 
