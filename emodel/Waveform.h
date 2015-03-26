@@ -77,10 +77,10 @@ class gate::Waveform : public gate::BObject {
   void SetBaseline(double b);
   
   //! Get baseline RMS
-  double GetBaselineRMS() const;
+  double GetBaselineSig() const;
 
   //! Set baseline RMS
-  void SetBaselineRMS(double rms);
+  void SetBaselineSig(double rms);
 
   //! Get  data
   const std::vector< std::pair<unsigned short,unsigned short> >& GetData()const;
@@ -125,8 +125,8 @@ inline double gate::Waveform::GetSampWidth() const { return _sampWidth; }
 inline void gate::Waveform::SetBaseline(double b) { _baseline = b; }
 inline double gate::Waveform::GetBaseline() const { return _baseline; }
 
-inline void gate::Waveform::SetBaselineRMS(double rms) { _baselineRMS = rms; }
-inline double gate::Waveform::GetBaselineRMS() const { return _baselineRMS; }
+inline void gate::Waveform::SetBaselineSig(double rms) { _baselineRMS = rms; }
+inline double gate::Waveform::GetBaselineSig() const { return _baselineRMS; }
 
 inline void gate::Waveform::ClearData(){ _data.clear(); }
 

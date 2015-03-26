@@ -42,13 +42,15 @@ double gate::Waveform::GetAmplitude(unsigned short isamp) const{
 void gate::Waveform::Info(std::ostream& s) const{
 //=======================================================
 
-    s << "=========Waveform instance ======="<< std::endl;
+    s << "========= Waveform instance ======="<< std::endl;
     
     BObject::Info(s);
 
-    s << "TO BE IMPLEMENTED"<< std::endl;
+    s << "Baseline mean: "<<this->GetBaseline()<< std::endl;
     
-    s << "=============================="<< std::endl;
+    s << "Baseline noise: "<<this->GetBaselineSig()<< std::endl;
+    
+    s << "==================================="<< std::endl;
 
 }
 
