@@ -22,7 +22,7 @@ void gate::Pulse::Info(std::ostream& s) const{
     
     s << " Sensor state" << this->GetState()<< std::endl;
 
-    s << " Pulse amplitdue" << this->GetAmplitude()<< std::endl;
+    s << " Pulse charge" << this->GetCharge()<< std::endl;
 
     s << " Pulse start time" << this->GetStartTime()<< std::endl;
 

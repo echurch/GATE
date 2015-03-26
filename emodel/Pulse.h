@@ -86,11 +86,11 @@ class gate::Pulse : public gate::BObject {
   //! Set state (RAW, RECOED, CALIB)
   void  SetState(gate::STATE st);
 
-  //! Get amplitude 
-  double GetAmplitude() const;
+  //! Get charge 
+  double GetCharge() const;
   
    //! Set amplitude 
-  void SetAmplitude(double amp);
+  void SetCharge(double q);
 
   //! Get start time
   double GetStartTime() const;
@@ -139,8 +139,8 @@ inline const gate::Waveform& gate::Pulse::GetWaveform() const {return *_wform;}
 inline void gate::Pulse::SetState(gate::STATE st) { _state = st;}
 inline gate::STATE gate::Pulse::GetState() const { return _state; }
 
-inline void gate::Pulse::SetAmplitude(double amp ){ _amp = amp; }
-inline double gate::Pulse::GetAmplitude() const { return _amp;}
+inline void gate::Pulse::SetCharge(double q ){ _amp = q; }
+inline double gate::Pulse::GetCharge() const { return _amp;}
 
 inline void gate::Pulse::SetStartTime(double t) {  _sTime = t; }
 inline double gate::Pulse::GetStartTime() const { return _sTime; }
