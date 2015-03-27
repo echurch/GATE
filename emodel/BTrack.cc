@@ -26,7 +26,7 @@ double gate::BTrack::GetEnergy() const{
 }
 
 //=======================================================
-void gate::BTrack::SetExtrems(size_t first, size_t last){
+void gate::BTrack::SetExtremes(size_t first, size_t last){
 //=======================================================
   
   gate::Assert( (first<_hits.size() && last<_hits.size()),
