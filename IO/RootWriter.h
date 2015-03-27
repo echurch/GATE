@@ -51,6 +51,9 @@ namespace gate{
    
     //! build tree and assign branches
     void buildTree();
+
+    //! build run tree and assign branches
+    void buildRunTree();
       
   public:    
     

@@ -55,8 +55,13 @@ void gate::RootReader::Print(){
 
 
 gate::Run& gate::RootReader::GetRunInfo(size_t i){
-  
-  if (_runTree) _runTree->GetEntry(i);
+
+  if (_runTree){ 
+
+    if (i<_runTree->GetEntriesFast()) _runTree->GetEntry(i); 
+    
+    else _run = 0;
+  }
 
   return *_run;
   

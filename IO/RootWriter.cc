@@ -4,7 +4,7 @@ ClassImp(gate::RootWriter)
 
 gate::RootWriter::RootWriter() :   IWriter(), 
   
-  _tf(0) , _evtTree(0),_evt(0), _run(0) {
+  _tf(0) , _evtTree(0), _runTree(0),_evt(0), _run(0) {
 
 }
   
@@ -12,22 +12,26 @@ void  gate::RootWriter::buildTree(){
   
     _evt = 0;
     
-    _run = 0;
-    
     _evtTree= new TTree("EVENT","GATE event tree");
     
-    _runTree= new TTree("RUN","GATE run tree");
-
     TTree::SetBranchStyle(1);
     
     _evtTree->Branch("event","gate::Event",&_evt,32000,0);
-
-    _runTree->Branch("run","gate::Run",&_run);
     
     // TOFIX: Potential memory leak!!!!!!
     // cannot modify or delete tree, don't know reason
    
   }
+
+void  gate::RootWriter::buildRunTree(){
+  
+  _run = 0;
+  
+  _runTree= new TTree("RUN","GATE run tree");
+  
+  _runTree->Branch("run","gate::Run",&_run);
+
+}
 
 
 gate::RootWriter::~RootWriter(){
@@ -47,7 +51,9 @@ void gate::RootWriter::Open(std::string fileName, std::string option){
     _tf = new TFile(fileName.c_str(),option.c_str());
     
     this->buildTree();
-    
+
+    this->buildRunTree();
+
     _isOpen=true;
     
 }
@@ -62,9 +68,13 @@ void gate::RootWriter::Close(){
     _tf->Write();
     
     _tf->Close();
-    
+   
     _isOpen=false;
     
+    //delete _evtTree; _evtTree = 0;
+
+    //delete _runTree; _runTree = 0;
+
   }  
  
 void gate::RootWriter::Write(Event& evt){
@@ -76,10 +86,10 @@ void gate::RootWriter::Write(Event& evt){
 }
   
 void gate::RootWriter::WriteRunInfo(Run& runInfo){
-       
-    _run = &runInfo;
     
-    _runTree->Fill();
+  _run = &runInfo;
+    
+  _runTree->Fill();
      
 }
   
