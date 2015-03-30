@@ -19,7 +19,7 @@ namespace gate{
   
   inline double distance(gate::BHit* hit1, gate::BHit* hit2) {
         
-    return distance(hit2->GetPosition(),hit2->GetPosition());
+    return distance(hit1->GetPosition(),hit2->GetPosition());
   }
 
   inline double distance(gate::BTrack* track1, gate::BTrack* track2){
