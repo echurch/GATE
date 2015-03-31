@@ -35,8 +35,9 @@ void gate::BTrack::SetExtremes(size_t first, size_t last){
 		
 		gate::internal_logic("Hit index out of bounds"));
 
-  std::pair<gate::BHit*,gate::BHit*>(_hits[first],_hits[last]); 
-  
+  _exhits.first  = _hits[first];
+  _exhits.second = _hits[last];
+
 }
 
 //=======================================================
