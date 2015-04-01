@@ -6,7 +6,10 @@ ClassImp(gate::Signal)
 gate::Signal::Signal() : BObject(), _sType(gate::NOSIGTYPE),
   _amp(-1),_sTime(-1),_eTime(-1) {
 //=======================================================
-
+  
+  _chitmap = NULL;
+  
+  _ahitmap = NULL;
 }
 
 //=======================================================

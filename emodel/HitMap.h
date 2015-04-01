@@ -113,7 +113,7 @@ class gate::HitMap : public BObject {
   //! print pulse into stream
   void Info(std::ostream& s=std::cout) const;
   
-  ClassDef(HitMap,1)
+  ClassDef(gate::HitMap,1)
 
 };
 
