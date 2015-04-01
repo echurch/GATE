@@ -92,7 +92,7 @@ class gate::Signal : public BObject {
   //! hitmap for anode
   const gate::HitMap* _ahitmap;
 
-  ClassDef(Signal,1)
+  ClassDef(gate::Signal,1)
 
 };
 
