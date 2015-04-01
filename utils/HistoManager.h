@@ -59,8 +59,9 @@ class gate::HistoManager : public gate::HistoPlotter{
   //! book 1D histogram
   void h1(std::string name,std::string title,size_t nbin,double fb,double lb);
   //! book 2D histogram
-  void h2(std::string name,std::string title,size_t nxbin,
-	  double fbx,double lbx,size_t nybin,size_t fby,size_t lby);
+  void h2(std::string name, std::string title,
+          size_t nxbin, double fbx, double lbx,
+          size_t nybin, double fby, double lby);
   
   //! fill histogram
   void fill(std::string name,double value);

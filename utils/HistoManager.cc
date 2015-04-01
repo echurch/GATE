@@ -80,9 +80,9 @@ void gate::HistoManager::h1(std::string name,std::string title,size_t nbin,
 }
 
 //************************************************************************  
-void gate::HistoManager::h2(std::string name,std::string title,size_t nxbin,
-		      double fbx,double lbx,size_t nybin,
-		      size_t fby,size_t lby){
+void gate::HistoManager::h2(std::string name, std::string title,
+                            size_t nxbin, double fbx, double lbx,
+                            size_t nybin, double fby, double lby) {
 //************************************************************************  
   
   _hdir->cd();
