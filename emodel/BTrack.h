@@ -45,8 +45,14 @@ class gate::BTrack : public gate::BObject {
   //! retrieve mirror tracks 
   const std::vector<gate::BTrack*>& GetMirrorTracks() const; 
   
-  //! get total energy (sum of hit amplitudes)
+  //! get total energy of the track (as defined elsewhere)
   double GetEnergy() const;
+
+  //! set total energy of the track
+  void SetEnergy(double E);
+
+  //! get total energy as the sum of hit amplitudes
+  double GetHitsEnergy() const;
   
   //! get track length
   double GetLength() const;
@@ -92,6 +98,9 @@ inline void gate::BTrack::AddMirrorTrack(gate::BTrack* trk)
 
 inline const std::vector<gate::BTrack*>& gate::BTrack::GetMirrorTracks() const
 { return _mtracks;}
+
+inline void gate::BTrack::SetEnergy(double e){_energy=e;}
+inline double gate::BTrack::GetEnergy() const{return _energy;}
 
 inline void gate::BTrack::SetLength(double l){_length=l;}
 inline double gate::BTrack::GetLength() const{return _length;}

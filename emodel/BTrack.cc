@@ -11,7 +11,7 @@ gate::BTrack::BTrack() : BObject(), _length(0){
 }
 
 //=======================================================
-double gate::BTrack::GetEnergy() const{
+double gate::BTrack::GetHitsEnergy() const{
 //=======================================================
     
     double energy = 0;
@@ -46,6 +46,8 @@ void gate::BTrack::Info(std::ostream& s) const{
 
     BObject::Info(s);
      
+    s << "Energy:" << this->GetEnergy()<< std::endl;
+
     s << "List of hits:" << std::endl;
     
     std::vector<gate::BHit*>::const_iterator it;
