@@ -9,21 +9,61 @@
 
 namespace gate{
   
+  inline string ResumedInfo(gate::Event* event) {
+    //! too heavy for an inline function ???
+    std::vector <gate::MCParticle*> mcParts = event->GetMCParticles();
+    std::vector <gate::Track*> tracks = event->GetTracks();
+
+    std::string info = "** Event " + to_string(event->GetID()) + "   Type: " + to_string(event->GetMCEventType()) + "\n";
+    info += "*  True Edep: " + to_string(event->GetMCEnergy()) + "   from " + to_string(mcParts.size()) + " MC Particles\n";
+    info += "*  Rec. Edep: " + to_string(event->GetEnergy()) + "   from " + to_string(tracks.size()) + " Rec Tracks\n";
+
+    info += "*  MC Particles:\n";
+    for (auto mcPart: mcParts) {
+        info += "   ID: " + to_string(mcPart->GetID()) + "  " + mcPart->fetch_sstore("name");
+        std::string motherIDstr = "null";
+        if (not mcPart->IsPrimary()) motherIDstr = to_string(mcPart->GetMother().GetID());
+        info += "  by " + mcPart->GetCreatorProc() + "  MotherID: " + motherIDstr;
+        info += "  Edep: " + to_string(mcPart->GetTracks()[0]->GetEnergy()) + "\n";
+        Point3D iniPos = mcPart->GetInitialVtx();
+        Point3D decPos = mcPart->GetFinalVtx();
+        info += "          IniVtx: (" + to_string(iniPos.x()) + ", " + to_string(iniPos.y()) + ", " + to_string(iniPos.z()) + ")";
+        info += "  DecVtx: (" + to_string(decPos.x()) + ", " + to_string(decPos.y()) + ", " + to_string(decPos.z()) + ")";
+        info += "\n";
+    }
+
+    // ADD TRACKS INFO ////////////
+    info += "*  Rec Tracks:\n";
+    for (auto track: tracks) {
+        info += "   ID: " + to_string(track->GetID()) + "  Edep: " + to_string(track->GetEnergy()) + "\n";
+        Point3D iniPos = track->GetExtremes().first->GetPosition();
+        Point3D decPos = track->GetExtremes().second->GetPosition();
+        info += "          IniVtx: (" + to_string(iniPos.x()) + ", " + to_string(iniPos.y()) + ", " + to_string(iniPos.z()) + ")";
+        info += "  DecVtx: (" + to_string(decPos.x()) + ", " + to_string(decPos.y()) + ", " + to_string(decPos.z()) + ")";
+        info += "\n";
+    }
+
+
+    info += '\n';
+    return info;
+  }
+
+
+
   inline double distance(gate::Point3D p1, gate::Point3D p2) {
-    
     double distx = p1.x() - p2.x();
     double disty = p1.y() - p2.y();
     double distz = p1.z() - p2.z();
     return sqrt(distx*distx + disty*disty + distz*distz);
   }
+
   
-  inline double distance(gate::BHit* hit1, gate::BHit* hit2) {
-        
+  inline double distance(gate::BHit* hit1, gate::BHit* hit2) {      
     return distance(hit1->GetPosition(),hit2->GetPosition());
   }
 
-  inline double distance(gate::BTrack* track1, gate::BTrack* track2){
-    
+
+  inline double distance(gate::BTrack* track1, gate::BTrack* track2){    
     //! too heavy for an inline function ???
 
     std::vector<BHit*> hits1 = track1->GetHits(); 
@@ -50,16 +90,16 @@ namespace gate{
     return distances[0];
   }
 
-  inline VLEVEL to_VLEVEL(int level ){
 
+  inline VLEVEL to_VLEVEL(int level ){
     if(level == 0)  return MUTE;
     if(level == 1)  return NORMAL;
     if(level == 2)  return DETAILED;
     if(level == 3)  return VERBOSE;
     if(level == 4)  return DUMP;
     else return NORMAL;
-  
   }
+
 
   inline VLEVEL get_info_level( string info )
   {
@@ -71,6 +111,7 @@ namespace gate{
     else return NORMAL;
   }
   
+
   inline double unit_from_string(string sunit){
     //! TO BE REVIEWED !!!!!
     double unit = 0.;

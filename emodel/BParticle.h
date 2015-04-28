@@ -70,7 +70,7 @@ class gate::BParticle : public gate::BObject {
   const Point3D& GetInitialVtx() const ; 
     
   //! get destruction vertex
-  const Point3D& SetFinalVtx() const ; 
+  const Point3D& GetFinalVtx() const ; 
   
   //!set pdg code
   void SetPDG(int pdg);
@@ -146,7 +146,7 @@ inline  const gate::Vector4D& gate::BParticle::GetFinalMom() const { return _fp4
 
 inline  const gate::Point3D& gate::BParticle::GetInitialVtx() const { return _ivtx;} 
 
-inline  const gate::Point3D& gate::BParticle::SetFinalVtx() const { return _fvtx;} 
+inline  const gate::Point3D& gate::BParticle::GetFinalVtx() const { return _fvtx;} 
 
 inline  void gate::BParticle::SetPDG(int pdg) { _pdg = pdg; }
 
