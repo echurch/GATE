@@ -75,6 +75,7 @@
 #pragma link C++ class std::pair<std::string, vector<std::string> >;
 #pragma link C++ class std::pair<std::string, vector<double> >;//std::vector!!!
 #pragma link C++ class std::pair<std::string, vector<int> >;//std::vector!!!
+#pragma link C++ class std::pair<int, gate::Sensor* >;
 //------------------------------------------------------------------
 
 #pragma link C++ function operator << (ostream& , const gate::Point3D&);
