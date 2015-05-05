@@ -11,19 +11,39 @@ GATE is divided into three main folders, compiled as individual libraries: emode
 DEPENDENCIES:
 ==================================================================
 
-Root v5.
+Root v5
+
+gcc >= 4.8
 
 ==================================================================
 INSTALL:
 ==================================================================
 
-Just use "make". Linux and Mac-OS supported. 
+Just use "make". Linux and Mac-OS supported. It might be convenient to define the location of GATE with an environment variable (ex: export GATE_DIR=/usr/local/GATE).
 
 ==================================================================
 DOCUMENTATION:
 ==================================================================
 
 "make doxygen" will create doxygen documentation within doc folder
+
+==================================================================
+EXAMPLES:
+==================================================================
+
+GATE provides two kinds of examples:
+
+    1) simple ROOT macros: $GATE_DIR/examples/mac
+    2) A template library (or module) for analysis of GATE events: $GATE_DIR/examples/GateModule
+
+
+GATE analysis modules:
+
+GATE provides an script to create template analysis libraries. Typing
+
+./$GATE_DIR/bin/myGateModule MyModule
+
+will generate a c++ library (named MyModule in this example) with a dummy algorithm where the user can implement the desired analysis. Such algorihtm can be executed as a ROOT macro (MyModule/mac) or with the executable file created upon compilation in MyModule/bin. Finally, the algorithm can be also executed within the Centella framework (see corresponding notebook).
 
 ==================================================================
 AUTHORS:
