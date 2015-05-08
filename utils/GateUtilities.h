@@ -24,11 +24,13 @@ namespace gate{
         std::string motherIDstr = "null";
         if (not mcPart->IsPrimary()) motherIDstr = to_string(mcPart->GetMother().GetID());
         info += "  by " + mcPart->GetCreatorProc() + "  MotherID: " + motherIDstr;
-        info += "  Edep: " + to_string(mcPart->GetTracks()[0]->GetEnergy()) + "\n";
-        Point3D iniPos = mcPart->GetInitialVtx();
-        Point3D decPos = mcPart->GetFinalVtx();
-        info += "          IniVtx: (" + to_string(iniPos.x()) + ", " + to_string(iniPos.y()) + ", " + to_string(iniPos.z()) + ")";
-        info += "  DecVtx: (" + to_string(decPos.x()) + ", " + to_string(decPos.y()) + ", " + to_string(decPos.z()) + ")";
+        if (mcPart->GetTracks().size() > 0) {
+            info += "  Edep: " + to_string(mcPart->GetTracks()[0]->GetEnergy()) + "\n";
+            Point3D iniPos = mcPart->GetInitialVtx();
+            Point3D decPos = mcPart->GetFinalVtx();
+            info += "          IniVtx: (" + to_string(iniPos.x()) + ", " + to_string(iniPos.y()) + ", " + to_string(iniPos.z()) + ")";
+            info += "  DecVtx: (" + to_string(decPos.x()) + ", " + to_string(decPos.y()) + ", " + to_string(decPos.z()) + ")";
+        }
         info += "\n";
     }
 
