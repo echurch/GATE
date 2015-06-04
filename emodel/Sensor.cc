@@ -17,6 +17,8 @@ gate::Sensor::Sensor() : BObject(){
   _gain = gate::nan;
 
   _gainSig = gate::nan;
+  
+  _pos = gate::Point3D();
 
 }
 
@@ -39,6 +41,8 @@ void gate::Sensor::Info(std::ostream& s) const{
   s << " Sensor baseline noise" << this->GetBaselineSig()<< std::endl;
   
   s << " Sensor dead: " << this->IsDead()<< std::endl;
+
+  s << " Sensor position: " << this->GetPosition()<< std::endl;
 
   s << "=============================="<< std::endl;
 }

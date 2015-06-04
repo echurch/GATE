@@ -20,6 +20,7 @@
  */
 
 #include<GATE/BObject.h>
+#include<GATE/Point3D.h>
 
 namespace gate{
   
@@ -69,6 +70,12 @@ namespace gate{
     //! set baseline noise
     void SetBaselineSig(double s);
     
+    //! get position
+    gate::Point3D GetPosition() const;
+    
+    //! set position
+    void SetPosition(gate::Point3D p);
+
     //! print sensor into stream
     void Info(std::ostream& s=std::cout) const;
 
@@ -91,7 +98,10 @@ namespace gate{
 
     //! gain sigma
     double _gainSig;
-   
+    
+    //! position
+    gate::Point3D _pos;
+
     ClassDef(Sensor,1)
 
   };
@@ -114,6 +124,9 @@ namespace gate{
 
   inline double Sensor::GetBaselineSig() const {return _blineSig;}
   inline void Sensor::SetBaselineSig(double s){ _blineSig = s;}
+
+  inline gate::Point3D Sensor::GetPosition() const {return _pos;}
+  inline void Sensor::SetPosition(gate::Point3D p){ _pos = p;}
   
 }// end of namespace gate
 
