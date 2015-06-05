@@ -47,11 +47,16 @@ class gate::Run : BObject{
   //! run end time
   int _eTime;
   
+  //! drif velocity
+  double _driftVel;
+
+  //! electron lifetime
+  double _eLifeTime;
+
   //! vector of sensors
   std::map<int,gate::Sensor*> _sensors;
   //std::multimap<gate::SENSORTYPE, gate::Sensor*> _sensors;
   
-
 public:
   
   //! Get data type
@@ -77,7 +82,19 @@ public:
 
   //! Set run end time
   void SetEndTime(double t);
+
+  //! Get drift velocity
+  double GetDriftVel() const;
+
+  //! Set drift velocity
+  void SetDriftVel(double v);
+
+  //! Get e- life-time
+  double GetElecLifeTime() const;
   
+  //! Set e- life-time
+  void SetElecLifeTime(double t);
+
   //! retrieve all sensors
   //std::vector<gate::Sensor*> GetSensors() const;
   
@@ -90,7 +107,7 @@ public:
   
   //! get sensor 
   const gate::Sensor* GetSensor(int id); 
-
+  
   //! print event into stream
   void Info(std::ostream& s=std::cout) const;
 
@@ -109,6 +126,12 @@ inline double gate::Run::GetStartTime() const { return _sTime;}
 
 inline void gate::Run::SetEndTime(double t){ _eTime = t;}
 inline double gate::Run::GetEndTime() const { return _eTime;}
+
+inline void gate::Run::SetDriftVel(double v){ _driftVel = v;}
+inline double gate::Run::GetDriftVel() const { return _driftVel;}
+
+inline void gate::Run::SetElecLifeTime(double v){ _eLifeTime = v;}
+inline double gate::Run::GetElecLifeTime() const { return _eLifeTime;}
 
 inline const gate::Sensor* gate::Run::GetSensor(int id){
   return _sensors[id];}
