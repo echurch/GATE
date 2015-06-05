@@ -84,6 +84,8 @@ class gate::HitMap : public BObject {
   //! get channels id in isample time slice
   std::vector<double> GetAmplitudes(size_t isample) const;
   
+  //! get number of time samples in hitmap
+  size_t GetNsamp() const;
 
  private:
   
@@ -142,6 +144,8 @@ inline std::vector<std::map<int,double> > gate::HitMap::GetTimeMap() const {
 
 inline std::map<int,double> gate::HitMap::GetMap(size_t isample) const { 
   return _tmap[isample];}
+
+inline size_t gate::HitMap::GetNsamp() const { return _tmap.size(); }
 
 std::ostream& operator << (std::ostream& s, const gate::HitMap& hmap); 
 
