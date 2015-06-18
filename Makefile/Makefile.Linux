@@ -4,6 +4,6 @@ LD              = g++
 LDFLAGS         += -Wl,-rpath,$(NEMLIBDIR)/lib 
 FFLAGS          += -Wall -std=c++11
 FLDFLAGS        += -lstdc++ -shared 
-CXXFLAGS        += -g  -Wall  -D_NEM_$(shell uname -s)_ -std=c++11
+CXXFLAGS        += -g  -Wall  -D_NEM_$(shell uname -s)_ #-std=c++11
 SOMAKER         = g++
 SOFLAGS         = -g -shared 

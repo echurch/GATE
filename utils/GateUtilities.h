@@ -19,7 +19,10 @@ namespace gate{
     info += "*  Rec. Edep: " + to_string(event->GetEnergy()) + "   from " + to_string(tracks.size()) + " Rec Tracks\n";
 
     info += "*  MC Particles:\n";
-    for (auto mcPart: mcParts) {
+    std::vector<gate::MCParticle*>::const_iterator IP;
+    for(IP=mcParts.begin(); IP !=mcParts.end(); ++IP){ 
+    //for (auto mcPart: mcParts) {
+      const gate::MCParticle* mcPart = *IP; 
         info += "   ID: " + to_string(mcPart->GetID()) + "  " + mcPart->fetch_sstore("name");
         std::string motherIDstr = "null";
         if (not mcPart->IsPrimary()) motherIDstr = to_string(mcPart->GetMother().GetID());
@@ -36,7 +39,10 @@ namespace gate{
 
     // ADD TRACKS INFO ////////////
     info += "*  Rec Tracks:\n";
-    for (auto track: tracks) {
+    std::vector<gate::Track*>::const_iterator IT;
+    for(IT=tracks.begin(); IT !=tracks.end(); ++IT){ 
+      //for (auto track: tracks) {
+      gate::Track* track = *IT;
         info += "   ID: " + to_string(track->GetID()) + "  Edep: " + to_string(track->GetEnergy()) + "\n";
         Point3D iniPos = track->GetExtremes().first->GetPosition();
         Point3D decPos = track->GetExtremes().second->GetPosition();
