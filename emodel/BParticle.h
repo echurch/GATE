@@ -60,17 +60,36 @@ class gate::BParticle : public gate::BObject {
   //! set destruction vertex
   void SetFinalVtx(double x, double y, double z); 
   
+  //! set creation vertex
+  void SetInitialVtx(gate::Vector4D); 
+  
+  //! set creation vertex
+  void SetInitialVtx(double x, double y, double z, double t); 
+  
+  //! set destruction vertex
+  void SetFinalVtx(gate::Vector4D); 
+  
+  //! set destruction vertex
+  void SetFinalVtx(double x, double y, double z, double t); 
+  
+
   //! get initial momentum
   const gate::Vector4D& GetInitialMom() const ; 
   
   //! get final momentum
   const gate::Vector4D& GetFinalMom() const; 
     
-  //! get creation vertex
-  const Point3D& GetInitialVtx() const ; 
+  //! get creation vertex 4D (xyz+time)
+  const Vector4D& GetInitialVtx4D() const ; 
     
-  //! get destruction vertex
-  const Point3D& GetFinalVtx() const ; 
+  //! get destruction vertex 4D (xzt+time)
+  const Vector4D& GetFinalVtx4D() const ; 
+
+  //! get creation vertex 
+  Point3D GetInitialVtx() const ; 
+    
+  //! get destruction vertex 
+  Point3D GetFinalVtx() const ; 
   
   //!set pdg code
   void SetPDG(int pdg);
@@ -99,10 +118,10 @@ protected:
   int _pdg;
 
   //! creation vertex
-  gate::Point3D _ivtx;
+  gate::Vector4D _ivtx;
 
   //! decay/stopping vertex
-  gate::Point3D _fvtx;
+  gate::Vector4D _fvtx;
 
   //! initial momentum
   gate::Vector4D _ip4;
@@ -129,24 +148,39 @@ inline  void gate::BParticle::SetFinalMom(gate::Vector4D v4){ _fp4=v4; }
 
 inline  void gate::BParticle::SetFinalMom(double x, double y, double z, double p){
   _fp4 = gate::Vector4D(x,y,z,p);}
+
   
-inline  void gate::BParticle::SetInitialVtx(gate::Point3D v){ _ivtx = v;}
+inline  void gate::BParticle::SetInitialVtx(gate::Point3D v){_ivtx.SetCoord3D(v);}
 
 inline  void gate::BParticle::SetInitialVtx(double x, double y, double z){
-  _ivtx=gate::Point3D(x,y,z);}
+  _ivtx.SetCoord3D(gate::Point3D(x,y,z));}
 
-inline  void gate::BParticle::SetFinalVtx(gate::Point3D v) { _fvtx = v;}
+inline  void gate::BParticle::SetFinalVtx(gate::Point3D v){_fvtx.SetCoord3D(v);}
 
 inline   void gate::BParticle::SetFinalVtx(double x, double y, double z){
-  _fvtx=gate::Point3D(x,y,z);}
+  _fvtx.SetCoord3D(gate::Point3D(x,y,z));}
+
+inline  void gate::BParticle::SetInitialVtx(gate::Vector4D v){_ivtx = v;}
+
+inline  void gate::BParticle::SetInitialVtx(double x, double y, double z, double t){
+  _ivtx = gate::Vector4D(x,y,z,t);}
+
+inline  void gate::BParticle::SetFinalVtx(gate::Vector4D v){_fvtx = v;}
+
+inline   void gate::BParticle::SetFinalVtx(double x, double y, double z, double t){
+  _fvtx = gate::Vector4D(x,y,z,t);}
 
 inline  const gate::Vector4D& gate::BParticle::GetInitialMom() const {return _ip4;} 
 
 inline  const gate::Vector4D& gate::BParticle::GetFinalMom() const { return _fp4;} 
 
-inline  const gate::Point3D& gate::BParticle::GetInitialVtx() const { return _ivtx;} 
+ inline  gate::Point3D gate::BParticle::GetInitialVtx() const { return _ivtx.GetCoord3D();} 
 
-inline  const gate::Point3D& gate::BParticle::GetFinalVtx() const { return _fvtx;} 
+ inline  gate::Point3D gate::BParticle::GetFinalVtx() const { return _fvtx.GetCoord3D();} 
+
+ inline  const gate::Vector4D& gate::BParticle::GetInitialVtx4D() const { return _ivtx;} 
+
+ inline  const gate::Vector4D& gate::BParticle::GetFinalVtx4D() const { return _fvtx;}
 
 inline  void gate::BParticle::SetPDG(int pdg) { _pdg = pdg; }
 
