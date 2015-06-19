@@ -23,6 +23,7 @@
 #include <cmath>
 
 #include <GATE/Error.h>
+#include <GATE/Point3D.h>
 
 #include<Rtypes.h>
 
@@ -49,32 +50,32 @@ namespace gate{
     virtual ~Vector4D(){};
 
     //! constructor with coordinates and time/energy
-    Vector4D(double x, double y, double z,double t): 
-      _x(x),_y(y),_z(z),_t(t){}
+    Vector4D(double cx, double cy, double cz,double ct): 
+      _x(cx),_y(cy),_z(cz),_t(ct){}
 
     //! constructor with coordinates
-    Vector4D(double x, double y, double z): 
-      _x(x),_y(y),_z(z),_t(0){}
+    Vector4D(double cx, double cy, double cz): 
+      _x(cx),_y(cy),_z(cz),_t(nan){}
 
     //! set all coordinates
-    void SetCoordinates(double x,double y, double z,double t){
-      _x=x; _y=y; _z=z; _t=t;
+    void SetCoordinates(double cx,double cy, double cz,double ct=nan){
+      _x=cx; _y=cy; _z=cz; _t=ct;
       
     }
     //! set all coordinates
-    void Set(double x,double y, double z, double t){
-      SetCoordinates(x,y,z,t);
+    void Set(double cx,double cy, double cz, double ct=nan){
+      SetCoordinates(cx,cy,cz,ct);
     }
 
 
     //! set x
-    inline void SetX(double x) { _x=x; } 
+    inline void SetX(double cx) { _x=cx; } 
  
     //! set z
-    inline void SetZ(double z) { _z=z; } 
+    inline void SetZ(double cz) { _z=cz; } 
     
     //! set y
-    inline void SetY(double y) { _y=y; } 
+    inline void SetY(double cy) { _y=cy; } 
     
     //! set energy
     inline void SetE(double e)  { _t=e; } 
@@ -106,7 +107,12 @@ namespace gate{
 
     //! retrieve x
     inline double z() const {return _z;}
-
+    
+    //! retrieve coordinaties as Point3D
+    inline gate::Point3D GetCoord3D() const {return gate::Point3D(_x,_y,_z);}
+    
+    //! set coordinaties as Point3D
+    inline void SetCoord3D(gate::Point3D xyz) {_x=xyz.x();_y=xyz.y();_z=xyz.z();}
 
     // Operators
     // operator () returns/set x,y,z
