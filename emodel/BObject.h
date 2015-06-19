@@ -34,8 +34,9 @@ class gate::BObject : public gate::ParamStore {
  public:
   
   //! default contructor
-  //BObject() : _id(-1), _dType(gate::NODTYPE) {}
- BObject() : ParamStore(),_id(-1), _dType(gate::NODTYPE) {}
+ 
+  //BObject() : ParamStore(),_id(-1), _dType(gate::NODTYPE) {}
+ BObject() : ParamStore(),_id(-1), _label(""){}
 
   //! default destructor
   virtual ~BObject(){}
@@ -49,11 +50,17 @@ class gate::BObject : public gate::ParamStore {
   void SetID(int id);
   
   //! Get data type 
-  gate::DATATYPE GetDataType() const;
+  //gate::DATATYPE GetDataType() const;
   
   //! Set data type 
-  void SetDataType(gate::DATATYPE type);
+  //void SetDataType(gate::DATATYPE type);
   
+  //! Get label 
+  std::string GetLabel() const;
+  
+  //! Set label (user's degree of freedom)  
+  void SetLabel(std::string lab);
+
   //! print info
   void Info(std::ostream& s=std::cout) const;
  
@@ -66,7 +73,10 @@ class gate::BObject : public gate::ParamStore {
   int _id;
 
   //! data type (MC-THUTH, MC or DATA)
-  gate::DATATYPE _dType;
+  //gate::DATATYPE _dType;
+  
+  //! user defined label
+  std::string _label;
 
   ClassDef(gate::BObject,1)
     };
@@ -74,10 +84,13 @@ class gate::BObject : public gate::ParamStore {
 inline void gate::BObject::SetID(int id) { _id = id; }
 inline int gate::BObject::GetID() const { return _id; }
 
-inline void gate::BObject::SetDataType(gate::DATATYPE t) { _dType = t; }
-inline gate::DATATYPE gate::BObject::GetDataType() const { return _dType; }
+//inline void gate::BObject::SetDataType(gate::DATATYPE t) { _dType = t; }
+//inline gate::DATATYPE gate::BObject::GetDataType() const { return _dType; }
 
-inline void gate::BObject::Clear(){_id = -1; _dType = gate::NODTYPE;}
+inline void gate::BObject::SetLabel(std::string lab) { _label = lab; }
+inline std::string gate::BObject::GetLabel() const { return _label;} 
+
+inline void gate::BObject::Clear(){_id = -1; _label = "";}
 
 std::ostream& operator << (std::ostream& s, const gate::BObject& obj); 
 
