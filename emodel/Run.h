@@ -23,7 +23,7 @@
 
 namespace gate{class Run;}
 
-class gate::Run : BObject{
+class gate::Run : public gate::BObject{
 
  public:
   
@@ -55,7 +55,7 @@ class gate::Run : BObject{
 
   //! vector of sensors
   std::map<int,gate::Sensor*> _sensors;
-  //std::multimap<gate::SENSORTYPE, gate::Sensor*> _sensors;
+  
   
 public:
   
