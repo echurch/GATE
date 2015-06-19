@@ -61,6 +61,11 @@ void gate::Event::Clear() {
     typedef std::vector<gate::MCHit*>::const_iterator ITH;
     for(ITH i=_thits.begin(); i !=_thits.end(); ++i){ delete *i; }
     _thits.clear();
+
+    // destroy true sensor hits
+    typedef std::vector<gate::Hit*>::const_iterator ITSH;
+    for(ITSH i=_tshits.begin(); i !=_tshits.end(); ++i){ delete *i; }
+    _tshits.clear();
           
     // destroy true particles
     typedef std::vector<gate::MCParticle*>::const_iterator ITP;
@@ -250,10 +255,24 @@ std::vector<gate::MCHit*> gate::Event::GetMCHits() const{
 }
 
 //=======================================================
+std::vector<gate::Hit*> gate::Event::GetMCSensHits() const{
+//=======================================================
+    
+    return _tshits;
+}
+
+//=======================================================
 void gate::Event::AddMCHit(gate::MCHit* hit){
 //=======================================================
    
     _thits.push_back(hit);
+}
+
+//=======================================================
+void gate::Event::AddMCSensHit(gate::Hit* hit){
+//=======================================================
+   
+    _tshits.push_back(hit);
 }
 
 
@@ -321,6 +340,10 @@ void gate::Event::Info(std::ostream& s) const{
     s << " Number of hits: " << this->GetHits().size()<< std::endl;
     
     s << " Number of true hits: " << this->GetMCHits().size()<< std::endl;
+
+    s << " Number of true sensor hits: " << 
+        
+        this->GetMCSensHits().size()<< std::endl;
     
     s << " Number of tracks: " << this->GetTracks().size()<< std::endl;
 
@@ -330,7 +353,9 @@ void gate::Event::Info(std::ostream& s) const{
 
     s << " Number of particles: " << this->GetParticles().size()<< std::endl;
 
-    s << " Number of true particles: " << this->GetMCParticles().size()<< std::endl;
+    s << " Number of true particles: " << 
+        
+        this->GetMCParticles().size()<< std::endl;
 
     s << "======================================="<< std::endl;
 

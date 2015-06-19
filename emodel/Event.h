@@ -125,6 +125,12 @@ public:
   // add true hit
   void AddMCHit(gate::MCHit*);
   
+  // add true sensor hit
+  void AddMCSensHit(gate::Hit*);
+  
+  //! retrieve all true sensor hits
+  std::vector<gate::Hit*> GetMCSensHits() const;
+
   //! retrieve all true tracks
   std::vector<gate::MCTrack*> GetMCTracks() const;
     
@@ -217,7 +223,10 @@ private:
   
   //! vector of true tracks (collection of true hits)
   std::vector<gate::MCTrack*> _ttracks;
-
+  
+  //! vector of true sensor hits (true signal in sensor, no electronics effects)
+  std::vector<gate::Hit*> _tshits;
+  
   ClassDef(gate::Event,1)
 
 }; 
