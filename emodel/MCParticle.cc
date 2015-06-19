@@ -4,9 +4,10 @@ ClassImp(gate::MCParticle)
 
 //===========================================================
 gate::MCParticle::MCParticle() : BParticle(), 
-    _G4(0), _primary(true), _creatProc(""),_mother(0){
+    _G4(0), _primary(true), _creatProc(""),_initVol(""),_finVol(""),
+    _plength(0),_mother(0){
 //===========================================================
-  
+    
 }
 
 
@@ -22,6 +23,8 @@ void gate::MCParticle::Info(std::ostream& s) const{
 
     s << "Primary particle?: "<< this->IsPrimary() <<std::endl;
     
+    s << "Path length: "<< this->GetPathLength() <<std::endl;
+
     s << "Number of true tracks: " << this->GetTracks().size() << std::endl;
     
     s << "======================================" << std::endl;

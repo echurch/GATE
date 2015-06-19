@@ -58,10 +58,28 @@ class gate::MCParticle : public gate::BParticle {
   bool IsPrimary() const;
   
   //! set creation process
-  void SetCreatorProc(std::string p);
+  void SetCreatorProc(std::string v);
   
+  //! set initial volume
+  void SetInitialVol(std::string v);
+  
+  //! get initial volume
+  std::string GetInitialVol() const;
+
+  //! set final volume
+  void SetFinalVol(std::string v);
+  
+  //! get final volume
+  std::string GetFinalVol() const;
+
   //! get creation process
   std::string GetCreatorProc()const;
+  
+  //! set path length
+  void SetPathLength(double l);
+
+  //! get path length
+  double GetPathLength() const;
 
   //! print info
   void Info(std::ostream& s=std::cout) const;
@@ -73,9 +91,18 @@ protected:
   
   //! primary particle?
   bool _primary;
-  
+ 
   //! creation process 
   std::string _creatProc;
+  
+  //! creation volume 
+  std::string _initVol;
+  
+  //! destruction volume 
+  std::string _finVol;
+  
+  //! particle path length
+  double _plength;
 
   //! pointer to its mother particle if any
   const gate::MCParticle* _mother;
@@ -109,6 +136,15 @@ gate::MCParticle::GetDaughters() const{ return _daughters;}
   
 inline void gate::MCParticle::SetCreatorProc(std::string p){ _creatProc=p;}
 inline std::string gate::MCParticle::GetCreatorProc()const{return _creatProc;}
+
+inline void gate::MCParticle::SetInitialVol(std::string v){ _initVol=v;}
+inline std::string gate::MCParticle::GetInitialVol()const{return _initVol;}
+
+inline void gate::MCParticle::SetFinalVol(std::string v){ _finVol=v;}
+inline std::string gate::MCParticle::GetFinalVol()const{return _finVol;}
+
+inline void gate::MCParticle::SetPathLength(double l){ _plength=l;}
+inline double gate::MCParticle::GetPathLength()const{return _plength;}
 
 std::ostream& operator << (std::ostream& s, const gate::MCParticle& p);
 
