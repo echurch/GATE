@@ -6,9 +6,7 @@ GATELIBDIR = ../../lib
 DICT  = GateModuleCint
 SHLIB = libGateModule.so
 SOURCES = $(wildcard *.cc)
-#HEADERS = $(wildcard *.h)
 HEADERS = $(filter-out GateModuleCint.h,$(wildcard *.h))
-#OBJECTS = $(SOURCES:.cc=.o)
 OBJECTS = $(filter-out RunGateAlgo.o, $(SOURCES:.cc=.o))
 
 
@@ -38,9 +36,11 @@ include $(GATEMAKEDIR)/GNUmakefile.GATE
 LIBS += $(shell root-config --libs)  -lCore -lRIO -lHist
 LIBS += -L../../lib  -lGATE -lGATEIO -lGATEUtils -lGateModule
 
+LDFLAGS = -Wl,--no-as-needed
+
 bin: lib/$(SHLIB) RunGateAlgo.o
 	@echo "<< compiling RunGateAlgo >>"
-	@$(CXX) -g $(CXXFLAGS) -o ./bin/RunGateAlgo $^ $(LIBS) 
+	@$(CXX) -g $(LDFLAGS) -o ./bin/RunGateAlgo $^ $(LIBS) 
 
 .PHONY: clean cleanapps
 
