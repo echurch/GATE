@@ -86,7 +86,7 @@ for line in fileinput.input(files,inplace=1):
 
     line = line.replace('RunGateAlgo','Run'+mname)
 
-    line = line.replace('-lDCGateModule','-l'+mname)
+    line = line.replace('-lGateModule','-l'+mname)
         
     line = line.replace('GateModuleCint',mname+'Cint')
 
