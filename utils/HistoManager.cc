@@ -95,22 +95,23 @@ void gate::HistoManager::h2(std::string name, std::string title,
 }
 
 //************************************************************************  
-void gate::HistoManager::fill(std::string name, double value1){
+void gate::HistoManager::fill(std::string name, double value1, double w){
 //************************************************************************  
 
   TH1F* h = dynamic_cast<TH1F*>(fetch(name));
 
-  h->Fill(value1);
+  h->Fill(value1,w);
     
 }
 
 //************************************************************************  
-void gate::HistoManager::fill2d(std::string name, double value1, double value2){
+void gate::HistoManager::fill2d(std::string name, double value1, 
+				double value2, double w){
 //************************************************************************  
 
   TH2F* h = dynamic_cast<TH2F*>(fetch(name));
  
-  h->Fill(value1,value2);
+  h->Fill(value1,value2,w);
     
 }
 

@@ -64,9 +64,9 @@ class gate::HistoManager : public gate::HistoPlotter{
           size_t nybin, double fby, double lby);
   
   //! fill histogram
-  void fill(std::string name,double value);
+  void fill(std::string name,double value, double w=1);
   //! fill histogram
-  void fill2d(std::string name,double value1,double value2);
+  void fill2d(std::string name,double value1,double value2, double w=1);
   
   //! draw histogram
   void draw(std::string, Option_t* opt="");
