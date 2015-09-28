@@ -12,7 +12,7 @@ gate::Hit::Hit() : BHit(),_sensorID(-1), _sType(NOSTYPE),
 gate::Hit::~Hit(){ 
 //=======================================================
     
-    delete _wform;
+  if (_wform) delete _wform;
 
 }
 
