@@ -155,7 +155,7 @@ void gate::Centella::readParam(const gate::ParamStore& gs){
 }
 
 //*************************************************************
-bool gate::Centella::initialize(){
+bool gate::Centella::initializeJob(){
 //*************************************************************
   
   _m.message("+++ Initialising Centella +++",gate::NORMAL);
@@ -173,7 +173,7 @@ bool gate::Centella::initialize(){
 }
 
 //*************************************************************
-void gate::Centella::finalize(){
+void gate::Centella::finalizeJob(){
 //*************************************************************
   
   _m.message("+++ Finalising Centella +++",gate::NORMAL);
@@ -194,7 +194,7 @@ void gate::Centella::finalize(){
 }
 
 //*************************************************************
-void gate::Centella::execute(){
+void gate::Centella::executeJob(){
 //*************************************************************
   
   _m.message("+++ Executing Centella +++",gate::NORMAL);
@@ -383,11 +383,11 @@ void gate::Centella::timeLog(){
 bool gate::Centella::run(){
 //*************************************************************
   
-  this->initialize();
+  this->initializeJob();
   
-  this->execute();
+  this->executeJob();
   
-  this->finalize();
+  this->finalizeJob();
   
   return true;
 

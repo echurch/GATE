@@ -82,13 +82,13 @@ public:
   void destroy();
   
   //! execute analysis
-  virtual void execute();
+  virtual void executeJob();
   
   //! initialize analysis
-  virtual bool initialize();
+  virtual bool initializeJob();
   
   //! finalize analysis
-  virtual void finalize();
+  virtual void finalizeJob();
   
   //! run analysis
   bool run();
