@@ -25,6 +25,7 @@
 #include <GATE/Error.h>
 
 #include<Rtypes.h>
+#include<TObject.h>
 
 namespace gate{
   
@@ -121,7 +122,6 @@ namespace gate{
     //! operator []
     inline const T& operator[](std::string name) const {return fetch(name);}
 
-
     //! fetch an object from its name
     const T& fetch (std::string name) const{
 
@@ -179,7 +179,7 @@ namespace gate{
   //! a vector of std::strings
   typedef std::vector<std::string> vstring;
   //! a vector of tobjects
-  typedef std::vector<TObject*> vtobject;
+  typedef std::vector<TObject> vtobject;
 
   
    //! a store of integers
@@ -188,12 +188,17 @@ namespace gate{
   typedef tstore<double> dstore;
   //! a store of strings
   typedef tstore<std::string> sstore;
+  //! a store of TObjects
+  typedef tstore<TObject> tostore;
+  
   //! a store of vector of doubles
   typedef tstore<gate::vdouble> dvstore;
   //! a store of vectors of int
   typedef tstore<gate::vint> ivstore;
   //! a store of vectors of string
   typedef tstore<gate::vstring> svstore;
+  //! a store of vectors of TObject
+  typedef tstore<gate::vtobject> tovstore;
   
   //ClassImp(gate::tstore)
 
@@ -220,9 +225,12 @@ namespace gate{
     dstore dstore_;
     istore istore_;
     sstore sstore_;
+    tostore tostore_;
+    
     dvstore dvstore_;
     ivstore ivstore_;
     svstore svstore_;
+    tovstore tovstore_;
 
   public:
     //! Default constructor
@@ -241,26 +249,35 @@ namespace gate{
     void store(std::string name,int val){istore_.store(name,val);}
     //! store a new std::string in the store 
     void store(std::string name,std::string val){sstore_.store(name,val);}
-    //! store a new histo definition in the store
+    //! store a new TObject in the store 
+    void store(std::string name,TObject val){tostore_.store(name,val);}
+    
+    //! store a new vector of doubles in the store
     void store(std::string name,gate::vdouble& val){dvstore_.store(name,val);}
     //! store a new std::string vector in the store
     void store(std::string name,gate::vstring& val){svstore_.store(name,val);}
     //! store a new integer vector in the store
     void store(std::string name,gate::vint& val){ivstore_.store(name,val);}
-    
+    //! store a new TObject vector in the store 
+    void store(std::string name,vtobject val){tovstore_.store(name,val);}
+
     //! store a new double in the store
     void fstore(std::string name,double val){dstore_.sstore(name,val);}
     //! sstore a new int in the store 
     void fstore(std::string name,int val){istore_.sstore(name,val);}
     //! sstore a new std::string in the store 
     void fstore(std::string name,std::string val){sstore_.sstore(name,val);}
-    //! sstore a new histo definition in the store
+    //! store a new TObject in the store 
+    void fstore(std::string name,TObject val){tostore_.sstore(name,val);}
+    
+    //! sstore a new double vector in the store
     void fstore(std::string name,gate::vdouble& val){dvstore_.sstore(name,val);}
     //! sstore a new std::string vector in the store
     void fstore(std::string name,gate::vstring& val){svstore_.sstore(name,val);}
     //! sstore a new integer vector in the store
     void fstore(std::string name,gate::vint& val){ivstore_.sstore(name,val);}
-    
+    //! store a new TObject vector in the store 
+    void fstore(std::string name,vtobject val){tovstore_.sstore(name,val);}
 
      //! change a double in the store
     void change_dstore(std::string name,double val){dstore_.sstore(name,val);}
@@ -268,6 +285,9 @@ namespace gate{
     void change_istore(std::string name,int val){istore_.sstore(name,val);}
     //! change a std::string in the store
     void change_sstore(std::string name,std::string val){sstore_.sstore(name,val);}
+    //! change a TObject in the store
+    void change_tostore(std::string name,TObject val){tostore_.sstore(name,val);}
+    
     //! change a histo definition in the store
     void change_dvstore(std::string name,gate::vdouble& val){
       dvstore_.sstore(name,val);}
@@ -277,6 +297,8 @@ namespace gate{
     //! change an integer vector in the store
     void change_ivstore(std::string name,gate::vint& val){
       ivstore_.sstore(name,val);}
+    //! change a TObject vector in the store
+    void change_tovstore(std::string name,vtobject val){tovstore_.sstore(name,val);}
 
     //!size of the double store
     size_t size_dstore()const {return dstore_.size();}
@@ -284,12 +306,16 @@ namespace gate{
     size_t size_istore()const {return istore_.size();}
     //!size of the std::string store
     size_t size_sstore()const {return sstore_.size();}
-    //!size of the histo definitions store
+    //!size of the TObject store
+    size_t size_tostore()const {return tostore_.size();}
+    //!size of double vector store
     size_t size_dvstore()const {return dvstore_.size();}
-   //!size of the vector store
+   //!size of the string vector store
     size_t size_svstore()const {return svstore_.size();}
-    //!size of the vector store
+    //!size of the int vector store
     size_t size_ivstore()const {return ivstore_.size();}
+    //!size of the TObject vector store
+    size_t size_tovstore()const {return tovstore_.size();}
 
     //! Find double (if exists) in the store
     bool find_dstore(std::string name)const{return dstore_.find(name);}
@@ -297,25 +323,34 @@ namespace gate{
     bool find_istore(std::string name)const{return istore_.find(name);}
     //! Find std::string (if exists) in the store
     bool find_sstore(std::string name)const{return sstore_.find(name);}
-    //! Find double vecotor (if exists) in the store
+    //! Find TObject (if exists) in the store
+    bool find_tostore(std::string name)const{return tostore_.find(name);}
+    //! Find double vector (if exists) in the store
     bool find_dvstore(std::string name)const{return dvstore_.find(name);}
     //! Find std::string vector (if exists) in the store
     bool find_svstore(std::string name)const{return svstore_.find(name);}
     //! Find integer vector (if exists) in the store
     bool find_ivstore(std::string name)const{return ivstore_.find(name);}
-    
+    //! Find TObject vector (if exists) in the store
+    bool find_tovstore(std::string name)const{return tovstore_.find(name);}
+
     //! Fetch a double in the store
     double fetch_dstore(std::string name)const{return dstore_.fetch(name);}
     //! Fetch a int in the store
     int fetch_istore(std::string name)const{return istore_.fetch(name);}
     //! Fetch a std::string in the store
     std::string fetch_sstore(std::string name)const{return sstore_.fetch(name);}
+    //! Fetch a TObject in the store
+    TObject fetch_tostore(std::string name)const{return tostore_.fetch(name);}
+    
     //! Fetch a vector in the store
     const vdouble& fetch_dvstore(std::string name)const{return dvstore_.fetch(name);}
     //! Fetch a std::string vector in the store
     const vstring& fetch_svstore(std::string name)const{return svstore_.fetch(name);}
     //! Fetch a std::string vector in the store
     const vint& fetch_ivstore(std::string name)const{return ivstore_.fetch(name);}
+    //! Fetch a TObject vector in the store
+    const vtobject& fetch_tovstore(std::string name)const{return tovstore_.fetch(name);}
     
     //! erase double from store 
     bool erase_dstore(std::string name) {return dstore_.erase(name);}
@@ -323,13 +358,16 @@ namespace gate{
     bool erase_istore(std::string name) {return istore_.erase(name);}
     //! erase std::string from store 
     bool erase_sstore(std::string name) {return sstore_.erase(name);}
-    //! erase HD from store 
+    //! erase TObject from store 
+    bool erase_tostore(std::string name) {return tostore_.erase(name);}
+    //! erase double vector from store 
     bool erase_dvstore(std::string name) {return dvstore_.erase(name);}
     //! erase std::string vector from store 
     bool erase_svstore(std::string name) {return svstore_.erase(name);}
     //! erase int vector from store 
     bool erase_ivstore(std::string name) {return ivstore_.erase(name);}
-
+    //! erase TObject vector from store 
+    bool erase_tovstore(std::string name) {return tovstore_.erase(name);}
   
     //! returns all names in double store
     std::vector<std::string> names_dstore() const {return dstore_.names();}  
@@ -349,14 +387,18 @@ namespace gate{
     //! returns all items in int store
     std::vector<int> items_istore() const{return istore_.items();}  
     //! returns all items in std::string store
-    std::vector<std::string> items_sstore() const{return sstore_.items();}  
+    std::vector<std::string> items_sstore() const{return sstore_.items();}
+    //! returns all items in TObject store
+    std::vector<TObject> items_tostore() const{return tostore_.items();}
     //! returns all items in double vector store
     std::vector<gate::vdouble> items_dvstore() const{return dvstore_.items();}
     //! returns all items in int vector store
     std::vector<gate::vint> items_ivstore() const{return ivstore_.items();}  
     //! returns all items in std::string vector store
     std::vector<gate::vstring> items_svstore() const{return svstore_.items();}  
-    
+    //! returns all items in TObject vector store
+    std::vector<gate::vtobject> items_tovstore() const{return tovstore_.items();}
+
     //! returns all store as a map
     const std::map<std::string,std::string>& sstore_map() const{
       return sstore_.store_map();}
@@ -366,6 +408,9 @@ namespace gate{
     //! returns all store as a map
     const std::map<std::string,double>& dstore_map() const{
       return dstore_.store_map();}
+     //! returns all store as a map
+    const std::map<std::string,TObject>& tostore_map() const{
+      return tostore_.store_map();}
     //! returns all store as a map
     const std::map<std::string,gate::vstring>& svstore_map() const{
       return svstore_.store_map();}
@@ -375,15 +420,20 @@ namespace gate{
     //! returns all store as a map
     const std::map<std::string,gate::vdouble>& dvstore_map() const{
       return dvstore_.store_map();}
+    //! returns all store as a map
+    const std::map<std::string,gate::vtobject>& tovstore_map() const{
+      return tovstore_.store_map();}
     
     //remove all elements in store
     void clear(){
       dstore_.clear();
       istore_.clear();
       sstore_.clear();
+      tostore_.clear();
       dvstore_.clear();
       svstore_.clear();
       ivstore_.clear();
+      tovstore_.clear();
     }
     
     //returns total size of store
@@ -394,9 +444,11 @@ namespace gate{
       len += size_istore();
       len += size_dstore();
       len += size_sstore();
+      len += size_tostore();
       len += size_dvstore();
       len += size_ivstore();
       len += size_svstore();
+      len += size_tovstore();
       
       return len;
     }
@@ -434,7 +486,7 @@ namespace gate{
       
     // }//end of info
   
-    ClassDef(ParamStore,1)
+    ClassDef(ParamStore,2)
 
   };//end of class
 
