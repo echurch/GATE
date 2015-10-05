@@ -9,15 +9,16 @@
 #pragma link C++ class std::vector<gate::vstring>+;
 #pragma link C++ class std::vector<gate::vdouble>+;
 #pragma link C++ class std::vector<gate::vint>+;
+#pragma link C++ class std::vector<gate::vtobject>+;
 
 #pragma link C++ class gate::tstore<int>+;
 #pragma link C++ class gate::tstore<double>+;
 #pragma link C++ class gate::tstore<std::string>+;
-#pragma link C++ class gate::tstore<TObject*>+;
+#pragma link C++ class gate::tstore<TObject>+;
 #pragma link C++ class gate::tstore<std::vector<int> >+;
 #pragma link C++ class gate::tstore<std::vector<double> >+;
 #pragma link C++ class gate::tstore<std::vector<std::string> >+;
-#pragma link C++ class gate::tstore<std::vector<TObject*> >+;
+#pragma link C++ class gate::tstore<std::vector<TObject> >+;
 
 #pragma link C++ class gate::ParamStore+;
 #pragma link C++ class gate::BObject+;
