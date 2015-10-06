@@ -66,6 +66,10 @@
 #pragma link C++ class std::vector<pair<unsigned short,unsigned short> >;
 #pragma link C++ class std::pair<unsigned short,unsigned short>;
 
+//! links for hitmap
+#pragma link C++ class std::vector<std::map<int,double> >;
+//#pragma link C++ class std::map<int,double>;
+
 //! links for pairs are requested by art (warnings) !!!!???!!??!!!!!--
 #pragma link C++ class std::pair<gate::BHit*,gate::BHit*>;
 #pragma link C++ class std::pair<gate::SENSORTYPE,gate::Hit*>;
