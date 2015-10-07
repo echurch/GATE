@@ -62,8 +62,11 @@ class gate::BObject : public gate::ParamStore {
   void SetLabel(std::string lab);
 
   //! print info
-  void Info(std::ostream& s=std::cout) const;
- 
+  virtual void Info(std::ostream& s=std::cout) const;
+
+  //! convert object into string
+  std::string ToString() const;
+  
   //! clear info
   void Clear();
 
