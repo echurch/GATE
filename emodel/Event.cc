@@ -331,34 +331,84 @@ double gate::Event::GetMCTracksEnergy() const{
 void gate::Event::Info(std::ostream& s) const{
 //=======================================================
 
-    s << "============= Event instance =========="<< std::endl;
+    s << "======================================="<< std::endl;
+    s << "=============== Event instance ============"<< std::endl;
+    s << "======================================="<< std::endl;
     
     s << " Event number: " << this->GetEventID()<< std::endl;
 
     s << " Event time: " << this->GetTime()<< std::endl;
-
-    s << " Number of hits: " << this->GetHits().size()<< std::endl;
     
-    s << " Number of true hits: " << this->GetMCHits().size()<< std::endl;
+    s << "======================================="<< std::endl;
+    s << "             Event Toplogy              "<< std::endl;
+    s << "======================================="<< std::endl;
 
+    s << "==== MC true objects  ===="<< std::endl;
+    
+    s << " Number of true particles: " << 
+        
+      this->GetMCParticles().size()<< std::endl;
+
+    s << " Number of true tracks: " << this->GetMCTracks().size()<< std::endl;
+
+    s << " Number of true hits: " << this->GetMCHits().size()<< std::endl;
+    
     s << " Number of true sensor hits: " << 
         
         this->GetMCSensHits().size()<< std::endl;
     
-    s << " Number of tracks: " << this->GetTracks().size()<< std::endl;
+    s << "==== Detector hits ===="<< std::endl;
 
-    s << " Number of true tracks: " << this->GetMCTracks().size()<< std::endl;
+    s << " Number of PMT hits: "<<this->GetHits(gate::PMT).size()<< std::endl;
+
+    s << " Number of SiPM hits: "<<this->GetHits(gate::SIPM).size()<< std::endl;
     
+    s << "==== Reconstructed objects ===="<< std::endl;
+
     s << " Number of signals: " << this->GetSignals().size()<< std::endl;
+
+    s << " Number of clusters: " << this->GetClusters().size()<< std::endl;
+    
+    s << " Number of tracks: " << this->GetTracks().size()<< std::endl;
 
     s << " Number of particles: " << this->GetParticles().size()<< std::endl;
 
-    s << " Number of true particles: " << 
-        
-        this->GetMCParticles().size()<< std::endl;
-
     s << "======================================="<< std::endl;
+    s << "      Event detailed information       "<< std::endl;
+    s << "======================================="<< std::endl;
+    
+     s << "======== MC true objects  ========"<< std::endl;
 
+     s << "==== List of true particles:"<< std::endl;     
+     std::vector<gate::MCParticle*> mcps = this->GetMCParticles();
+     for(size_t i=0; i< mcps.size(); i++){s<<*mcps[i]<<std::endl;}
+     
+     s << "==== List of true tracks:"<< std::endl;
+     std::vector<gate::MCTrack*> mcts = this->GetMCTracks();
+     for(size_t i=0; i< mcts.size(); i++){s<<*mcts[i]<<std::endl;}
+
+     s << "==== List of true hits:"<< std::endl;
+     std::vector<gate::MCHit*> mchs = this->GetMCHits();
+     for(size_t i=0; i< mchs.size(); i++){s<<*mchs[i]<<std::endl;}
+
+     s << "==== List of true sensor hits:"<< std::endl;
+     std::vector<gate::Hit*> mcshs = this->GetMCSensHits();
+     for(size_t i=0; i< mcshs.size(); i++){s<<*mcshs[i]<<std::endl;}
+
+     s << "===== End of MC true objects  ====="<< std::endl;
+
+     s << "======= Detector hits  ======="<< std::endl;
+     s << "==== List of PMT hits:"<< std::endl;
+     s << "==== List of SiPM hits:"<< std::endl;
+     s << "===== End of detector hits  ====="<< std::endl;
+
+     s << "======== Reconstructed objects  ========"<< std::endl;
+     s << "===== End of Reconstructed objects  ====="<< std::endl;
+
+     s << "======================================="<< std::endl;
+    s << "=============== End of Event ============="<< std::endl;
+    s << "======================================="<< std::endl;
+     
 }
 
 //=======================================================
