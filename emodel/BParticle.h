@@ -110,7 +110,7 @@ class gate::BParticle : public gate::BObject {
   const std::vector<const gate::BParticle*>& GetMirrorParticles() const; 
 
   //! print info
-  void Info(std::ostream& s=std::cout) const;
+  virtual void Info(std::ostream& s=std::cout) const;
 
 protected:
   
