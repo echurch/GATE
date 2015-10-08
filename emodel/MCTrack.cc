@@ -14,9 +14,9 @@ void gate::MCTrack::Info(std::ostream& s) const{
 
     BTrack::Info(s);
     
-    s << "MC Particle:  "<<*_part<<std::endl;
+    s << "MC Particle ID:  "<<_part->GetID()<<std::endl;
 
-    s << "======================= ========="<<std::endl;
+    s << "================================="<<std::endl;
     
 }
 

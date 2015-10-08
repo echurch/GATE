@@ -14,7 +14,7 @@ void gate::BParticle::Info(std::ostream& s) const{
     
     BObject::Info(s);
     
-    s << " pdg = " << this->GetPDG() << std::endl;
+    s << "PDG code = " << this->GetPDG() << std::endl;
     
     //! TO BE IMPLEMENTED
 

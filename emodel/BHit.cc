@@ -22,9 +22,9 @@ void gate::BHit::Info(std::ostream& s) const{
     
     _pos.Info(s);
 
-    s << " Hit amplitdue" << this->GetAmplitude()<< std::endl;
+    s << "Hit amplitdue: " << this->GetAmplitude()<< std::endl;
     
-    s << " Hit time" << this->GetTime()<< std::endl;
+    s << "Hit time: " << this->GetTime()<< std::endl;
         
 }
 

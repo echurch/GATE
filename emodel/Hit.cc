@@ -24,15 +24,15 @@ void gate::Hit::Info(std::ostream& s) const{
     
     BHit::Info(s);
 
-    s << " Sensor ID" << this->GetSensorID()<< std::endl;
+    s << "Sensor ID: " << this->GetSensorID()<< std::endl;
     
-    s << " Sensor type" << this->GetSensorType()<< std::endl;
+    s << "Sensor type: " << this->GetSensorType()<< std::endl;
     
-    s << " Hit state" << this->GetState()<< std::endl;
+    s << "Hit state: " << this->GetState()<< std::endl;
     
-    s << " TO BE IMPLEMENTED: wform and pulses" << std::endl;
+    //s << "TO BE IMPLEMENTED: wform and pulses" << std::endl;
     
-    s << "=========================="<< std::endl;
+    s << "==============================="<< std::endl;
 
 }
 

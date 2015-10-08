@@ -22,9 +22,9 @@ void gate::Cluster::Info(std::ostream& s) const{
     
     Hit::Info(s);
 
-    s << "Number of hits:" << this->GetHits().size()<< std::endl;
+    s << "Number of hits: " << this->GetHits().size()<< std::endl;
     
-    s << "=========================="<< std::endl;
+    s << "=================================="<< std::endl;
 
 }
 

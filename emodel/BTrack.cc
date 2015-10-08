@@ -46,9 +46,9 @@ void gate::BTrack::Info(std::ostream& s) const{
 
     BObject::Info(s);
      
-    s << "Energy:" << this->GetEnergy()<< std::endl;
+    s << "Energy: " << this->GetEnergy()<< std::endl;
 
-    s << "List of hits:" << std::endl;
+    s << "List of hits: " << std::endl;
     
     std::vector<gate::BHit*>::const_iterator it;
 

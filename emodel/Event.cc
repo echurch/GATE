@@ -332,7 +332,7 @@ void gate::Event::Info(std::ostream& s) const{
 //=======================================================
 
     s << "======================================="<< std::endl;
-    s << "=============== Event instance ============"<< std::endl;
+    s << "============= Event instance =========="<< std::endl;
     s << "======================================="<< std::endl;
     
     s << " Event number: " << this->GetEventID()<< std::endl;
@@ -399,14 +399,33 @@ void gate::Event::Info(std::ostream& s) const{
 
      s << "======= Detector hits  ======="<< std::endl;
      s << "==== List of PMT hits:"<< std::endl;
-     s << "==== List of SiPM hits:"<< std::endl;
-     s << "===== End of detector hits  ====="<< std::endl;
+     std::vector<gate::Hit*> phs = this->GetHits(gate::PMT);
+     for(size_t i=0; i< phs.size(); i++){s<<*phs[i]<<std::endl;}
 
+     s << "==== List of SiPM hits:"<< std::endl;
+     std::vector<gate::Hit*> shs = this->GetHits(gate::SIPM);
+     for(size_t i=0; i< shs.size(); i++){s<<*shs[i]<<std::endl;}
+
+     s << "===== End of detector hits  ====="<< std::endl;
+    
      s << "======== Reconstructed objects  ========"<< std::endl;
+     
+     s << "==== List of signals:"<< std::endl;
+     std::vector<gate::Signal*> ss = this->GetSignals();
+     for(size_t i=0; i< ss.size(); i++){s<<*ss[i]<<std::endl;}
+
+     s << "==== List of clusters:"<< std::endl;
+     std::vector<gate::Cluster*> cs = this->GetClusters();
+     for(size_t i=0; i< cs.size(); i++){s<<*shs[i]<<std::endl;}
+     
+     s << "==== List of tracks:"<< std::endl;
+     std::vector<gate::Track*> ts = this->GetTracks();
+     for(size_t i=0; i< ts.size(); i++){s<<*ts[i]<<std::endl;}
+
      s << "===== End of Reconstructed objects  ====="<< std::endl;
 
-     s << "======================================="<< std::endl;
-    s << "=============== End of Event ============="<< std::endl;
+    s << "======================================="<< std::endl;
+    s << "============== End of Event ==========="<< std::endl;
     s << "======================================="<< std::endl;
      
 }

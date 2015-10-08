@@ -59,6 +59,8 @@ void gate::Run::Info(std::ostream& s) const{
     
     s << " Run number: " << this->GetRunID()<< std::endl;
 
+    s << " Data type: " << this->GetDataType()<< std::endl;
+
     s << " Start time: " << this->GetStartTime()<< std::endl;
 
     s << " Start time: " << this->GetEndTime()<< std::endl;

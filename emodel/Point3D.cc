@@ -12,7 +12,7 @@ gate::Point3D::Point3D(double x, double y, double z) : _x(x),_y(y),_z(z){
 void gate::Point3D::Info(std::ostream& s) const{
 //=======================================================
     
-    s << " Point3D: ( " << _x <<", "<<_y<<", "<<_z<< " )"<<std::endl;
+    s << "Point3D: ( " << _x <<", "<<_y<<", "<<_z<< " )"<<std::endl;
 
 }
 

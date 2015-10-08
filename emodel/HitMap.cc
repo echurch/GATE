@@ -46,7 +46,7 @@ void gate::HitMap::Info(std::ostream& s) const{
     
     BObject::Info(s);
 
-    s << "TO BE IMPLEMENTED"<< std::endl;
+    //s << "TO BE IMPLEMENTED"<< std::endl;
     
     s << "=============================="<< std::endl;
 

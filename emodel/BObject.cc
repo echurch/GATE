@@ -5,9 +5,9 @@ void gate::BObject::Info(std::ostream& s) const{
 //=======================================================
     
     //s << " Data type" << this->GetDataType()<< std::endl;
-    s << " Label: " << this->GetLabel()<< std::endl;
+    s << "Label: " << this->GetLabel()<< std::endl;
     
-    s << " Object ID: " << this->GetID()<< std::endl;
+    s << "ID: " << this->GetID()<< std::endl;
     
 }
 
