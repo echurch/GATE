@@ -1,0 +1,72 @@
+#!/usr/bin/env python
+
+"""
+Script to dump dst data
+
+Author: Pau Novella <pau.novella@ific.es>
+"""
+
+import sys,os, getopt
+
+from subprocess import call
+
+def msg(m): print ">> %s"%m
+
+def abort(s,func=False):
+
+    msg(s)
+    if func: func()
+    sys.exit()
+
+try: from ROOT import gSystem
+
+except ImportError: 
+    
+    abort("ROOT could not be loaded. $ROOTSYS/lib added to $PYTHONPATH?")
+
+fail = gSystem.Load("$GATE_DIR/lib/libGATE")
+
+if fail: abort("GATE lib not found! $GATE_DIR defined?")
+
+fail = gSystem.Load("$GATE_DIR/lib/libGATEIO")
+
+if fail: abort("GATEIO lib not found!")
+
+from ROOT import gate
+
+def phelp():
+    
+    msg("")
+    msg("dstviewer usage:")
+    msg("      dstviewer [OPTION] dst_file entry_number:")
+    msg("[OPTIONS:")
+    msg("      -r,--run  -----> display run information")
+    msg("")
+    
+try: opts, args = getopt.getopt(sys.argv[1:], 'hr',["help","run"])
+    
+except getopt.GetoptError as err: abort(str(err),phelp)
+        
+run = False
+
+for o,v in opts: 
+    
+    if o in ('-h','--help'): abort()
+    
+    elif o in ("-r","--run"): run = True
+            
+if len(args) not in (2,3): abort("Wrong number of arguments",phelp)
+
+dst, entry = args[0], int(args[1])
+
+reader = gate.RootReader()
+reader.Open(dst)
+
+if run: 
+    irun = reader.GetRunInfo(entry)
+    irun.Info()
+else: 
+    ievent = reader.Read(entry)
+    ievent.Info()
+
+
