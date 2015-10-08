@@ -15,9 +15,11 @@ void gate::MCHit::Info(std::ostream& s) const{
 
     BHit::Info(s);
     
-    s << "MC Particle ID:  "<<_part->GetID()<<std::endl;
+    if (_part) s << "MC Particle ID:  "<<_part->GetID()<<std::endl;
+    
+    else s << "MC Particle not set"<<std::endl;
 
-    s << "=========== End of True hit ========="<<std::endl;
+    s << "=========== End of MC hit ========="<<std::endl;
 }
 
 //=======================================================
