@@ -43,11 +43,11 @@ os.mkdir(mpathname)
 
 os.mkdir(mpathname+'/doc')
 
-os.mkdir(mpathname+'/lib')
+#os.mkdir(mpathname+'/lib')
 
 os.mkdir(mpathname+'/mac')
 
-os.mkdir(mpathname+'/bin')
+#os.mkdir(mpathname+'/bin')
 
 #------------ copy module files form gate utils ------------#
 
