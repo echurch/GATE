@@ -40,6 +40,7 @@ LDFLAGS = -Wl,--no-as-needed
 
 bin: lib/$(SHLIB) RunGateAlgo.o
 	@echo "<< compiling RunGateAlgo >>"
+	@mkdir -p ./bin
 	@$(CXX) -g $(LDFLAGS) -o ./bin/RunGateAlgo $^ $(LIBS) 
 
 .PHONY: clean cleanapps
