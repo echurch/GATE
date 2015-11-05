@@ -39,7 +39,7 @@ def phelp():
     msg("")
     msg("dstviewer usage:")
     msg("      dstviewer [OPTION] dst_file entry_number:")
-    msg("[OPTIONS:")
+    msg("OPTIONS:")
     msg("      -r,--run  -----> display run information")
     msg("")
     
@@ -64,7 +64,9 @@ reader.Open(dst)
 
 if run: 
     irun = reader.GetRunInfo(entry)
-    irun.Info()
+    if irun: irun.Info()
+    else: msg("No run information in DST") 
+
 else: 
     ievent = reader.Read(entry)
     ievent.Info()
