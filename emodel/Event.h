@@ -172,6 +172,36 @@ public:
   
   //! clear info
   void Clear();
+  
+  //! destroy particles
+  void DestroyParticles();
+    
+  //! destroy MC particles
+  void DestroyMCParticles();
+  
+  //! destroy hits
+  void DestroyHits();
+  
+  //! destroy MC hits
+  void DestroyMCHits();
+  
+  //! destroy MC sensor hits
+  void DestroyMCSensHits();
+  
+  //! destroy hitmaps
+  void DestroyHitMaps();
+
+  //! destroy signals
+  void DestroySignals();
+  
+  //! destroy clusters
+  void DestroyClusters();
+
+  //! destroy tracks
+  void DestroyTracks();
+
+  //! destroy MC tracks
+  void DestroyMCTracks();
 
 private:
     
