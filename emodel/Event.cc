@@ -484,7 +484,7 @@ void gate::Event::Info(std::ostream& s) const{
 
      s << "==== List of clusters:"<< std::endl;
      std::vector<gate::Cluster*> cs = this->GetClusters();
-     for(size_t i=0; i< cs.size(); i++){s<<*shs[i]<<std::endl;}
+     for(size_t i=0; i< cs.size(); i++){s<<*cs[i]<<std::endl;}
      
      s << "==== List of tracks:"<< std::endl;
      std::vector<gate::Track*> ts = this->GetTracks();
