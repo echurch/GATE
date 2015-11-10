@@ -7,6 +7,7 @@
 #pragma link C++ namespace gate;
 
 #pragma link C++ class gate::tstore<TH1*>+;
+#pragma link C++ class gate::tstore<TTree*>+;
 #pragma link C++ class gate::Messenger+;
 #pragma link C++ class gate::IAlgo+;
 #pragma link C++ class gate::AlgoManager+;
@@ -15,6 +16,7 @@
 #pragma link C++ class gate::LogManager+;
 #pragma link C++ class gate::EventManager+;
 #pragma link C++ class gate::RunManager+;
+#pragma link C++ class gate::TreeManager+;
 #pragma link C++ class gate::HistoManager+;
 #pragma link C++ class gate::HistoPlotter+;
 #pragma link C++ class gate::Centella+;
