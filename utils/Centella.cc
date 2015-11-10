@@ -52,6 +52,8 @@ gate::Centella::Centella(gate::VLEVEL vl):RunManager(vl),AlgoManager(vl){
     
     _hman = new gate::HistoManager("centella_histos.root",vl);
 
+    _tman = new gate::TreeManager("centella_trees.root",vl);
+
 }
 
 
@@ -74,6 +76,10 @@ gate::Centella::Centella(const gate::ParamStore& data, gate::VLEVEL vl):
     _m.message("++ generating HistoManager...",gate::VERBOSE);
 
     _hman = new gate::HistoManager(data,vl);
+    
+    _m.message("++ generating TreeManager...",gate::VERBOSE);
+
+    _tman = new gate::TreeManager(data,vl);
 
 }
 
@@ -87,11 +93,15 @@ void gate::Centella::init(){
   
   _histos = false;
 
+  _trees = false;
+
   _ndebug = 100;
   
   _log = false;
   
   _hman = 0;
+
+  _tman = 0;
 
   _fevent = 0;
 
@@ -129,6 +139,12 @@ void gate::Centella::readParam(const gate::ParamStore& gs){
   if (ok) _histos = (bool) gs.fetch_istore("HISTOS");  
     
   _m.message("++ Save histograms:",_histos,gate::VERBOSE);
+  
+  ok = gs.find_istore("TREES");
+  
+  if (ok) _trees = (bool) gs.fetch_istore("TREES");  
+    
+  _m.message("++ Save trees:",_trees,gate::VERBOSE);
 
   ok = gs.find_istore("NDEBUG");
   
@@ -187,6 +203,8 @@ void gate::Centella::finalizeJob(){
   else _m.message("not writing log file",gate::NORMAL);
 
   if (_histos) _hman->save();
+
+  if (_trees) _tman->save();
   
   else _m.message("not saving hitograms",gate::NORMAL);
   
@@ -284,8 +302,12 @@ void gate::Centella::dataLog(){
   _logMan.strongAddLog("CNT","FEVENT",(int)_fevent);
 
   _logMan.strongAddLog("CNT","HISTOS",(int)_histos);
+  
+  _logMan.strongAddLog("CNT","FHISTOS",_hman->getHistoFileName());
 
-  _logMan.strongAddLog("CNT","FHISTO",_hman->getHistoFileName());
+  _logMan.strongAddLog("CNT","TREES",(int)_trees);
+
+  _logMan.strongAddLog("CNT","FTREES",_tman->getTreeFileName());
 
   
 }

@@ -11,8 +11,7 @@
 #include <GATE/RunManager.h>
 #include <GATE/LogManager.h>
 #include <GATE/HistoManager.h>
-
-#include<TSystem.h>
+#include <GATE/TreeManager.h>
 
 /**
  * \class Centella
@@ -73,7 +72,7 @@ private:
   static gate::Centella* _centella;
   
   //! private destructor (use destroy for public access)
-  virtual ~Centella(){delete _hman; _centella=0;}
+  virtual ~Centella(){delete _hman; delete _tman; _centella=0;}
 
 public:
 
@@ -108,6 +107,9 @@ public:
 
   //! write output histogram file ?
   inline void saveHistos(bool histos) { _histos = histos;}
+
+  //! write output tree file ?
+  inline void saveTrees(bool trees) { _trees = trees;}
   
   //! get number of event to analize
   inline size_t getNevents() const {return _nevents;}
@@ -133,6 +135,9 @@ public:
 
   //! retrieve histogram  manager
   gate::HistoManager* hman(){return _hman;} 
+  
+  //! retrieve tree  manager
+  gate::TreeManager* tman(){return _tman;}
 
 protected:
   
@@ -172,6 +177,9 @@ protected:
 
   /// histogram manager
   gate::HistoManager* _hman;
+
+  /// tree manager
+  gate::TreeManager* _tman;
   
   //! current run info
   gate::Run* _run;
@@ -186,7 +194,10 @@ private:
   
   //! generate and save histos ?
   bool _histos;
-  
+
+  //! generate and save trees ?
+  bool _trees;
+
   //! name of histogram file
   //string _hfile;
 
