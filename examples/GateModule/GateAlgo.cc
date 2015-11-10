@@ -29,6 +29,9 @@ bool GateAlgo::initialize(){
   gate::Centella::instance()
     ->hman()->h1(this->alabel("EvtID"),"EvtID",10,0,100);
 
+  gate::Centella::instance()
+    ->tman()->create(this->alabel("MyTree"),"TreeExample");
+
   return true;
 
 }
