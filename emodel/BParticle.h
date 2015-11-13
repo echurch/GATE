@@ -102,12 +102,18 @@ class gate::BParticle : public gate::BObject {
   
   //! retrieve tracks
   const std::vector<const BTrack*>& GetTracks() const;
+  
+  //! clear tracks
+  void ClearTracks();
 
   //! add mirror particle
   void AddMirrorParticle(gate::BParticle* p);
 
   //! retrieve mirror particles 
   const std::vector<const gate::BParticle*>& GetMirrorParticles() const; 
+  
+  //! clear mirror particles
+  void ClearMirrorParticles();
 
   //! print info
   virtual void Info(std::ostream& s=std::cout) const;
@@ -192,11 +198,15 @@ inline  void  gate::BParticle::AddTrack(BTrack* trk){
 inline const std::vector<const gate::BTrack*>&  
 gate::BParticle::GetTracks() const { return _tracks;}
 
+inline void gate::BParticle::ClearTracks(){_tracks.clear();}
+
 inline void gate::BParticle::AddMirrorParticle(gate::BParticle* p)
 {_mparts.push_back(p);}
 
 inline const std::vector<const gate::BParticle*>& 
 gate::BParticle::GetMirrorParticles()const { return _mparts;}
+
+inline void gate::BParticle::ClearMirrorParticles(){_mparts.clear();}
 
 std::ostream& operator << (std::ostream& s, const gate::BParticle& p);
 
