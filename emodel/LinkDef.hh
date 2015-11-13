@@ -23,6 +23,8 @@
 #pragma link C++ class gate::ParamStore+;
 #pragma link C++ class gate::BObject+;
 #pragma link C++ class gate::Run+;
+#pragma link C++ class gate::Geometry+;
+#pragma link C++ class gate::Properties+;
 #pragma link C++ class gate::Sensor+;
 #pragma link C++ class gate::Event+;
 #pragma link C++ class gate::Pulse+;
@@ -56,11 +58,14 @@
 #pragma link C++ class std::vector<gate::BParticle*>;
 #pragma link C++ class std::vector<gate::MCParticle*>;
 #pragma link C++ class std::vector<gate::Particle*>;
+#pragma link C++ class std::vector<gate::Sensor*>;
 
 #pragma link C++ class std::multimap<gate::SENSORTYPE,gate::Hit*>;
 #pragma link C++ class std::multimap<gate::SENSORTYPE,gate::HitMap*>;
 #pragma link C++ class std::multimap<gate::SENSORTYPE,gate::Cluster*>;
 #pragma link C++ class std::multimap<gate::SENSORTYPE,gate::Track*>;
+
+#pragma link C++ class std::map<int,gate::Sensor*>;
 
 //#pragma link C++ class std::vector< pair<double,double> >;//waveforms
 #pragma link C++ class std::vector<pair<unsigned short,unsigned short> >;
@@ -68,7 +73,7 @@
 
 //! links for hitmap
 #pragma link C++ class std::vector<std::map<int,double> >;
-//#pragma link C++ class std::map<int,double>;
+#pragma link C++ class std::map<int,double>;
 
 //! links for pairs are requested by art (warnings) !!!!???!!??!!!!!--
 #pragma link C++ class std::pair<gate::BHit*,gate::BHit*>;
@@ -86,6 +91,8 @@
 #pragma link C++ function operator << (ostream& , const gate::Point3D&);
 #pragma link C++ function operator << (ostream& , const gate::Vector4D&);
 #pragma link C++ function operator << (ostream& , const gate::Run&);
+#pragma link C++ function operator << (ostream& , const gate::Geometry&);
+#pragma link C++ function operator << (ostream& , const gate::Properties&);
 #pragma link C++ function operator << (ostream& , const gate::Sensor&);
 #pragma link C++ function operator << (ostream& , const gate::Event&);
 #pragma link C++ function operator << (ostream& , const gate::Hit&);
