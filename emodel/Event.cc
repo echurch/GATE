@@ -62,35 +62,58 @@ void gate::Event::Clear() {
 //=======================================================
 void gate::Event::DestroyHits(){
 //=======================================================
-   
-  typedef std::multimap<gate::SENSORTYPE, gate::Hit*>::const_iterator I;
-  for(I i=_hits.begin(); i !=_hits.end(); ++i){ delete i->second; }
-  _hits.clear();
+    
+    typedef std::vector<gate::MCHit*>::const_iterator ITH;
+    for(ITH i=_thits.begin(); i !=_thits.end(); ++i){ 
+        (*i)->ClearMirrorHits(); }
+    
+    typedef std::multimap<gate::SENSORTYPE, gate::Track*>::const_iterator IT;
+    for(IT i=_tracks.begin(); i !=_tracks.end(); ++i){ 
+        i->second->ClearHits(); }
+
+    typedef std::multimap<gate::SENSORTYPE, gate::Cluster*>::const_iterator IC;
+    for(IC i=_clusters.begin(); i !=_clusters.end(); ++i){ 
+        i->second->ClearHits(); }
+
+    typedef std::multimap<gate::SENSORTYPE, gate::Hit*>::const_iterator I;
+    for(I i=_hits.begin(); i !=_hits.end(); ++i){ delete i->second; }
+    _hits.clear();
   
 }
 
 //=======================================================
 void gate::Event::DestroySignals(){
 //=======================================================
-  
+    
   typedef std::vector<gate::Signal*>::const_iterator IS;
   for(IS i=_signals.begin(); i !=_signals.end(); ++i){ delete *i; }
   _signals.clear();
+
 }
 
 //=======================================================
 void gate::Event::DestroyHitMaps(){
 //=======================================================
 
+    typedef std::vector<gate::Signal*>::const_iterator IS;
+    for(IS i=_signals.begin(); i !=_signals.end(); ++i){ 
+        (*i)->SetAnoHitMap(NULL); 
+        (*i)->SetCatHitMap(NULL); 
+    }
+    
     typedef std::multimap<gate::SENSORTYPE, gate::HitMap*>::const_iterator II;
     for(II i=_hmaps.begin(); i !=_hmaps.end(); ++i){ delete i->second; }
     _hmaps.clear();
-    
+
 }
 
 //=======================================================
 void gate::Event::DestroyClusters(){
 //=======================================================
+    
+    typedef std::multimap<gate::SENSORTYPE, gate::Track*>::const_iterator IT;
+    for(IT i=_tracks.begin(); i !=_tracks.end(); ++i){ 
+        i->second->ClearHits(); }
 
     typedef std::multimap<gate::SENSORTYPE, gate::Cluster*>::const_iterator IC;
     for(IC i=_clusters.begin(); i !=_clusters.end(); ++i){ delete i->second; }
@@ -100,6 +123,9 @@ void gate::Event::DestroyClusters(){
 //=======================================================
 void gate::Event::DestroyTracks(){
 //=======================================================
+    
+    typedef std::vector<gate::Particle*>::const_iterator IP;
+    for(IP i=_parts.begin(); i !=_parts.end(); ++i){ (*i)->ClearTracks(); }
 
     typedef std::multimap<gate::SENSORTYPE, gate::Track*>::const_iterator IT;
     for(IT i=_tracks.begin(); i !=_tracks.end(); ++i){ delete i->second; }
@@ -110,6 +136,10 @@ void gate::Event::DestroyTracks(){
 //=======================================================
 void gate::Event::DestroyParticles(){
 //=======================================================
+    
+    typedef std::vector<gate::MCParticle*>::const_iterator ITP;
+    for(ITP i=_tparts.begin(); i !=_tparts.end(); ++i){ 
+        (*i)->ClearMirrorParticles(); }
 
     typedef std::vector<gate::Particle*>::const_iterator IP;
     for(IP i=_parts.begin(); i !=_parts.end(); ++i){ delete *i; }
@@ -119,6 +149,10 @@ void gate::Event::DestroyParticles(){
 //=======================================================
 void gate::Event::DestroyMCTracks(){
 //=======================================================
+    
+    typedef std::vector<gate::MCParticle*>::const_iterator ITP;
+    for(ITP i=_tparts.begin(); i !=_tparts.end(); ++i){ 
+        (*i)->ClearTracks(); }
 
     typedef std::vector<gate::MCTrack*>::const_iterator ITT;
     for(ITT i=_ttracks.begin(); i !=_ttracks.end(); ++i){ delete *i; }
@@ -130,6 +164,14 @@ void gate::Event::DestroyMCTracks(){
 void gate::Event::DestroyMCHits(){
 //=======================================================
     
+    typedef std::multimap<gate::SENSORTYPE, gate::Hit*>::const_iterator I;
+    for(I i=_hits.begin(); i !=_hits.end(); ++i){ 
+        i->second->ClearMirrorHits(); }
+
+    typedef std::vector<gate::MCTrack*>::const_iterator ITT;
+    for(ITT i=_ttracks.begin(); i !=_ttracks.end(); ++i){ 
+        (*i)->ClearHits(); }
+
     typedef std::vector<gate::MCHit*>::const_iterator ITH;
     for(ITH i=_thits.begin(); i !=_thits.end(); ++i){ delete *i; }
     _thits.clear();
@@ -148,6 +190,10 @@ void gate::Event::DestroyMCSensHits(){
 //=======================================================
 void gate::Event::DestroyMCParticles(){
 //=======================================================
+    
+    typedef std::vector<gate::Particle*>::const_iterator IP;
+    for(IP i=_parts.begin(); i !=_parts.end(); ++i){
+        (*i)->ClearMirrorParticles(); }
 
     typedef std::vector<gate::MCParticle*>::const_iterator ITP;
     for(ITP i=_tparts.begin(); i !=_tparts.end(); ++i){ delete *i; }
