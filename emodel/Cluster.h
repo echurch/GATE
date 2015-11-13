@@ -40,6 +40,9 @@ class gate::Cluster : public gate::Hit{
 
   //! retrieve hits
   const std::vector<gate::Hit*>& GetHits() const;
+  
+  //! clear hits
+  void ClearHits();
 
   //! print hit into stream
   void Info(std::ostream& s=std::cout) const;
@@ -55,6 +58,8 @@ class gate::Cluster : public gate::Hit{
 
 inline void gate::Cluster::AddHit(gate::Hit* h){ _hits.push_back(h);}
 inline const std::vector<gate::Hit*>& gate::Cluster::GetHits()const {return _hits;}
+
+inline void gate::Cluster::ClearHits(){_hits.clear();}
 
 std::ostream& operator << (std::ostream& s, const gate::Cluster& c); 
 
