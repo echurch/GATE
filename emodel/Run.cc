@@ -4,51 +4,52 @@
 ClassImp(gate::Run)
 
 //===============================================================
-gate::Run::Run(gate::DATATYPE dt, int id) : BObject(), 
-_dType(dt), _runID(id),_sTime(-1),_eTime(-1){
+gate::Run::Run(gate::DATATYPE dt, int id) : BObject(){
 //===============================================================
+    
+    _geo = 0;
 
-  
+    _prop = 0;
+    
+    this->Clear();
+
+    _dType = dt; 
+
+    _runID = id;
+
+    //_geo = new gate::Geometry();
+
+    //_prop = new gate::Properties();
+    
+    
 }
 
-// //=======================================================
-// std::vector<gate::Sensor*> gate::Run::GetSensors() const{
-// //=======================================================
+//===============================================================
+gate::Run::~Run(){ 
+//===============================================================
     
-//     std::vector<gate::Sensor*> sensors;
-//     std::multimap<gate::SENSORTYPE,gate::Sensor*>::const_iterator 
-//         iter = _sensors.begin();
-//     while(iter != _sensors.end()){sensors.push_back(iter->second); ++iter;}
-//     return sensors;
-  
-// }
-
-// //=======================================================
-// std::vector<gate::Sensor*> gate::Run::GetSensors(gate::SENSORTYPE type)const{
-// //=======================================================
+    this->Clear();
     
-//     std::vector<gate::Sensor*> sensors;
-//     typedef std::multimap<gate::SENSORTYPE, gate::Sensor*>::const_iterator I;
-//     std::pair<I,I> b = _sensors.equal_range(type);
-//     for(I i=b.first; i !=b.second; ++i){ sensors.push_back((i->second)); }
-//     return sensors;
-// }
-
-
-// //=======================================================
-// void gate::Run::AddHit(gate::SENSORTYPE type, gate::Sensor* sens){
-// //=======================================================
-    
-//     _sensors.insert(std::make_pair(type,sens));
-// }
-
-//=======================================================
-void gate::Run::AddSensor(gate::Sensor* sens){
-//=======================================================
-    
-  _sensors[sens->GetID()]=sens;
 }
 
+
+//===============================================================
+void gate::Run::Clear(){ 
+//===============================================================
+    
+    if (_geo) delete _geo;
+    
+    if (_prop) delete _prop;
+    
+    BObject::Clear();
+    
+    _dType = gate::NODTYPE;
+
+    _runID = -1;
+    
+    _sTime = _eTime = -1;
+
+}
 
 
 //=======================================================
@@ -64,7 +65,18 @@ void gate::Run::Info(std::ostream& s) const{
     s << " Start time: " << this->GetStartTime()<< std::endl;
 
     s << " Start time: " << this->GetEndTime()<< std::endl;
+
+    if (_geo){ 
+        
+        s << " Detector geometry: "<< std::endl;
+
+        s << *_geo << std::endl;}
     
+    if (_prop) {
+        s << " Detector properties: "<< std::endl;
+        
+        s << *_prop << std::endl;}
+
     s << "======================================="<< std::endl;
 
 }
