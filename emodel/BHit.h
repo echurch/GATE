@@ -79,9 +79,12 @@ class gate::BHit : public gate::BObject{
   //! retrieve mirror hits 
   const std::vector<gate::BHit*>& GetMirrorHits() const; 
   
+  //! clear mirror hits 
+  void ClearMirrorHits();
+
   //! print hit into stream
   void Info(std::ostream& s=std::cout) const;
-
+  
   ClassDef(gate::BHit,1)
 
     };
@@ -103,6 +106,7 @@ inline void gate::BHit::AddMirrorHit(gate::BHit* h)
 inline const std::vector<gate::BHit*>& gate::BHit::GetMirrorHits() const
 { return _mhits;}
 
+inline void gate::BHit::ClearMirrorHits(){ _mhits.clear();}
 
 std::ostream& operator << (std::ostream& s, const gate::BHit& bhit); 
 
