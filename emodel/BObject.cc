@@ -11,6 +11,15 @@ void gate::BObject::Info(std::ostream& s) const{
     
 }
 
+//=======================================================
+void gate::BObject::Clear(){
+//=======================================================
+
+    _id = -1; _label = ""; 
+    
+    ParamStore::clear();
+
+}
 
 //=======================================================
 std::string gate::BObject::ToString() const{

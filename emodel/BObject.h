@@ -87,13 +87,8 @@ class gate::BObject : public gate::ParamStore {
 inline void gate::BObject::SetID(int id) { _id = id; }
 inline int gate::BObject::GetID() const { return _id; }
 
-//inline void gate::BObject::SetDataType(gate::DATATYPE t) { _dType = t; }
-//inline gate::DATATYPE gate::BObject::GetDataType() const { return _dType; }
-
 inline void gate::BObject::SetLabel(std::string lab) { _label = lab; }
 inline std::string gate::BObject::GetLabel() const { return _label;} 
-
-inline void gate::BObject::Clear(){_id = -1; _label = "";}
 
 std::ostream& operator << (std::ostream& s, const gate::BObject& obj); 
 
