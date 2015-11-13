@@ -38,6 +38,9 @@ class gate::BTrack : public gate::BObject {
   
   //! retrieve hits 
   const std::vector<gate::BHit*>& GetHits() const; 
+
+  //! clear hits 
+  void ClearHits(); 
    
    //! add mirror track
   void AddMirrorTrack(gate::BTrack* trk);
@@ -92,6 +95,8 @@ class gate::BTrack : public gate::BObject {
 
 inline void gate::BTrack::AddHit(gate::BHit* hit){_hits.push_back(hit);}
 inline const std::vector<gate::BHit*>& gate::BTrack::GetHits() const{return _hits;}
+
+inline void gate::BTrack::ClearHits(){_hits.clear();}
 
 inline void gate::BTrack::AddMirrorTrack(gate::BTrack* trk)
 {_mtracks.push_back(trk);}
