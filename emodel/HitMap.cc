@@ -13,7 +13,7 @@ gate::HitMap::HitMap() : BObject(),_sensType(gate::NOSTYPE),
 std::vector<int> gate::HitMap::GetChannels(size_t isample) const{
 //=======================================================
   
-  std::map<int, double>::const_iterator pi;
+  std::map<int, float>::const_iterator pi;
   std::vector<int> chs;
      
   for (pi = _tmap[isample].begin(); pi!= _tmap[isample].end(); ++pi){
@@ -27,7 +27,7 @@ std::vector<int> gate::HitMap::GetChannels(size_t isample) const{
 std::vector<double> gate::HitMap::GetAmplitudes(size_t isample) const{
 //=======================================================
   
-  std::map<int, double>::const_iterator pi;
+  std::map<int, float>::const_iterator pi;
   std::vector<double> chs;
      
   for (pi = _tmap[isample].begin(); pi!= _tmap[isample].end(); ++pi){

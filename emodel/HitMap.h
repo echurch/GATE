@@ -70,13 +70,13 @@ class gate::HitMap : public BObject {
   double GetAmplitude() const; 
   
   //! get time map
-  std::vector<std::map<int,double> > GetTimeMap() const;
+  std::vector<std::map<int,float> > GetTimeMap() const;
   
   //! set time map
-  void SetTimeMap(std::vector<std::map<int,double> > m);
+  void SetTimeMap(std::vector<std::map<int,float> > m);
 
   //! get map for time slice
-  std::map<int,double>  GetMap(size_t isample) const;
+  std::map<int,float>  GetMap(size_t isample) const;
   
   //! get channels id in isample time slice
   std::vector<int> GetChannels(size_t isample) const;
@@ -108,14 +108,14 @@ class gate::HitMap : public BObject {
   double _tSample;
 
   //! time map for signal
-  std::vector<std::map<int,double> > _tmap; 
+  std::vector<std::map<int,float> > _tmap; 
   
  public:
 
   //! print pulse into stream
   void Info(std::ostream& s=std::cout) const;
   
-  ClassDef(gate::HitMap,1)
+  ClassDef(gate::HitMap,2)
 
 };
 
@@ -137,12 +137,12 @@ inline double gate::HitMap::GetEndTime()  const { return _eTime;}
 inline void gate::HitMap::SetTimeSample(double t) { _tSample = t; }
 inline double gate::HitMap::GetTimeSample()  const { return _tSample;}
 
-inline void gate::HitMap::SetTimeMap(std::vector<std::map<int,double> > m) { 
+inline void gate::HitMap::SetTimeMap(std::vector<std::map<int,float> > m) { 
   _tmap = m; }
-inline std::vector<std::map<int,double> > gate::HitMap::GetTimeMap() const { 
+inline std::vector<std::map<int,float> > gate::HitMap::GetTimeMap() const { 
   return _tmap;}
 
-inline std::map<int,double> gate::HitMap::GetMap(size_t isample) const { 
+inline std::map<int,float> gate::HitMap::GetMap(size_t isample) const { 
   return _tmap[isample];}
 
 inline size_t gate::HitMap::GetNsamp() const { return _tmap.size(); }
