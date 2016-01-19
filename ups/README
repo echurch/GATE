@@ -3,4 +3,8 @@ To declare GATE as an ups product, type:
 ups declare GATE <version> -r $GATEDIR 
   -f ANY  -U $GATEDIR/ups/ -m GATE.table -M $GATEDIR/ups/
 
-where GATEDIR is the path to the the root directory of GATE
+where GATEDIR is the path to the the root directory of GATE.
+
+In case the path to the ups products database needs to be specified, use also:
+
+-z PATH_TO_UPS_DATABASE 
