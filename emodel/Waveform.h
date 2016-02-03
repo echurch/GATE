@@ -54,7 +54,7 @@ class gate::Waveform : public gate::BObject {
   std::vector<gate::Pulse*> _pulses;
   
   //! waveform data, as a vector of pair<time,amp>
-  std::vector< std::pair<unsigned short, unsigned short> > _data;
+  std::vector< std::pair<unsigned int, unsigned int> > _data;
 
  public:
   
@@ -83,13 +83,13 @@ class gate::Waveform : public gate::BObject {
   void SetBaselineSig(double rms);
 
   //! Get  data
-  const std::vector< std::pair<unsigned short,unsigned short> >& GetData()const;
+  const std::vector< std::pair<unsigned int,unsigned int> >& GetData()const;
   
   //! Get amlitude  in time sample isamp
-  double GetAmplitude(unsigned short isamp) const;
+  double GetAmplitude(unsigned int isamp) const;
 
   //! Set data (not passed by reference, but copied!!!)
-  void SetData(std::vector< std::pair<unsigned short,unsigned short> > data);
+  void SetData(std::vector< std::pair<unsigned int,unsigned int> > data);
   
   //! Clear data (once reconstructed, wf might not be needed)
   void ClearData();
@@ -103,12 +103,12 @@ class gate::Waveform : public gate::BObject {
   //! print pulse into stream
   void Info(std::ostream& s=std::cout) const;
 
-  ClassDef(gate::Waveform,2)
+  ClassDef(gate::Waveform,3)
 
     };
 
 
-inline const std::vector< std::pair<unsigned short,unsigned short> >& 
+inline const std::vector< std::pair<unsigned int,unsigned int> >& 
   gate::Waveform::GetData() const {return _data;}
 
 inline void gate::Waveform::AddPulse( gate::Pulse* p) { 
