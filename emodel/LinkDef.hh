@@ -67,9 +67,8 @@
 
 #pragma link C++ class std::map<int,gate::Sensor*>;
 
-//#pragma link C++ class std::vector< pair<double,double> >;//waveforms
-#pragma link C++ class std::vector<pair<unsigned short,unsigned short> >;
-#pragma link C++ class std::pair<unsigned short,unsigned short>;
+#pragma link C++ class std::vector<pair<unsigned int,unsigned int> >;
+#pragma link C++ class std::pair<unsigned int,unsigned int>;
 
 //! links for hitmap
 #pragma link C++ class std::vector<std::map<int,float> >;
