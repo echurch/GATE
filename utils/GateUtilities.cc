@@ -1,7 +1,6 @@
 #include <GateUtilities.h>
 
-
-std::string ResumedInfo(gate::Event* event){
+std::string gate::ResumedInfo(gate::Event* event){
     //! too heavy for an inline function ???
     std::vector <gate::MCParticle*> mcParts = event->GetMCParticles();
     std::vector <gate::Track*> tracks = event->GetTracks();
