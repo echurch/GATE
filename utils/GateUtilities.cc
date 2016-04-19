@@ -1,11 +1,10 @@
 #include <GateUtilities.h>
 
 std::string gate::ResumedInfo(gate::Event* event){
-    //! too heavy for an inline function ???
     std::vector <gate::MCParticle*> mcParts = event->GetMCParticles();
     std::vector <gate::Track*> tracks = event->GetTracks();
 
-    std::string info = "** Event " + to_string(event->GetID()) + "   Type: " + to_string(event->GetMCEventType()) + "\n";
+    std::string info = "** Event " + to_string(event->GetID()) + "   Type: " + to_string(event->GetEventType()) + "\n";
     info += "*  True Edep: " + to_string(event->GetMCEnergy()) + "   from " + to_string(mcParts.size()) + " MC Particles\n";
     info += "*  Rec. Edep: " + to_string(event->GetEnergy()) + "   from " + to_string(tracks.size()) + " Rec Tracks\n";
 
@@ -14,7 +13,7 @@ std::string gate::ResumedInfo(gate::Event* event){
     for(IP=mcParts.begin(); IP !=mcParts.end(); ++IP){ 
     //for (auto mcPart: mcParts) {
       const gate::MCParticle* mcPart = *IP; 
-        info += "   ID: " + to_string(mcPart->GetID()) + "  " + mcPart->fetch_sstore("name");
+        info += "   ID: " + to_string(mcPart->GetID()) + "  " + mcPart->GetLabel();
         std::string motherIDstr = "null";
         if (not mcPart->IsPrimary()) motherIDstr = to_string(mcPart->GetMother().GetID());
         info += "  by " + mcPart->GetCreatorProc() + "  MotherID: " + motherIDstr;
