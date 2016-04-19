@@ -4,7 +4,7 @@ std::string gate::ResumedInfo(gate::Event* event){
     std::vector <gate::MCParticle*> mcParts = event->GetMCParticles();
     std::vector <gate::Track*> tracks = event->GetTracks();
 
-    std::string info = "** Event " + to_string(event->GetID()) + "   Type: " + to_string(event->GetEventType()) + "\n";
+    std::string info = "** Event " + to_string(event->GetID()) + "   Type: " + to_string(event->GetMCEventType()) + "\n";
     info += "*  True Edep: " + to_string(event->GetMCEnergy()) + "   from " + to_string(mcParts.size()) + " MC Particles\n";
     info += "*  Rec. Edep: " + to_string(event->GetEnergy()) + "   from " + to_string(tracks.size()) + " Rec Tracks\n";
 
