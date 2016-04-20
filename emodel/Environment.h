@@ -20,6 +20,9 @@ namespace gate{
   //! not defined number
   static const double nan = -9999.9999;
 
+  //! verbosity levels
+  enum VLEVEL{MUTE,NORMAL,DETAILED,VERBOSE,DUMP};
+  
   //! Data type: MC-TRUTH, MC-DIGI, or DATA 
   enum DATATYPE{ NODTYPE, MCTRUTH,MC,DATA};
   
@@ -31,9 +34,6 @@ namespace gate{
   
   //! sensor type: SiPM or PMT
   enum SENSORTYPE{ NOSTYPE,SIPM,PMT,TPC};
-  
-  //! verbosity levels
-  enum VLEVEL{MUTE,NORMAL,DETAILED,VERBOSE,DUMP};
   
   //! Event type
   enum EVENTTYPE{ NOETYPE, BB2NU, BB0NU, BKG }; // Bi214, Tl208,...
