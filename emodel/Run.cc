@@ -16,12 +16,7 @@ gate::Run::Run(gate::DATATYPE dt, int id) : BObject(){
     _dType = dt; 
 
     _runID = id;
-
-    //_geo = new gate::Geometry();
-
-    //_prop = new gate::Properties();
-    
-    
+        
 }
 
 //===============================================================
@@ -49,6 +44,7 @@ void gate::Run::Clear(){
     
     _sTime = _eTime = -1;
 
+    _nEvents = -1;
 }
 
 
@@ -62,6 +58,8 @@ void gate::Run::Info(std::ostream& s) const{
 
     s << " Data type: " << this->GetDataType()<< std::endl;
 
+    s << " Number of events: " << this->GetNumEvents()<< std::endl;
+    
     s << " Start time: " << this->GetStartTime()<< std::endl;
 
     s << " Start time: " << this->GetEndTime()<< std::endl;

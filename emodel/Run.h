@@ -44,6 +44,9 @@ class gate::Run : public gate::BObject{
 
   //! run number
   int _runID;
+
+  //! number of events in run
+  int _nEvents;
   
   //! run start time
   int _sTime;
@@ -71,6 +74,12 @@ public:
 
   //! Set run number
   void SetRunID(int id);
+
+  //! Get number of events in run
+  int GetNumEvents() const;
+
+  //! Set number of events in run
+  void SetNumEvents(int n);
   
   //! Get start time
   double GetStartTime() const;
@@ -99,7 +108,7 @@ public:
   //! set geometry info
   void SetProperties(gate::Properties* prop);
 
-  ClassDef(gate::Run,2)
+  ClassDef(gate::Run,3)
 
 };
 
@@ -108,6 +117,9 @@ inline void gate::Run::SetDataType(gate::DATATYPE t) {_dType = t;}
 
 inline void gate::Run::SetRunID(int id){ _runID = id;}
 inline int gate::Run::GetRunID() const { return _runID;}
+
+inline void gate::Run::SetNumEvents(int n){ _nEvents = n;}
+inline int gate::Run::GetNumEvents() const { return _nEvents;}
 
 inline void gate::Run::SetStartTime(double t){ _sTime = t;}
 inline double gate::Run::GetStartTime() const { return _sTime;}
