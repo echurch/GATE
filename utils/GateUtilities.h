@@ -12,45 +12,60 @@ namespace gate{
   
   std::string ResumedInfo(gate::Event* event); 
 
-  inline double distance(gate::Point3D p1, gate::Point3D p2) {
-    double distx = p1.x() - p2.x();
-    double disty = p1.y() - p2.y();
-    double distz = p1.z() - p2.z();
-    return sqrt(distx*distx + disty*disty + distz*distz);
-  }
-
-  
-  inline double distance(gate::BHit* hit1, gate::BHit* hit2) {      
-    return distance(hit1->GetPosition(),hit2->GetPosition());
-  }
+  double distance(gate::Point3D p1, gate::Point3D p2);
+  double distance(gate::BHit* hit1, gate::BHit* hit2);
+  double distance(gate::BTrack* track1, gate::BTrack* track2);
 
 
-  inline double distance(gate::BTrack* track1, gate::BTrack* track2){    
-    //! too heavy for an inline function ???
-
-    std::vector<BHit*> hits1 = track1->GetHits(); 
-    std::vector<BHit*> hits2 = track2->GetHits(); 
-    
-    Assert( (hits1.size() && hits2.size()) ,__FILE__,__LINE__,
-	    
-	   gate::internal_logic("Track does not contain any hits")); 
-
-    std::vector<BHit*>::const_iterator ihit;
-    std::vector<BHit*>::const_iterator jhit;
-    
-    std::vector<double> distances; 
-
-    for (ihit = hits1.begin(); ihit!=hits1.end(); ++ihit){
-
-      for (jhit = hits2.begin(); jhit!=hits2.end(); ++jhit){
-	
-	distances.push_back(distance(*ihit,*jhit));}
+  inline std::string toString(gate::DATATYPE dataType) {
+    switch(dataType) {
+      case(gate::NODTYPE): return "Not Set";
+      case(gate::MCTRUTH): return "MC Truth";
+      case(gate::MC):      return "MC Digi";
+      case(gate::DATA):    return "Data";
+      default:             return "NOT VALID !!";
     }
-    
-    std::sort(distances.begin(),distances.end());
-
-    return distances[0];
   }
+
+  inline std::string toString(gate::EVENTTYPE evtType) {
+    switch(evtType) {
+      case (gate::NOETYPE): return "Not Set";
+      case (gate::BB2NU):   return "BB2nu";
+      case (gate::BB0NU):   return "BB0nu";
+      case (gate::BKG):     return "Background";
+      default:              return "NOT VALID !!";
+    }
+  }
+
+  inline std::string toString(gate::SIGNALTYPE signalType) {
+    switch(signalType) {
+      case (gate::NOSIGTYPE): return "Not Set";
+      case (gate::S1):        return "S1";
+      case (gate::S2):        return "S2";
+      default:                return "NOT VALID !!";
+    }
+  }
+
+  inline std::string toString(gate::STATE state) {
+    switch(state) {
+      case (gate::NOSTATE): return "Not Set";
+      case (gate::RAW):     return "Raw";
+      case (gate::RECOED):  return "Reconstructed";
+      case (gate::CALIB):   return "Calibrated";
+      default:              return "NOT VALID !!";
+    }
+  }
+
+  inline std::string toString(gate::SENSORTYPE sensorType) {
+    switch(sensorType) {
+      case (gate::NOSTYPE): return "Not Set";
+      case (gate::SIPM):    return "No Type";
+      case (gate::PMT):     return "No Type";
+      case (gate::TPC):     return "No Type";
+      default:              return "NOT VALID !!";
+    }
+  }
+
 
 
   inline VLEVEL to_VLEVEL(int level ){
@@ -196,7 +211,7 @@ namespace gate{
     else if (sunit=="perMillion") unit = gate::perMillion;
     
     Assert(unit,__FILE__,__LINE__,
-	   gate::internal_logic("Unit not known: "+sunit)); 
+           gate::internal_logic("Unit not known: "+sunit)); 
 
     return unit;
   }
