@@ -8,8 +8,11 @@
 #include <GATE/Error.h>
 #include <GATE/Event.h>
 #include <GATE/Utilities.h>
+#include <GATE/PartProperties.h>
 
 namespace gate{
+  
+  PartProperties GetProperties(gate::BParticle* p);
   
   std::string ResumedInfo(gate::Event* event); 
 
@@ -216,6 +219,10 @@ namespace gate{
 
     return unit;
   }
+
+  
+  
+
 
 }
 

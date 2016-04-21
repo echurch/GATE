@@ -1,6 +1,49 @@
 #include <GateUtilities.h>
 
 
+gate::PartProperties gate::GetProperties(gate::BParticle* p){
+    
+    int pdg = p->GetPDG();
+    
+    gate::PartProperties pp;
+
+    switch (pdg) {
+        
+    case 22: 
+        pp =  gate::GAMMA; break;
+    case 11: 
+        pp =  gate::ELECTRON; break; 
+    case -11: 
+        pp =  gate::POSITRON; break;
+    case 12: 
+        pp =  gate::NUE; break; 
+    case -12: 
+        pp =  gate::ANTINUE; break;
+    case 13:
+        pp = gate::MUMINUS; break;
+    case -13:
+        pp = gate::MUPLUS; break;
+    case 14: 
+        pp =  gate::NUMU; break; 
+    case -14: 
+        pp =  gate::ANTINUMU; break;
+     case 15:
+        pp = gate::TAUMINUS; break;
+    case -15:
+        pp = gate::TAUPLUS; break;    
+    case 16: 
+        pp =  gate::NUTAU; break; 
+    case -16: 
+        pp =  gate::ANTINUTAU; break;   
+    case 1000020040:
+        pp =  gate::ALPHA; break;   
+    default:
+        break; 
+    }
+
+    return pp;    
+}
+
 double gate::distance(gate::Point3D p1, gate::Point3D p2) {
   double distx = p1.x() - p2.x();
   double disty = p1.y() - p2.y();
