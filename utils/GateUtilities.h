@@ -7,6 +7,7 @@
 #include <GATE/system_of_units.h>
 #include <GATE/Error.h>
 #include <GATE/Event.h>
+#include <GATE/Utilities.h>
 
 namespace gate{
   
