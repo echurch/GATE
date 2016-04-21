@@ -25,4 +25,6 @@
 #pragma link C++ class gate::engine+;
 #pragma link C++ class gate::sreader+;
 
+#pragma link C++ class gate::PartProperties;
+
 #endif
