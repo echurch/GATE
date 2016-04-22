@@ -12,13 +12,14 @@
 
 namespace gate{
   
-  PartProperties GetProperties(gate::BParticle* p);
+  PartProperties GetProperties(const gate::BParticle* p);
+  double GetIniEkin(const gate::BParticle* p);
   
-  std::string ResumedInfo(gate::Event* event); 
+  std::string ResumedInfo(const gate::Event* event); 
 
-  double distance(gate::Point3D p1, gate::Point3D p2);
-  double distance(gate::BHit* hit1, gate::BHit* hit2);
-  double distance(gate::BTrack* track1, gate::BTrack* track2);
+  double distance(const gate::Point3D p1, const gate::Point3D p2);
+  double distance(const gate::BHit* hit1, const gate::BHit* hit2);
+  double distance(const gate::BTrack* track1, const gate::BTrack* track2);
 
 
   inline std::string to_string(gate::DATATYPE dataType) {
@@ -71,7 +72,6 @@ namespace gate{
   }
 
 
-
   inline VLEVEL to_VLEVEL(int level ){
     if(level == 0)  return MUTE;
     if(level == 1)  return NORMAL;
@@ -80,7 +80,6 @@ namespace gate{
     if(level == 4)  return DUMP;
     else return NORMAL;
   }
-
 
   inline VLEVEL get_info_level( string info )
   {
@@ -219,10 +218,6 @@ namespace gate{
 
     return unit;
   }
-
-  
-  
-
 
 }
 

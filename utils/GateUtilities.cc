@@ -1,7 +1,7 @@
 #include <GateUtilities.h>
 
-
-gate::PartProperties gate::GetProperties(gate::BParticle* p){
+// Particle Properties
+gate::PartProperties gate::GetProperties(const gate::BParticle* p){
     
     int pdg = p->GetPDG();
     
@@ -44,20 +44,27 @@ gate::PartProperties gate::GetProperties(gate::BParticle* p){
     return pp;    
 }
 
-double gate::distance(gate::Point3D p1, gate::Point3D p2) {
+
+// Initial Kinetic Energy
+double gate::GetIniEkin(const gate::BParticle* p) {
+  double Ekin = p->GetInitialMom().GetE() - gate::GetProperties(p).GetMass();
+  return Ekin;
+}
+
+
+// Euclidean Distances
+double gate::distance(const gate::Point3D p1, const gate::Point3D p2) {
   double distx = p1.x() - p2.x();
   double disty = p1.y() - p2.y();
   double distz = p1.z() - p2.z();
   return sqrt(distx*distx + disty*disty + distz*distz);
 }
-
   
-double gate::distance(gate::BHit* hit1, gate::BHit* hit2) {      
+double gate::distance(const gate::BHit* hit1, const gate::BHit* hit2) {      
   return distance(hit1->GetPosition(),hit2->GetPosition());
 }
 
-
-double gate::distance(gate::BTrack* track1, gate::BTrack* track2) {    
+double gate::distance(const gate::BTrack* track1, const gate::BTrack* track2) {    
   std::vector<BHit*> hits1 = track1->GetHits(); 
   std::vector<BHit*> hits2 = track2->GetHits(); 
     
@@ -79,8 +86,8 @@ double gate::distance(gate::BTrack* track1, gate::BTrack* track2) {
 }
 
 
-
-std::string gate::ResumedInfo(gate::Event* event){
+// Event Resumed Info
+std::string gate::ResumedInfo(const gate::Event* event) {
   std::vector <gate::MCParticle*> mcParts = event->GetMCParticles();
   std::vector <gate::Track*> tracks = event->GetTracks();
 
@@ -90,13 +97,14 @@ std::string gate::ResumedInfo(gate::Event* event){
 
   info += "\n*  MC Particles:\n";
   std::vector<gate::MCParticle*>::const_iterator IP;
-  for(IP=mcParts.begin(); IP !=mcParts.end(); ++IP){ 
+  for(IP=mcParts.begin(); IP!=mcParts.end(); ++IP){ 
     const gate::MCParticle* mcPart = *IP; 
     info += "   ID: " + gate::to_string(mcPart->GetID()) + "  " + mcPart->GetLabel();
     std::string motherIDstr = "null";
     if (not mcPart->IsPrimary()) motherIDstr = gate::to_string(mcPart->GetMother().GetID());
     info += "  by " + mcPart->GetCreatorProc() + "  MotherID: " + motherIDstr;
     if (mcPart->GetTracks().size() > 0) {
+      info += "  IniEkin: " + gate::to_string(gate::GetIniEkin(mcPart));
       info += "  Edep: " + gate::to_string(mcPart->GetTracks()[0]->GetEnergy()) + "\n";
       gate::Point3D iniPos = mcPart->GetInitialVtx();
       gate::Point3D decPos = mcPart->GetFinalVtx();
@@ -108,7 +116,7 @@ std::string gate::ResumedInfo(gate::Event* event){
   info += "\n";
   }
 
-  /// ADD REC TRACKS INFO
+  // Add RecTracks Info
   info += "\n*  Rec Tracks:\n";
   std::vector<gate::Track*>::const_iterator IT;
   for(IT=tracks.begin(); IT !=tracks.end(); ++IT){ 
