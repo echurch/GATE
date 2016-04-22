@@ -43,7 +43,7 @@ namespace gate{
 
     //! default constructor: sets all members
   PartProperties(int pdg=-1, std::string n="NONE", double mass=0, int q=0):
-    _PDG(pdg),_name(n),_mass(m),_charge(q){};
+    _PDG(pdg),_name(n),_mass(mass),_charge(q){};
     
     //! get PDG number
     inline int GetPDG() const {return _PDG;}
