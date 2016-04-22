@@ -37,12 +37,12 @@ namespace gate{
     double _mass;
     
     //! charge
-    double _charge;
+    int _charge;
     
   public:
 
     //! default constructor: sets all members
-  PartProperties(int pdg=-1, std::string n="NONE", double mass=0, double q=0):
+  PartProperties(int pdg=-1, std::string n="NONE", double mass=0, int q=0):
     _PDG(pdg),_name(n),_mass(m),_charge(q){};
     
     //! get PDG number
@@ -50,7 +50,7 @@ namespace gate{
     //! get particle name as a string
     inline std::string GetName() const {return _name;}
     //! get mass
-    inline int GetMass() const {return _mass;}
+    inline double GetMass() const {return _mass;}
     // get charge
     inline int GetCharge() const {return _charge;}
 
