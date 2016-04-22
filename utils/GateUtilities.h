@@ -21,7 +21,7 @@ namespace gate{
   double distance(gate::BTrack* track1, gate::BTrack* track2);
 
 
-  inline std::string toString(gate::DATATYPE dataType) {
+  inline std::string to_string(gate::DATATYPE dataType) {
     switch(dataType) {
       case(gate::NODTYPE): return "Not Set";
       case(gate::MCTRUTH): return "MC Truth";
@@ -31,7 +31,7 @@ namespace gate{
     }
   }
 
-  inline std::string toString(gate::EVENTTYPE evtType) {
+  inline std::string to_string(gate::EVENTTYPE evtType) {
     switch(evtType) {
       case (gate::NOETYPE): return "Not Set";
       case (gate::BB2NU):   return "BB2nu";
@@ -41,7 +41,7 @@ namespace gate{
     }
   }
 
-  inline std::string toString(gate::SIGNALTYPE signalType) {
+  inline std::string to_string(gate::SIGNALTYPE signalType) {
     switch(signalType) {
       case (gate::NOSIGTYPE): return "Not Set";
       case (gate::S1):        return "S1";
@@ -50,7 +50,7 @@ namespace gate{
     }
   }
 
-  inline std::string toString(gate::STATE state) {
+  inline std::string to_string(gate::STATE state) {
     switch(state) {
       case (gate::NOSTATE): return "Not Set";
       case (gate::RAW):     return "Raw";
@@ -60,7 +60,7 @@ namespace gate{
     }
   }
 
-  inline std::string toString(gate::SENSORTYPE sensorType) {
+  inline std::string to_string(gate::SENSORTYPE sensorType) {
     switch(sensorType) {
       case (gate::NOSTYPE): return "Not Set";
       case (gate::SIPM):    return "No Type";
