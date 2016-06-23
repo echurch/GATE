@@ -104,11 +104,12 @@ std::string gate::ResumedInfo(const gate::Event* event) {
     if (not mcPart->IsPrimary()) motherIDstr = gate::to_string(mcPart->GetMother().GetID());
     info += "  by " + mcPart->GetCreatorProc() + "  MotherID: " + motherIDstr;
     if (mcPart->GetTracks().size() > 0) {
-      info += "  IniEkin: " + gate::to_string(gate::GetIniEkin(mcPart));
+      info += "  IniTime: " + gate::to_string(mcPart->GetTracks()[0]->GetHits()[0]->GetTime()) + "\n";
+      info += "           IniEkin: " + gate::to_string(gate::GetIniEkin(mcPart));
       info += "  Edep: " + gate::to_string(mcPart->GetTracks()[0]->GetEnergy()) + "\n";
       gate::Point3D iniPos = mcPart->GetInitialVtx();
       gate::Point3D decPos = mcPart->GetFinalVtx();
-      info += "          IniVtx: (" + gate::to_string(int(iniPos.x()+0.5)) + ", " +
+      info += "           IniVtx: (" + gate::to_string(int(iniPos.x()+0.5)) + ", " +
                                   gate::to_string(int(iniPos.y()+0.5)) + ", " + gate::to_string(int(iniPos.z()+0.5)) + ")";
       info += "  DecVtx: (" + gate::to_string(int(decPos.x()+0.5)) + ", " +
                           gate::to_string(int(decPos.y()+0.5)) + ", " + gate::to_string(int(decPos.z()+0.5)) + ")";
