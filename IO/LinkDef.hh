@@ -10,5 +10,6 @@
 #pragma link C++ class gate::IWriter+;
 #pragma link C++ class gate::RootWriter+;
 #pragma link C++ class gate::RootReader+;
+#pragma link C++ class gate::HDF5Writer+;
 
 #endif

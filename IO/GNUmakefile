@@ -1,3 +1,4 @@
+
 # specific names for this package
 
 GATEMAKEDIR = ../Makefile
@@ -10,6 +11,7 @@ SOURCES = $(wildcard *.cc)
 HEADERS = $(filter-out GATEIOCint.h,$(wildcard *.h))
 OBJECTS = $(SOURCES:.cc=.o)
 #OBJECTS = $(filter-out RunActionUnit.o, $(SOURCES:.cc=.o))
+
 
 # include options for this package
 INCFLAGS = -I.
@@ -27,6 +29,10 @@ include $(GATEMAKEDIR)/Makefile.${OSNAME}
 CXXFLAGS += $(shell root-config --cflags)
 CXXFLAGS += '-fPIC'
 
+ifneq  ($(HDF5_INC),)
+CXXFLAGS += '-DHDF5'
+INCFLAGS += -I$(HDF5_INC)
+endif
 
 # call the common GNUmakefile
 include $(GATEMAKEDIR)/GNUmakefile.GATE
