@@ -68,6 +68,7 @@
 #pragma link C++ class std::multimap<gate::SENSORTYPE,gate::Track*>;
 
 #pragma link C++ class std::map<int,gate::Sensor*>;
+#pragma link C++ class std::map<int,gate::Sensor*>::iterator;
 
 #pragma link C++ class std::vector<pair<unsigned int,unsigned int> >;
 #pragma link C++ class std::pair<unsigned int,unsigned int>;
