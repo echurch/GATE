@@ -18,11 +18,11 @@
  *
  * @details Writes GATE events into a HDF5 file  
  *    
- * @author Pau Novella  <pau.novella@ific.uv.es>
+ * @author Jose Maria Benlloch Rodriguez  <jmbenlloch@ific.uv.es>
  *
  * @version Revision 1.0.0
  *
- * @date July 2016
+ * @date August 2016
  *
  * @ingroup IO
  */
@@ -35,7 +35,21 @@ namespace gate{
 
     //! HDF5 file
     size_t _file;
-       
+
+	//! Waveform sizes
+	size_t _pmtDatasize;
+	size_t _sipmDatasize;
+
+	//! First event
+	bool _firstEvent;
+
+	//Datasets
+	size_t _pmtrd;
+	size_t _sipmrd;
+	size_t _mctrks;
+	size_t _memtypeMC;
+	size_t _mctrkCount;
+
     //! pointer to current event
     Event* _evt;
 
