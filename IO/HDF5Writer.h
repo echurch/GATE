@@ -36,12 +36,12 @@ namespace gate{
     //! HDF5 file
     size_t _file;
 
-	//! Waveform sizes
-	size_t _pmtDatasize;
-	size_t _sipmDatasize;
-
 	//! First event
 	bool _firstEvent;
+
+	//Sensors activated in the run
+	bool _pmtOn;
+	bool _sipmOn;
 
 	//Datasets
 	size_t _pmtrd;
@@ -58,6 +58,11 @@ namespace gate{
 
     //! counter for writen events
     size_t _ievt;
+
+	//! Waveform sizes
+	size_t _pmtDatasize;
+	size_t _sipmDatasize;
+
       
   public:    
     
