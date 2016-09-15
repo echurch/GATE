@@ -24,6 +24,12 @@ except ImportError:
     
     abort("ROOT could not be loaded. $ROOTSYS/lib added to $PYTHONPATH?")
 
+if "HDF5_LIB" in os.environ:
+
+    fail = gSystem.Load("$HDF5_LIB/libhdf5")
+
+    if fail: abort("HDF5 lib not found in $HDF5_LIB")
+
 fail = gSystem.Load("$GATE_DIR/lib/libGATE")
 
 if fail: abort("GATE lib not found! $GATE_DIR defined?")
