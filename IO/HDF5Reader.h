@@ -29,15 +29,41 @@
 
 namespace gate{class HDF5Reader;}
 
+typedef struct{
+	int channel;
+	int active;
+	double position[3];
+	double gain;
+	double adc_to_pes;
+} sensor_t;
+
+ClassImp(gate::HDF5Reader)
+
 class gate::HDF5Reader : public gate::IReader {
 
  private:
   
   //! pointer to current event
   gate::Event* _evt;
+  int _evtIndex;
+
+  int _npmt, _pmtwflen;
+  int _nsipm, _sipmwflen;
   
   //! pointer to run information
   gate::Run* _run;
+
+  size_t _h5file, _dsetPMT, _dspacePMT, _dsetSIPM, _dspaceSIPM;
+  size_t _dsetSensorsSIPM, _dspaceSensorsSIPM;
+
+  int * _pmtdata;
+  int * _sipmdata;
+
+  int _nEvents;
+
+  bool _hasPMT, _hasSIPM;
+
+  sensor_t * _sensorsSIPM;
 
  public:
     
@@ -54,10 +80,10 @@ class gate::HDF5Reader : public gate::IReader {
   gate::Event& Read(size_t i=0);
   
   //! close file
-  void Close(){ _isOpen=false;} //! TO BE IMPLEMENTED
+  void Close();
     
   //! end of file
-  bool eof(size_t i){ return true; } //! TO BE IMPLEMENTED
+  bool eof(size_t i);
   
   //! return maximum number of events in file
   unsigned int GetNEvents() const; 
@@ -74,10 +100,6 @@ class gate::HDF5Reader : public gate::IReader {
   ClassDef(gate::HDF5Reader,1)
 
     };
-
-inline unsigned int gate::HDF5Reader::GetNEvents() const {   
-  
-  return 0; }//! TO BE IMPLEMENTED
 
 inline unsigned int gate::HDF5Reader::GetNRuns() const {   
   
