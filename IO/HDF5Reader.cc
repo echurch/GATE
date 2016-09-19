@@ -4,6 +4,7 @@
 #include <hdf5.h>
 #endif
 
+ClassImp(gate::HDF5Reader)
 
 gate::HDF5Reader::HDF5Reader() : IReader() {
    
@@ -13,6 +14,11 @@ gate::HDF5Reader::HDF5Reader() : IReader() {
 
 	_npmt = 0;
 	_nsipm = 0;
+
+	_evt = new gate::Event();
+
+	_pmtTable = "pmtrd";
+	_sipmTable = "sipmrd";
 
 }
 
@@ -29,10 +35,12 @@ void gate::HDF5Reader::Open(std::string file){
 
 	_h5file = H5Fopen (file.c_str(), H5F_ACC_RDONLY, H5P_DEFAULT);
 
+	std::cout << _pmtTable << std::endl;
+
 	//Check if there is PMT data
-    _hasPMT = H5Lexists(_h5file, "/RD/pmtrwf", H5P_DEFAULT);
+    _hasPMT = H5Lexists(_h5file, _pmtTable.c_str(), H5P_DEFAULT);
 	if(_hasPMT){
-		_dsetPMT = H5Dopen (_h5file, "/RD/pmtrwf", H5P_DEFAULT);
+		_dsetPMT = H5Dopen (_h5file, _pmtTable.c_str(), H5P_DEFAULT);
 		_dspacePMT = H5Dget_space(_dsetPMT);
 		const int ndims = H5Sget_simple_extent_ndims(_dspacePMT);
 		hsize_t dims[ndims];
@@ -47,9 +55,9 @@ void gate::HDF5Reader::Open(std::string file){
 	}
 
 	//Check if there is PMT data
-    _hasSIPM = H5Lexists(_h5file, "/RD/sipmrwf", H5P_DEFAULT);
+    _hasSIPM = H5Lexists(_h5file, _sipmTable.c_str(), H5P_DEFAULT);
 	if(_hasSIPM){
-		_dsetSIPM = H5Dopen (_h5file, "/RD/sipmrwf", H5P_DEFAULT);
+		_dsetSIPM = H5Dopen (_h5file, _sipmTable.c_str(), H5P_DEFAULT);
 		_dspaceSIPM = H5Dget_space(_dsetSIPM);
 		const int ndims = H5Sget_simple_extent_ndims(_dspaceSIPM);
 		hsize_t dims[ndims];
@@ -128,8 +136,8 @@ gate::Event& gate::HDF5Reader::Read(size_t i){
      
    //! TO BE IMPLEMENTED
   
-	_evt = new gate::Event();
 
+	_evt->Clear();
 	_evt->SetEventID(_evtIndex);
 
 

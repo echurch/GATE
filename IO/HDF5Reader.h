@@ -65,6 +65,9 @@ class gate::HDF5Reader : public gate::IReader {
 
   sensor_t * _sensorsSIPM;
 
+  std::string _pmtTable;
+  std::string _sipmTable;
+
  public:
     
   //! default contructor
@@ -97,9 +100,18 @@ class gate::HDF5Reader : public gate::IReader {
   //! print file info
   void Print();
 
+  //! set pmt table name
+  void SetPmtTable(std::string name);
+
+  //! set sipm table name
+  void SetSipmTable(std::string name);
+
   ClassDef(gate::HDF5Reader,1)
 
     };
+
+inline void gate::HDF5Reader::SetPmtTable(std::string name){ _pmtTable = name;}
+inline void gate::HDF5Reader::SetSipmTable(std::string name){ _sipmTable = name;}
 
 inline unsigned int gate::HDF5Reader::GetNRuns() const {   
   
