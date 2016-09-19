@@ -30,12 +30,10 @@ gate::HDF5Reader::~HDF5Reader(){
 #ifdef HDF5
 
 void gate::HDF5Reader::Open(std::string file){
-  
+
 	_evtIndex = 0;
 
 	_h5file = H5Fopen (file.c_str(), H5F_ACC_RDONLY, H5P_DEFAULT);
-
-	std::cout << _pmtTable << std::endl;
 
 	//Check if there is PMT data
     _hasPMT = H5Lexists(_h5file, _pmtTable.c_str(), H5P_DEFAULT);
@@ -79,12 +77,7 @@ void gate::HDF5Reader::Open(std::string file){
 		hsize_t dims[ndims];
 		H5Sget_simple_extent_dims(_dspaceSensorsSIPM, dims, NULL);
 
-		int nsipm = dims[0];
-		std::cout << nsipm << std::endl;
-		std::cout << sizeof(sensor_t) << std::endl;
-
 		_sensorsSIPM = (sensor_t*) malloc(dims[0]*sizeof(sensor_t));
-		std::cout << nsipm << std::endl;
 
 		//Create compound datatype for the table
 		hsize_t point_dim[1] = {3};
@@ -113,10 +106,14 @@ void gate::HDF5Reader::Print(){
 
 void gate::HDF5Reader::Close(){
 
-    H5Dclose (_dsetPMT);
-    H5Sclose (_dspacePMT);
-    H5Dclose (_dsetSIPM);
-    H5Sclose (_dspaceSIPM);
+	if(_hasPMT){
+		H5Dclose (_dsetPMT);
+		H5Sclose (_dspacePMT);
+	}
+	if(_hasSIPM){
+		H5Dclose (_dsetSIPM);
+		H5Sclose (_dspaceSIPM);
+	}
     H5Fclose (_h5file);
 
 
@@ -209,7 +206,7 @@ bool gate::HDF5Reader::eof(size_t i){
 
 void gate::HDF5Reader::Open(std::string file){}
 void gate::HDF5Reader::Close(){}
-unsigned int gate::HDF5Reader::GetNEvents(){}
+unsigned int gate::HDF5Reader::GetNEvents() const{return 0;}
 void gate::HDF5Reader::Print(){}
 gate::Run& gate::HDF5Reader::GetRunInfo(size_t i){return *_run;}
 gate::Event& gate::HDF5Reader::Read(size_t i){ return *_evt;}
