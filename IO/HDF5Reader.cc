@@ -48,8 +48,8 @@ void gate::HDF5Reader::Open(std::string file){
 		_npmt = dims[1];
 		_pmtwflen = dims[2];
 
-		_pmtdata = (int*) malloc(dims[0]*dims[1]*dims[2]*sizeof(int));
-		H5Dread (_dsetPMT, H5T_NATIVE_INT, H5S_ALL, H5S_ALL, H5P_DEFAULT,_pmtdata);
+		_pmtdata = (float*) malloc(dims[0]*dims[1]*dims[2]*sizeof(float));
+		H5Dread (_dsetPMT, H5T_NATIVE_FLOAT, H5S_ALL, H5S_ALL, H5P_DEFAULT,_pmtdata);
 	}
 
 	//Check if there is PMT data
@@ -65,8 +65,8 @@ void gate::HDF5Reader::Open(std::string file){
 		_nsipm = dims[1];
 		_sipmwflen = dims[2];
 
-		_sipmdata = (int*) malloc(dims[0]*dims[1]*dims[2]*sizeof(int));
-		H5Dread (_dsetSIPM, H5T_NATIVE_INT, H5S_ALL, H5S_ALL, H5P_DEFAULT,_sipmdata);
+		_sipmdata = (float*) malloc(dims[0]*dims[1]*dims[2]*sizeof(float));
+		H5Dread (_dsetSIPM, H5T_NATIVE_FLOAT, H5S_ALL, H5S_ALL, H5P_DEFAULT,_sipmdata);
 		
 	}
 
@@ -145,8 +145,7 @@ gate::Event& gate::HDF5Reader::Read(size_t i){
 		gate::Waveform* wf = new gate::Waveform();
 		wf->SetSensorID(i);
 
-		//TODO: signed & real
-		std::vector<std::pair<unsigned int, unsigned int> > data;
+		std::vector<std::pair<float, float> > data;
 		unsigned int sindex = 0; 
 
 		for(int j=0; j<_pmtwflen; j++){
@@ -174,7 +173,7 @@ gate::Event& gate::HDF5Reader::Read(size_t i){
 		gate::Waveform* wf = new gate::Waveform();
 		wf->SetSensorID(channel);
 
-		std::vector<std::pair<unsigned int, unsigned int> > data;
+		std::vector<std::pair<float, float> > data;
 		unsigned int sindex = 0; 
 		for(int j=0; j<_sipmwflen; j++){
 			int offset = _evtIndex*_nsipm*_sipmwflen + i*_sipmwflen + j;
