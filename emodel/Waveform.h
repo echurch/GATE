@@ -103,7 +103,7 @@ class gate::Waveform : public gate::BObject {
   //! print pulse into stream
   void Info(std::ostream& s=std::cout) const;
 
-  ClassDef(gate::Waveform,3)
+  ClassDef(gate::Waveform,4)
 
     };
 
