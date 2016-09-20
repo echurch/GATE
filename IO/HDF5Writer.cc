@@ -10,16 +10,16 @@ ClassImp(gate::HDF5Writer)
 typedef struct{
 	int channel;
 	int active;
-	double position[3];
-	double gain;
-	double adc_to_pes;
+	float position[3];
+	float gain;
+	float adc_to_pes;
 } sensor_t;
 
 typedef struct{
-	double x[2];
-	double y[2];
-	double z[2];
-	double r;
+	float x[2];
+	float y[2];
+	float z[2];
+	float r;
 } geometry_t;
 
 typedef struct{
@@ -28,15 +28,15 @@ typedef struct{
 	//const char *particle_name;
 	char particle_name[10];
 	int pdg_code;
-	double initial_vertex[3];
-	double final_vertex[3];
-	double momentum[3];
-	double energy;
+	float initial_vertex[3];
+	float final_vertex[3];
+	float momentum[3];
+	float energy;
 	int nof_hits;
 	int hit_indx;
-	double hit_position[3];
-	double hit_time;
-	double hit_energy;
+	float hit_position[3];
+	float hit_time;
+	float hit_energy;
 } mctrk_t;
 
 
@@ -114,9 +114,9 @@ void gate::HDF5Writer::Write(Event& evt){
 
 			// Create the dataset 'pmtrd1'
 			if(_pmtDatasize < 48000){
-				_pmtrd = H5Dcreate(_file, "pmtcwf", H5T_NATIVE_INT, file_space, H5P_DEFAULT, plistPmt, H5P_DEFAULT);
+				_pmtrd = H5Dcreate(_file, "pmtcwf", H5T_NATIVE_FLOAT, file_space, H5P_DEFAULT, plistPmt, H5P_DEFAULT);
 			}else{
-				_pmtrd = H5Dcreate(_file, "pmtrd", H5T_NATIVE_INT, file_space, H5P_DEFAULT, plistPmt, H5P_DEFAULT);
+				_pmtrd = H5Dcreate(_file, "pmtrd", H5T_NATIVE_FLOAT, file_space, H5P_DEFAULT, plistPmt, H5P_DEFAULT);
 			}
 
 			//Close resources
@@ -147,7 +147,7 @@ void gate::HDF5Writer::Write(Event& evt){
 			H5Pset_deflate (plistSipm, 1); 
 
 			// Create the dataset 'pmtrd1'
-			_sipmrd = H5Dcreate(_file, "sipmrd", H5T_NATIVE_INT, file_space, H5P_DEFAULT, plistSipm, H5P_DEFAULT);
+			_sipmrd = H5Dcreate(_file, "sipmrd", H5T_NATIVE_FLOAT, file_space, H5P_DEFAULT, plistSipm, H5P_DEFAULT);
 
 			//Close resources
 			H5Pclose(plistSipm);
@@ -174,7 +174,7 @@ void gate::HDF5Writer::Write(Event& evt){
 
 			//create compound datatype for MC tracks
 			hsize_t point_dim[1] = {3};
-			hid_t point = H5Tarray_create(H5T_NATIVE_DOUBLE, 1, point_dim);
+			hid_t point = H5Tarray_create(H5T_NATIVE_FLOAT, 1, point_dim);
 			//string type
 			//hid_t strtype = H5Tcopy (H5T_C_S1);
 			//H5Tset_size (strtype, H5T_VARIABLE);
@@ -190,12 +190,12 @@ void gate::HDF5Writer::Write(Event& evt){
 			H5Tinsert (_memtypeMC, "initial_vertex",HOFFSET (mctrk_t, initial_vertex), point);
 			H5Tinsert (_memtypeMC, "final_vertex",HOFFSET (mctrk_t, final_vertex), point);
 			H5Tinsert (_memtypeMC, "momentum",HOFFSET (mctrk_t, momentum), point);
-			H5Tinsert (_memtypeMC, "energy",HOFFSET (mctrk_t, energy), H5T_NATIVE_DOUBLE);
+			H5Tinsert (_memtypeMC, "energy",HOFFSET (mctrk_t, energy), H5T_NATIVE_FLOAT);
 			H5Tinsert (_memtypeMC, "nof_hits",HOFFSET (mctrk_t, nof_hits), H5T_NATIVE_INT);
 			H5Tinsert (_memtypeMC, "hit_indx",HOFFSET (mctrk_t, hit_indx), H5T_NATIVE_INT);
 			H5Tinsert (_memtypeMC, "hit_position",HOFFSET (mctrk_t, hit_position), point);
-			H5Tinsert (_memtypeMC, "hit_time",HOFFSET (mctrk_t, hit_time), H5T_NATIVE_DOUBLE);
-			H5Tinsert (_memtypeMC, "hit_energy",HOFFSET (mctrk_t, hit_energy), H5T_NATIVE_DOUBLE);
+			H5Tinsert (_memtypeMC, "hit_time",HOFFSET (mctrk_t, hit_time), H5T_NATIVE_FLOAT);
+			H5Tinsert (_memtypeMC, "hit_energy",HOFFSET (mctrk_t, hit_energy), H5T_NATIVE_FLOAT);
 
 			// Create the dataset 'MCTracks'
 			_mctrks = H5Dcreate(mcG, "MCTracks", _memtypeMC, file_space, H5P_DEFAULT, plistMC, H5P_DEFAULT);
@@ -219,7 +219,9 @@ void gate::HDF5Writer::Write(Event& evt){
 
 		for(ih i=hitsPmt.begin(); i !=hitsPmt.end(); ++i){
 			const gate::Waveform& wf =  (*i)->GetWaveform();
+
 			const std::vector<std::pair<unsigned int,float> >& d = wf.GetData();
+
 			for (unsigned int samp = 0; samp<d.size(); samp++){
 				//TODO Check order of sensors
 				pmtdata[index] = d[samp].second;
@@ -243,7 +245,7 @@ void gate::HDF5Writer::Write(Event& evt){
 		hsize_t startPmt[3] = {_ievt, 0, 0};
 		hsize_t countPmt[3] = {1,_npmt,_pmtDatasize}; 
 		H5Sselect_hyperslab(file_space, H5S_SELECT_SET, startPmt, NULL, countPmt, NULL);
-		H5Dwrite(_pmtrd, H5T_NATIVE_INT, memspace, file_space, H5P_DEFAULT, pmtdata);
+		H5Dwrite(_pmtrd, H5T_NATIVE_FLOAT, memspace, file_space, H5P_DEFAULT, pmtdata);
 		H5Sclose(file_space);
 
 		delete pmtdata;
@@ -259,7 +261,9 @@ void gate::HDF5Writer::Write(Event& evt){
 
 		for(ih i=hitsSipm.begin(); i !=hitsSipm.end(); ++i){
 			const gate::Waveform& wf =  (*i)->GetWaveform();
+
 			const std::vector<std::pair<unsigned int,float> >& d = wf.GetData();
+
 			for (unsigned int samp = 0; samp<d.size(); samp++){
 				//TODO Check order of sensors
 				sipmdata[index] = d[samp].second;
@@ -283,7 +287,7 @@ void gate::HDF5Writer::Write(Event& evt){
 		hsize_t startSipm[3] = {_ievt, 0, 0};
 		hsize_t countSipm[3] = {1,_nsipm,_sipmDatasize}; 
 		H5Sselect_hyperslab(file_space, H5S_SELECT_SET, startSipm, NULL, countSipm, NULL);
-		H5Dwrite(_sipmrd, H5T_NATIVE_INT, memspace, file_space, H5P_DEFAULT, sipmdata);
+		H5Dwrite(_sipmrd, H5T_NATIVE_FLOAT, memspace, file_space, H5P_DEFAULT, sipmdata);
 		H5Sclose(file_space);
 
 		delete sipmdata;
@@ -392,14 +396,14 @@ void gate::HDF5Writer::WriteRunInfo(Run& runInfo){
 		hid_t sensorsG = H5Gcreate2(_file, "/Sensors", H5P_DEFAULT, H5P_DEFAULT, H5P_DEFAULT);
 		//Create datatype for position
 		hsize_t point_dim[1] = {3};
-		hid_t point = H5Tarray_create(H5T_NATIVE_DOUBLE, 1, point_dim);
+		hid_t point = H5Tarray_create(H5T_NATIVE_FLOAT, 1, point_dim);
 		//Create compound datatype for the table
 		memtype = H5Tcreate (H5T_COMPOUND, sizeof (sensor_t));
 		H5Tinsert (memtype, "channel",HOFFSET (sensor_t, channel), H5T_NATIVE_INT);
 		H5Tinsert (memtype, "active",HOFFSET (sensor_t, active),H5T_NATIVE_INT);
 		H5Tinsert (memtype, "position",HOFFSET (sensor_t, position),point);
-		H5Tinsert (memtype, "gain",HOFFSET (sensor_t, gain), H5T_NATIVE_DOUBLE);
-		H5Tinsert (memtype, "adc_to_pes",HOFFSET (sensor_t, adc_to_pes), H5T_NATIVE_DOUBLE);
+		H5Tinsert (memtype, "gain",HOFFSET (sensor_t, gain), H5T_NATIVE_FLOAT);
+		H5Tinsert (memtype, "adc_to_pes",HOFFSET (sensor_t, adc_to_pes), H5T_NATIVE_FLOAT);
 
 		//dataspace for PMTs
 		hsize_t dimsPMTs[1] = {lastPMT};
@@ -432,13 +436,13 @@ void gate::HDF5Writer::WriteRunInfo(Run& runInfo){
 		hid_t detectorG = H5Gcreate2(_file, "/Detector", H5P_DEFAULT, H5P_DEFAULT, H5P_DEFAULT);
 		//Create datatype for geometry
 		hsize_t coordMinMax_dim[1] = {2};
-		hid_t coordMinMax = H5Tarray_create(H5T_NATIVE_DOUBLE, 1, coordMinMax_dim);
+		hid_t coordMinMax = H5Tarray_create(H5T_NATIVE_FLOAT, 1, coordMinMax_dim);
 		//Create compound datatype for the table
 		memtype = H5Tcreate (H5T_COMPOUND, sizeof (geometry_t));
 		H5Tinsert (memtype, "x_det",HOFFSET (geometry_t, x),coordMinMax);
 		H5Tinsert (memtype, "y_det",HOFFSET (geometry_t, y),coordMinMax);
 		H5Tinsert (memtype, "z_det",HOFFSET (geometry_t, z),coordMinMax);
-		H5Tinsert (memtype, "r_det",HOFFSET (geometry_t, r), H5T_NATIVE_DOUBLE);
+		H5Tinsert (memtype, "r_det",HOFFSET (geometry_t, r), H5T_NATIVE_FLOAT);
 		//dataspace for geometry
 		hsize_t dimsGeometry[1] = {1};
 		space = H5Screate_simple (1, dimsGeometry, NULL);

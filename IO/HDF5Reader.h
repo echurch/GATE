@@ -32,9 +32,9 @@ namespace gate{class HDF5Reader;}
 typedef struct{
 	int channel;
 	int active;
-	double position[3];
-	double gain;
-	double adc_to_pes;
+	float position[3];
+	float gain;
+	float adc_to_pes;
 } sensor_t;
 
 ClassImp(gate::HDF5Reader)
@@ -56,8 +56,8 @@ class gate::HDF5Reader : public gate::IReader {
   size_t _h5file, _dsetPMT, _dspacePMT, _dsetSIPM, _dspaceSIPM;
   size_t _dsetSensorsSIPM, _dspaceSensorsSIPM;
 
-  int * _pmtdata;
-  int * _sipmdata;
+  float * _pmtdata;
+  float * _sipmdata;
 
   int _nEvents;
 
