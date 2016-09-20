@@ -81,13 +81,13 @@ void gate::HDF5Reader::Open(std::string file){
 
 		//Create compound datatype for the table
 		hsize_t point_dim[1] = {3};
-		hid_t point = H5Tarray_create(H5T_NATIVE_DOUBLE, 1, point_dim);
+		hid_t point = H5Tarray_create(H5T_NATIVE_FLOAT, 1, point_dim);
 		size_t memtype = H5Tcreate (H5T_COMPOUND, sizeof (sensor_t));
 		H5Tinsert (memtype, "channel",HOFFSET (sensor_t, channel), H5T_NATIVE_INT);
 		H5Tinsert (memtype, "active",HOFFSET (sensor_t, active),H5T_NATIVE_INT);
 		H5Tinsert (memtype, "position",HOFFSET (sensor_t, position),point);
-		H5Tinsert (memtype, "gain",HOFFSET (sensor_t, gain), H5T_NATIVE_DOUBLE);
-		H5Tinsert (memtype, "adc_to_pes",HOFFSET (sensor_t, adc_to_pes), H5T_NATIVE_DOUBLE);
+		H5Tinsert (memtype, "gain",HOFFSET (sensor_t, gain), H5T_NATIVE_FLOAT);
+		H5Tinsert (memtype, "adc_to_pes",HOFFSET (sensor_t, adc_to_pes), H5T_NATIVE_FLOAT);
 
 		H5Dread (_dsetSensorsSIPM, memtype, H5S_ALL, H5S_ALL, H5P_DEFAULT,_sensorsSIPM);
 
