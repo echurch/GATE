@@ -219,7 +219,7 @@ void gate::HDF5Writer::Write(Event& evt){
 
 		for(ih i=hitsPmt.begin(); i !=hitsPmt.end(); ++i){
 			const gate::Waveform& wf =  (*i)->GetWaveform();
-			const std::vector<std::pair<unsigned int,unsigned int> >& d = wf.GetData();
+			const std::vector<std::pair<unsigned int,float> >& d = wf.GetData();
 			for (unsigned int samp = 0; samp<d.size(); samp++){
 				//TODO Check order of sensors
 				pmtdata[index] = d[samp].second;
@@ -259,7 +259,7 @@ void gate::HDF5Writer::Write(Event& evt){
 
 		for(ih i=hitsSipm.begin(); i !=hitsSipm.end(); ++i){
 			const gate::Waveform& wf =  (*i)->GetWaveform();
-			const std::vector<std::pair<unsigned int,unsigned int> >& d = wf.GetData();
+			const std::vector<std::pair<unsigned int,float> >& d = wf.GetData();
 			for (unsigned int samp = 0; samp<d.size(); samp++){
 				//TODO Check order of sensors
 				sipmdata[index] = d[samp].second;

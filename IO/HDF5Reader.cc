@@ -146,7 +146,7 @@ gate::Event& gate::HDF5Reader::Read(size_t i){
 		wf->SetSensorID(i);
 
 		//TODO: signed & real
-		std::vector<std::pair<unsigned int, unsigned int> > data;
+		std::vector<std::pair<unsigned int, float> > data;
 		unsigned int sindex = 0; 
 
 		for(int j=0; j<_pmtwflen; j++){
@@ -174,7 +174,7 @@ gate::Event& gate::HDF5Reader::Read(size_t i){
 		gate::Waveform* wf = new gate::Waveform();
 		wf->SetSensorID(channel);
 
-		std::vector<std::pair<unsigned int, unsigned int> > data;
+		std::vector<std::pair<unsigned int, float> > data;
 		unsigned int sindex = 0; 
 		for(int j=0; j<_sipmwflen; j++){
 			int offset = _evtIndex*_nsipm*_sipmwflen + i*_sipmwflen + j;
