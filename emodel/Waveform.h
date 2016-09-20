@@ -54,7 +54,7 @@ class gate::Waveform : public gate::BObject {
   std::vector<gate::Pulse*> _pulses;
   
   //! waveform data, as a vector of pair<time,amp>
-  std::vector< std::pair<unsigned int, unsigned int> > _data;
+  std::vector< std::pair<float, float> > _data;
 
  public:
   
@@ -83,13 +83,13 @@ class gate::Waveform : public gate::BObject {
   void SetBaselineSig(double rms);
 
   //! Get  data
-  const std::vector< std::pair<unsigned int,unsigned int> >& GetData()const;
+  const std::vector< std::pair<float,float> >& GetData()const;
   
   //! Get amlitude  in time sample isamp
-  double GetAmplitude(unsigned int isamp) const;
+  double GetAmplitude(float isamp) const;
 
   //! Set data (not passed by reference, but copied!!!)
-  void SetData(std::vector< std::pair<unsigned int,unsigned int> > data);
+  void SetData(std::vector< std::pair<float,float> > data);
   
   //! Clear data (once reconstructed, wf might not be needed)
   void ClearData();
@@ -108,7 +108,7 @@ class gate::Waveform : public gate::BObject {
     };
 
 
-inline const std::vector< std::pair<unsigned int,unsigned int> >& 
+inline const std::vector< std::pair<float,float> >& 
   gate::Waveform::GetData() const {return _data;}
 
 inline void gate::Waveform::AddPulse( gate::Pulse* p) { 

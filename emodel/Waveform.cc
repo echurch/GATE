@@ -18,17 +18,17 @@ gate::Waveform::~Waveform() {
 }
 
 //=======================================================
-void gate::Waveform::SetData(std::vector< std::pair<unsigned int,unsigned int> >data){
+void gate::Waveform::SetData(std::vector< std::pair<float,float> >data){
 //=======================================================
     _data=data;}
 
 //=======================================================
-double gate::Waveform::GetAmplitude(unsigned int isamp) const{
+double gate::Waveform::GetAmplitude(float isamp) const{
 //=======================================================
   
   double amp = gate::nan;
 
-  std::vector< std::pair<unsigned int,unsigned int> >::const_iterator I;
+  std::vector< std::pair<float,float> >::const_iterator I;
   
   for (I = _data.begin(); I !=_data.end(); ++I ){
     
