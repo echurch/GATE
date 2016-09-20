@@ -63,7 +63,9 @@ namespace gate{
 	size_t _pmtDatasize;
 	size_t _sipmDatasize;
 
-      
+        size_t _npmt;
+        size_t _nsipm;
+        
   public:    
     
     //! constructor 

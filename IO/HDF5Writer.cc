@@ -1,13 +1,11 @@
 #ifdef HDF5
-//#include <H5Cpp.h>
 #include <hdf5.h>
 #endif
 
 #include <HDF5Writer.h>
 #include <sstream>
 
-#define NPMT 12
-#define NSIPM 1792
+ClassImp(gate::HDF5Writer)
 
 typedef struct{
 	int channel;
@@ -41,11 +39,11 @@ typedef struct{
 	double hit_energy;
 } mctrk_t;
 
-ClassImp(gate::HDF5Writer)
+
 
 gate::HDF5Writer::HDF5Writer() :   IWriter(), 
   
-  _file(0), _pmtrd(0), _evt(0), _run(0), _ievt(0), _pmtDatasize(0), _sipmDatasize(0) {
+    _file(0), _pmtrd(0), _evt(0), _run(0), _ievt(0), _pmtDatasize(0), _sipmDatasize(0),_npmt(0),_nsipm(0) {
 
 }
   
@@ -77,30 +75,34 @@ void gate::HDF5Writer::Close(){
 void gate::HDF5Writer::Write(Event& evt){
 	//We need to create the tables on the first call.
 	//Here is where we can check the size of the waveform
-
+    
+    
+    
 	if(_firstEvent){
 		_firstEvent = false;
 
+                _npmt = evt.GetHits(gate::PMT).size();
+                _nsipm = evt.GetHits(gate::SIPM).size();
 
 		const hsize_t ndims = 3;
 		hid_t file_space;
 
 		//PMTs
 		//Check PMT exists and get WF length
-		if(evt.GetHits(gate::PMT).size() > 0){
+		if(_npmt){
 			//Get WF length
 			_pmtDatasize = evt.GetHits(gate::PMT)[0]->GetWaveform().GetData().size();
 
 			//Create 3D dataspace (evt,pmt,data). First dimension is unlimited (initially 0)
-			hsize_t dims[ndims] = {0, NPMT, _pmtDatasize};
-			hsize_t max_dims[ndims] = {H5S_UNLIMITED, NPMT,_pmtDatasize};
+			hsize_t dims[ndims] = {0, _npmt, _pmtDatasize};
+			hsize_t max_dims[ndims] = {H5S_UNLIMITED, _npmt,_pmtDatasize};
 			file_space = H5Screate_simple(ndims, dims, max_dims);
 
 			// Create a dataset creation property list
 			// The layout of the dataset have to be chunked when using unlimited dimensions
 			hid_t plistPmt = H5Pcreate(H5P_DATASET_CREATE);
 			H5Pset_layout(plistPmt, H5D_CHUNKED);
-			//  hsize_t chunk_dims[ndims] = {1,NPMT,_pmtDatasize};
+			//  hsize_t chunk_dims[ndims] = {1,_npmt,_pmtDatasize};
 			hsize_t chunk_dims[ndims] = {1,1,32768};
 			if(_pmtDatasize < 32768){
 				chunk_dims[2] = _pmtDatasize;
@@ -124,20 +126,20 @@ void gate::HDF5Writer::Write(Event& evt){
 
 		//SIPM
 		//Check SIPM exists and get WF length
-		if(evt.GetHits(gate::SIPM).size() > 0){
+		if(_nsipm > 0){
 			//Get WF length
 			_sipmDatasize = evt.GetHits(gate::SIPM)[0]->GetWaveform().GetData().size();
 
 			//Create 3D dataspace (evt,sipm,data). First dimension is unlimited (initially 0)
-			hsize_t dimsSipm[ndims] = {0, NSIPM, _sipmDatasize};
-			hsize_t max_dimsSipm[ndims] = {H5S_UNLIMITED,NSIPM,_sipmDatasize};
+			hsize_t dimsSipm[ndims] = {0, _nsipm, _sipmDatasize};
+			hsize_t max_dimsSipm[ndims] = {H5S_UNLIMITED,_nsipm,_sipmDatasize};
 			file_space = H5Screate_simple(ndims, dimsSipm, max_dimsSipm);
 
 			// Create a dataset creation property list
 			// The layout of the dataset have to be chunked when using unlimited dimensions
 			hid_t plistSipm = H5Pcreate(H5P_DATASET_CREATE);
 			H5Pset_layout(plistSipm, H5D_CHUNKED);
-			//  hsize_t chunk_dimsSipm[ndims] = {1,NSIPM,_sipmDatasize};
+			//  hsize_t chunk_dimsSipm[ndims] = {1,_nsipm,_sipmDatasize};
 			hsize_t chunk_dimsSipm[ndims] = {1,50,_sipmDatasize};
 			H5Pset_chunk(plistSipm, ndims, chunk_dimsSipm);
 
@@ -209,7 +211,7 @@ void gate::HDF5Writer::Write(Event& evt){
 
 	//Read PMT waveforms
 	if (_pmtDatasize > 0){
-		int *pmtdata = new int[NPMT*_pmtDatasize];
+		int *pmtdata = new int[_npmt*_pmtDatasize];
 		int index=0;
 
 		const std::vector<gate::Hit*>& hitsPmt = evt.GetHits(gate::PMT);
@@ -227,19 +229,19 @@ void gate::HDF5Writer::Write(Event& evt){
 
 		//Create memspace for one PMT row
 		const hsize_t ndims = 3;
-		hsize_t dims[ndims] = {1, NPMT, _pmtDatasize};
+		hsize_t dims[ndims] = {1, _npmt, _pmtDatasize};
 		memspace = H5Screate_simple(ndims, dims, NULL);
 
 		//Extend PMT dataset
 		dims[0] = _ievt+1;
-		dims[1] = NPMT;
+		dims[1] = _npmt;
 		dims[2] = _pmtDatasize;
 		H5Dset_extent(_pmtrd, dims);
 
 		//Write PMT waveforms
 		file_space = H5Dget_space(_pmtrd);
 		hsize_t startPmt[3] = {_ievt, 0, 0};
-		hsize_t countPmt[3] = {1,NPMT,_pmtDatasize}; 
+		hsize_t countPmt[3] = {1,_npmt,_pmtDatasize}; 
 		H5Sselect_hyperslab(file_space, H5S_SELECT_SET, startPmt, NULL, countPmt, NULL);
 		H5Dwrite(_pmtrd, H5T_NATIVE_INT, memspace, file_space, H5P_DEFAULT, pmtdata);
 		H5Sclose(file_space);
@@ -249,7 +251,7 @@ void gate::HDF5Writer::Write(Event& evt){
 
 	//Read SiPM waveforms
 	if (_sipmDatasize){
-		int *sipmdata = new int[NSIPM*_sipmDatasize];
+		int *sipmdata = new int[_nsipm*_sipmDatasize];
 		int index=0;
 
 		const std::vector<gate::Hit*>& hitsSipm = evt.GetHits(gate::SIPM);
@@ -267,19 +269,19 @@ void gate::HDF5Writer::Write(Event& evt){
 
 		//Create memspace for one SIPM row
 		const hsize_t ndims = 3;
-		hsize_t dims[ndims] = {1, NSIPM, _sipmDatasize};
+		hsize_t dims[ndims] = {1, _nsipm, _sipmDatasize};
 		memspace = H5Screate_simple(ndims, dims, NULL);
 
 		//Extend SIPM dataset
 		dims[0] = _ievt+1;
-		dims[1] = NSIPM;
+		dims[1] = _nsipm;
 		dims[2] = _sipmDatasize;
 		H5Dset_extent(_sipmrd, dims);
 
 		//Write SIPM waveforms
 		file_space = H5Dget_space(_sipmrd);
 		hsize_t startSipm[3] = {_ievt, 0, 0};
-		hsize_t countSipm[3] = {1,NSIPM,_sipmDatasize}; 
+		hsize_t countSipm[3] = {1,_nsipm,_sipmDatasize}; 
 		H5Sselect_hyperslab(file_space, H5S_SELECT_SET, startSipm, NULL, countSipm, NULL);
 		H5Dwrite(_sipmrd, H5T_NATIVE_INT, memspace, file_space, H5P_DEFAULT, sipmdata);
 		H5Sclose(file_space);
