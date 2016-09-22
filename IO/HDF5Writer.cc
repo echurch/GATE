@@ -211,7 +211,7 @@ void gate::HDF5Writer::Write(Event& evt){
 
 	//Read PMT waveforms
 	if (_pmtDatasize > 0){
-		int *pmtdata = new int[_npmt*_pmtDatasize];
+		float *pmtdata = new float[_npmt*_pmtDatasize];
 		int index=0;
 
 		const std::vector<gate::Hit*>& hitsPmt = evt.GetHits(gate::PMT);
@@ -253,7 +253,7 @@ void gate::HDF5Writer::Write(Event& evt){
 
 	//Read SiPM waveforms
 	if (_sipmDatasize){
-		int *sipmdata = new int[_nsipm*_sipmDatasize];
+		float *sipmdata = new float[_nsipm*_sipmDatasize];
 		int index=0;
 
 		const std::vector<gate::Hit*>& hitsSipm = evt.GetHits(gate::SIPM);
@@ -372,6 +372,10 @@ void gate::HDF5Writer::WriteRunInfo(Run& runInfo){
 			gate::Sensor* s = is->second;
 
 			if(s->GetID() < 1000){
+
+				std::cout << "Sensor ID: " << s->GetID() << "\tGain: " << s->GetGain() << std::endl;
+				std::cout << "Sensor ID: " << s->GetID() << "\tGainSig: " << s->GetGainSig() << std::endl;
+
 				pmts[lastPMT].channel = s->GetID();
 				pmts[lastPMT].active = 1;
 				pmts[lastPMT].gain = 4500000;
