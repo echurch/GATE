@@ -70,8 +70,8 @@
 #pragma link C++ class std::map<int,gate::Sensor*>;
 #pragma link C++ class std::map<int,gate::Sensor*>::iterator;
 
-#pragma link C++ class std::vector<pair<unsigned int,unsigned int> >;
-#pragma link C++ class std::pair<unsigned int,unsigned int>;
+#pragma link C++ class std::vector<pair<unsigned int,float> >;
+#pragma link C++ class std::pair<unsigned int,float>;
 
 //! links for hitmap
 #pragma link C++ class std::vector<std::map<int,float> >;
