@@ -373,8 +373,8 @@ void gate::HDF5Writer::WriteRunInfo(Run& runInfo){
 
 			if(s->GetID() < 1000){
 
-				std::cout << "Sensor ID: " << s->GetID() << "\tGain: " << s->GetGain() << std::endl;
-				std::cout << "Sensor ID: " << s->GetID() << "\tGainSig: " << s->GetGainSig() << std::endl;
+                            //std::cout << "Sensor ID: " << s->GetID() << "\tGain: " << s->GetGain() << std::endl;
+                            //std::cout << "Sensor ID: " << s->GetID() << "\tGainSig: " << s->GetGainSig() << std::endl;
 
 				pmts[lastPMT].channel = s->GetID();
 				pmts[lastPMT].active = 1;
