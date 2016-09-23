@@ -68,6 +68,9 @@ namespace gate{
 
 	//! data type
 	gate::DATATYPE _dType;
+
+	bool * _activePmts;
+	bool * _activeSipms;
         
   public:    
     
@@ -94,6 +97,8 @@ namespace gate{
 
 	//! Set data type
 	void SetDataType(gate::DATATYPE t);
+
+	int SipmIDtoPosition(int id);
      
     
     ClassDef(gate::HDF5Writer,1)

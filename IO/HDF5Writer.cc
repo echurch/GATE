@@ -4,6 +4,7 @@
 
 #include <HDF5Writer.h>
 #include <sstream>
+#include <cstring>
 
 ClassImp(gate::HDF5Writer)
 
@@ -43,8 +44,12 @@ typedef struct{
 
 gate::HDF5Writer::HDF5Writer() :   IWriter(), 
   
-    _file(0), _pmtrd(0), _evt(0), _run(0), _ievt(0), _pmtDatasize(0), _sipmDatasize(0),_npmt(0),_nsipm(0),_dType(gate::MC) {
+    _file(0), _pmtrd(0), _evt(0), _run(0), _ievt(0), _pmtDatasize(0), _sipmDatasize(0),_npmt(0),_nsipm(0),_dType(gate::DATA) {
 
+			_activePmts = (bool*) malloc(32*sizeof(bool));
+			memset(_activePmts,0,32*sizeof(bool));
+			_activeSipms = (bool*)malloc(1792*sizeof(bool));
+			memset(_activeSipms,0,1792*sizeof(bool));
 }
   
 
@@ -122,11 +127,7 @@ void gate::HDF5Writer::Write(Event& evt){
 
 			// Create the dataset 'pmtrd1'
 			if (GetDataType() == gate::MC){
-				if(_pmtDatasize < 48000){
-					_pmtrd = H5Dcreate(wfgroup, "pmtcwf", H5T_NATIVE_FLOAT, file_space, H5P_DEFAULT, plistPmt, H5P_DEFAULT);
-				}else{
-					_pmtrd = H5Dcreate(wfgroup, "pmtrd", H5T_NATIVE_FLOAT, file_space, H5P_DEFAULT, plistPmt, H5P_DEFAULT);
-				}
+				_pmtrd = H5Dcreate(wfgroup, "pmtrd", H5T_NATIVE_FLOAT, file_space, H5P_DEFAULT, plistPmt, H5P_DEFAULT);
 			}else{
 				_pmtrd = H5Dcreate(wfgroup, "pmtrwf", H5T_NATIVE_FLOAT, file_space, H5P_DEFAULT, plistPmt, H5P_DEFAULT);
 
@@ -231,18 +232,29 @@ void gate::HDF5Writer::Write(Event& evt){
 		float *pmtdata = new float[_npmt*_pmtDatasize];
 		int index=0;
 
-		const std::vector<gate::Hit*>& hitsPmt = evt.GetHits(gate::PMT);
+		//Sensors can have any order in any event
+		const std::vector<gate::Hit*>& hitsPmtUnsorted = evt.GetHits(gate::PMT);
 		typedef std::vector<gate::Hit*>::const_iterator ih;
 
-		for(ih i=hitsPmt.begin(); i !=hitsPmt.end(); ++i){
-			const gate::Waveform& wf =  (*i)->GetWaveform();
+		//Sort them
+		gate::Hit* hitsPmt[32];
+		int sensorID;
+		for(ih i=hitsPmtUnsorted.begin(); i !=hitsPmtUnsorted.end(); ++i){
+			sensorID = (*i)->GetSensorID();
+			_activePmts[sensorID] = true;
+			hitsPmt[sensorID] = *i;
+		}
 
-			const std::vector<std::pair<unsigned int,float> >& d = wf.GetData();
+		//Read waveforms always in the same order
+		for(int sensIndx=0; sensIndx<32; sensIndx++){
+			if(_activePmts[sensIndx]){
+				const gate::Waveform& wf =  hitsPmt[sensIndx]->GetWaveform();
+				const std::vector<std::pair<unsigned int,float> >& d = wf.GetData();
 
-			for (unsigned int samp = 0; samp<d.size(); samp++){
-				//TODO Check order of sensors
-				pmtdata[index] = d[samp].second;
-				index++;
+				for (unsigned int samp = 0; samp<d.size(); samp++){
+					pmtdata[index] = d[samp].second;
+					index++;
+				}
 			}
 		}
 
@@ -273,18 +285,30 @@ void gate::HDF5Writer::Write(Event& evt){
 		float *sipmdata = new float[_nsipm*_sipmDatasize];
 		int index=0;
 
-		const std::vector<gate::Hit*>& hitsSipm = evt.GetHits(gate::SIPM);
+		//Sensors can have any order in any event
+		const std::vector<gate::Hit*>& hitsSipmUnsorted = evt.GetHits(gate::SIPM);
 		typedef std::vector<gate::Hit*>::const_iterator ih;
 
-		for(ih i=hitsSipm.begin(); i !=hitsSipm.end(); ++i){
-			const gate::Waveform& wf =  (*i)->GetWaveform();
+		//Sort them
+		gate::Hit* hitsSipm[32];
+		int sensorID;
+		for(ih i=hitsSipmUnsorted.begin(); i !=hitsSipmUnsorted.end(); ++i){
+			sensorID = SipmIDtoPosition((*i)->GetSensorID());
+			_activeSipms[sensorID] = true;
+			hitsSipm[sensorID] = *i;
+			std::cout << sensorID << std::endl;
+		}
 
-			const std::vector<std::pair<unsigned int,float> >& d = wf.GetData();
+		//Read waveforms always in the same order
+		for(int sensIndx=0; sensIndx<32; sensIndx++){
+			if(_activeSipms[sensIndx]){
+				const gate::Waveform& wf =  hitsSipm[sensIndx]->GetWaveform();
+				const std::vector<std::pair<unsigned int,float> >& d = wf.GetData();
 
-			for (unsigned int samp = 0; samp<d.size(); samp++){
-				//TODO Check order of sensors
-				sipmdata[index] = d[samp].second;
-				index++;
+				for (unsigned int samp = 0; samp<d.size(); samp++){
+					sipmdata[index] = d[samp].second;
+					index++;
+				}
 			}
 		}
 
@@ -390,7 +414,7 @@ void gate::HDF5Writer::WriteRunInfo(Run& runInfo){
 
 			if(s->GetID() < 1000){
 				pmts[lastPMT].channel = s->GetID();
-				pmts[lastPMT].active = 1;
+				pmts[lastPMT].active = _activePmts[s->GetID()];
 				pmts[lastPMT].gain = 4500000;
 				pmts[lastPMT].adc_to_pes = 20;
 				pmts[lastPMT].position[0] = s->GetPosition().x();
@@ -399,7 +423,7 @@ void gate::HDF5Writer::WriteRunInfo(Run& runInfo){
 				lastPMT++;
 			}else{
 				sipms[lastSiPM].channel = s->GetID();
-				sipms[lastSiPM].active = 1;
+				sipms[lastSiPM].active = _activeSipms[SipmIDtoPosition(s->GetID())];
 				sipms[lastSiPM].gain = 1;
 				sipms[lastSiPM].adc_to_pes = 1;
 				sipms[lastSiPM].position[0] = s->GetPosition().x();
@@ -468,6 +492,11 @@ void gate::HDF5Writer::WriteRunInfo(Run& runInfo){
 		H5Dwrite (dset, memtype, H5S_ALL, H5S_ALL, H5P_DEFAULT, &gm);
 		H5Sclose (space);
 	}
+}
+
+int gate::HDF5Writer::SipmIDtoPosition(int id){
+	int position = ((id/1000)-1)*64 + id%1000;
+	return position;
 }
 
 #else
