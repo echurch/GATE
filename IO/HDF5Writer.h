@@ -63,8 +63,11 @@ namespace gate{
 	size_t _pmtDatasize;
 	size_t _sipmDatasize;
 
-        size_t _npmt;
-        size_t _nsipm;
+	size_t _npmt;
+	size_t _nsipm;
+
+	//! data type
+	gate::DATATYPE _dType;
         
   public:    
     
@@ -85,12 +88,22 @@ namespace gate{
     
     //! write dst info into root file
     void WriteRunInfo(Run& run);
+
+	//! Get data type
+	gate::DATATYPE GetDataType() const;
+
+	//! Set data type
+	void SetDataType(gate::DATATYPE t);
      
     
     ClassDef(gate::HDF5Writer,1)
 
       };   
 
+  inline gate::DATATYPE gate::HDF5Writer::GetDataType() const {return _dType;}
+  inline void gate::HDF5Writer::SetDataType(gate::DATATYPE t) {_dType = t;}
+
 }
+
   
 #endif

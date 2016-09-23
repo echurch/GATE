@@ -43,7 +43,7 @@ typedef struct{
 
 gate::HDF5Writer::HDF5Writer() :   IWriter(), 
   
-    _file(0), _pmtrd(0), _evt(0), _run(0), _ievt(0), _pmtDatasize(0), _sipmDatasize(0),_npmt(0),_nsipm(0) {
+    _file(0), _pmtrd(0), _evt(0), _run(0), _ievt(0), _pmtDatasize(0), _sipmDatasize(0),_npmt(0),_nsipm(0),_dType(gate::MC) {
 
 }
   
@@ -76,9 +76,17 @@ void gate::HDF5Writer::Write(Event& evt){
 	//We need to create the tables on the first call.
 	//Here is where we can check the size of the waveform
     
-    
-    
 	if(_firstEvent){
+
+		//Create group for sensors
+		hid_t wfgroup;
+		if (GetDataType() == gate::MC){
+			wfgroup = _file;
+		}else{
+			wfgroup = H5Gcreate2(_file, "/RD", H5P_DEFAULT, H5P_DEFAULT, H5P_DEFAULT);
+		}
+
+
 		_firstEvent = false;
 
                 _npmt = evt.GetHits(gate::PMT).size();
@@ -113,10 +121,15 @@ void gate::HDF5Writer::Write(Event& evt){
 			H5Pset_deflate (plistPmt, 1); 
 
 			// Create the dataset 'pmtrd1'
-			if(_pmtDatasize < 48000){
-				_pmtrd = H5Dcreate(_file, "pmtcwf", H5T_NATIVE_FLOAT, file_space, H5P_DEFAULT, plistPmt, H5P_DEFAULT);
+			if (GetDataType() == gate::MC){
+				if(_pmtDatasize < 48000){
+					_pmtrd = H5Dcreate(wfgroup, "pmtcwf", H5T_NATIVE_FLOAT, file_space, H5P_DEFAULT, plistPmt, H5P_DEFAULT);
+				}else{
+					_pmtrd = H5Dcreate(wfgroup, "pmtrd", H5T_NATIVE_FLOAT, file_space, H5P_DEFAULT, plistPmt, H5P_DEFAULT);
+				}
 			}else{
-				_pmtrd = H5Dcreate(_file, "pmtrd", H5T_NATIVE_FLOAT, file_space, H5P_DEFAULT, plistPmt, H5P_DEFAULT);
+				_pmtrd = H5Dcreate(wfgroup, "pmtrwf", H5T_NATIVE_FLOAT, file_space, H5P_DEFAULT, plistPmt, H5P_DEFAULT);
+
 			}
 
 			//Close resources
@@ -147,7 +160,11 @@ void gate::HDF5Writer::Write(Event& evt){
 			H5Pset_deflate (plistSipm, 1); 
 
 			// Create the dataset 'pmtrd1'
-			_sipmrd = H5Dcreate(_file, "sipmrd", H5T_NATIVE_FLOAT, file_space, H5P_DEFAULT, plistSipm, H5P_DEFAULT);
+			if (GetDataType() == gate::MC){
+				_sipmrd = H5Dcreate(wfgroup, "sipmrd", H5T_NATIVE_FLOAT, file_space, H5P_DEFAULT, plistSipm, H5P_DEFAULT);
+			}else{
+				_sipmrd = H5Dcreate(wfgroup, "sipmrwf", H5T_NATIVE_FLOAT, file_space, H5P_DEFAULT, plistSipm, H5P_DEFAULT);
+			}
 
 			//Close resources
 			H5Pclose(plistSipm);
@@ -372,10 +389,6 @@ void gate::HDF5Writer::WriteRunInfo(Run& runInfo){
 			gate::Sensor* s = is->second;
 
 			if(s->GetID() < 1000){
-
-                            //std::cout << "Sensor ID: " << s->GetID() << "\tGain: " << s->GetGain() << std::endl;
-                            //std::cout << "Sensor ID: " << s->GetID() << "\tGainSig: " << s->GetGainSig() << std::endl;
-
 				pmts[lastPMT].channel = s->GetID();
 				pmts[lastPMT].active = 1;
 				pmts[lastPMT].gain = 4500000;
