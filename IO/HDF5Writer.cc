@@ -416,7 +416,7 @@ void gate::HDF5Writer::WriteRunInfo(Run& runInfo){
 				pmts[lastPMT].channel = s->GetID();
 				pmts[lastPMT].active = _activePmts[s->GetID()];
 				pmts[lastPMT].gain = 4500000;
-				pmts[lastPMT].adc_to_pes = 20;
+				pmts[lastPMT].adc_to_pes = s->GetGain();
 				pmts[lastPMT].position[0] = s->GetPosition().x();
 				pmts[lastPMT].position[1] = s->GetPosition().y();
 				pmts[lastPMT].position[2] = s->GetPosition().z();
@@ -425,7 +425,7 @@ void gate::HDF5Writer::WriteRunInfo(Run& runInfo){
 				sipms[lastSiPM].channel = s->GetID();
 				sipms[lastSiPM].active = _activeSipms[SipmIDtoPosition(s->GetID())];
 				sipms[lastSiPM].gain = 1;
-				sipms[lastSiPM].adc_to_pes = 1;
+				sipms[lastSiPM].adc_to_pes = s->GetGain();
 				sipms[lastSiPM].position[0] = s->GetPosition().x();
 				sipms[lastSiPM].position[1] = s->GetPosition().y();
 				sipms[lastSiPM].position[2] = s->GetPosition().z();
