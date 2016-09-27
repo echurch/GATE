@@ -71,6 +71,13 @@ namespace gate{
 
 	bool * _activePmts;
 	bool * _activeSipms;
+
+	//! max number of channels
+	size_t _maxNumPmt;
+	size_t _maxNumSipm;
+
+	//! deconvolution constant
+	std::vector<double> _deconv;
         
   public:    
     
@@ -99,6 +106,12 @@ namespace gate{
 	void SetDataType(gate::DATATYPE t);
 
 	int SipmIDtoPosition(int id);
+
+	size_t GetMaxNumPmt();
+	void SetMaxNumPmt(size_t maxPmt);
+
+	size_t GetMaxNumSipm();
+	void SetMaxNumSipm(size_t maxSipm);
      
     
     ClassDef(gate::HDF5Writer,1)
@@ -107,6 +120,12 @@ namespace gate{
 
   inline gate::DATATYPE gate::HDF5Writer::GetDataType() const {return _dType;}
   inline void gate::HDF5Writer::SetDataType(gate::DATATYPE t) {_dType = t;}
+
+  inline size_t gate::HDF5Writer::GetMaxNumPmt() {return _maxNumPmt;}
+  inline void gate::HDF5Writer::SetMaxNumPmt(size_t maxPmt) {_maxNumPmt = maxPmt;}
+
+  inline size_t gate::HDF5Writer::GetMaxNumSipm() {return _maxNumSipm;}
+  inline void gate::HDF5Writer::SetMaxNumSipm(size_t maxSipm) {_maxNumSipm = maxSipm;}
 
 }
 

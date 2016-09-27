@@ -12,7 +12,7 @@ typedef struct{
 	int channel;
 	int active;
 	float position[3];
-	float gain;
+	double gain;
 	float adc_to_pes;
 } sensor_t;
 
@@ -44,12 +44,27 @@ typedef struct{
 
 gate::HDF5Writer::HDF5Writer() :   IWriter(), 
   
-    _file(0), _pmtrd(0), _evt(0), _run(0), _ievt(0), _pmtDatasize(0), _sipmDatasize(0),_npmt(0),_nsipm(0),_dType(gate::DATA) {
+    _file(0), _pmtrd(0), _evt(0), _run(0), _ievt(0), _pmtDatasize(0), _sipmDatasize(0),_npmt(0),_nsipm(0),_dType(gate::DATA), _maxNumPmt(32), _maxNumSipm(1792) {
 
-			_activePmts = (bool*) malloc(32*sizeof(bool));
-			memset(_activePmts,0,32*sizeof(bool));
-			_activeSipms = (bool*)malloc(1792*sizeof(bool));
-			memset(_activeSipms,0,1792*sizeof(bool));
+			_activePmts = (bool*) malloc(_maxNumPmt*sizeof(bool));
+			memset(_activePmts,0,_maxNumPmt*sizeof(bool));
+			_activeSipms = (bool*)malloc(_maxNumSipm*sizeof(bool));
+			memset(_activeSipms,0,_maxNumSipm*sizeof(bool));
+
+			_deconv = std::vector<double>(_maxNumPmt, 0);
+
+			_deconv[0] = 0.0016414818563650;
+			_deconv[1] = 0.0016229879497475;
+			_deconv[4] = 0.0015960341795175;
+			_deconv[5] = 0.0015811781676775;
+			_deconv[8] = 0.0016215610282000;
+			_deconv[9] = 0.0016013117326050;
+			_deconv[18] = 0.0016183592928600;
+			_deconv[19] = 0.0016161407273750;
+			_deconv[22] = 0.0015986567401350;
+			_deconv[23] = 0.0016061886622500;
+			_deconv[26] = 0.0015705862023800;
+			_deconv[27] = 0.0015643825749600;
 }
   
 
@@ -215,6 +230,9 @@ void gate::HDF5Writer::Write(Event& evt){
 			H5Tinsert (_memtypeMC, "hit_time",HOFFSET (mctrk_t, hit_time), H5T_NATIVE_FLOAT);
 			H5Tinsert (_memtypeMC, "hit_energy",HOFFSET (mctrk_t, hit_energy), H5T_NATIVE_FLOAT);
 
+			//Set compression
+			H5Pset_deflate (plistMC, 1);
+
 			// Create the dataset 'MCTracks'
 			_mctrks = H5Dcreate(mcG, "MCTracks", _memtypeMC, file_space, H5P_DEFAULT, plistMC, H5P_DEFAULT);
 
@@ -237,7 +255,7 @@ void gate::HDF5Writer::Write(Event& evt){
 		typedef std::vector<gate::Hit*>::const_iterator ih;
 
 		//Sort them
-		gate::Hit* hitsPmt[32];
+		gate::Hit* hitsPmt[GetMaxNumPmt()];
 		int sensorID;
 		for(ih i=hitsPmtUnsorted.begin(); i !=hitsPmtUnsorted.end(); ++i){
 			sensorID = (*i)->GetSensorID();
@@ -246,7 +264,7 @@ void gate::HDF5Writer::Write(Event& evt){
 		}
 
 		//Read waveforms always in the same order
-		for(int sensIndx=0; sensIndx<32; sensIndx++){
+		for(unsigned int sensIndx=0; sensIndx<GetMaxNumPmt(); sensIndx++){
 			if(_activePmts[sensIndx]){
 				const gate::Waveform& wf =  hitsPmt[sensIndx]->GetWaveform();
 				const std::vector<std::pair<unsigned int,float> >& d = wf.GetData();
@@ -290,17 +308,16 @@ void gate::HDF5Writer::Write(Event& evt){
 		typedef std::vector<gate::Hit*>::const_iterator ih;
 
 		//Sort them
-		gate::Hit* hitsSipm[32];
+		gate::Hit* hitsSipm[GetMaxNumSipm()];
 		int sensorID;
 		for(ih i=hitsSipmUnsorted.begin(); i !=hitsSipmUnsorted.end(); ++i){
 			sensorID = SipmIDtoPosition((*i)->GetSensorID());
 			_activeSipms[sensorID] = true;
 			hitsSipm[sensorID] = *i;
-			std::cout << sensorID << std::endl;
 		}
 
 		//Read waveforms always in the same order
-		for(int sensIndx=0; sensIndx<32; sensIndx++){
+		for(unsigned int sensIndx=0; sensIndx<GetMaxNumSipm(); sensIndx++){
 			if(_activeSipms[sensIndx]){
 				const gate::Waveform& wf =  hitsSipm[sensIndx]->GetWaveform();
 				const std::vector<std::pair<unsigned int,float> >& d = wf.GetData();
@@ -415,7 +432,7 @@ void gate::HDF5Writer::WriteRunInfo(Run& runInfo){
 			if(s->GetID() < 1000){
 				pmts[lastPMT].channel = s->GetID();
 				pmts[lastPMT].active = _activePmts[s->GetID()];
-				pmts[lastPMT].gain = 4500000;
+				pmts[lastPMT].gain = _deconv[s->GetID()];
 				pmts[lastPMT].adc_to_pes = s->GetGain();
 				pmts[lastPMT].position[0] = s->GetPosition().x();
 				pmts[lastPMT].position[1] = s->GetPosition().y();
@@ -443,7 +460,7 @@ void gate::HDF5Writer::WriteRunInfo(Run& runInfo){
 		H5Tinsert (memtype, "channel",HOFFSET (sensor_t, channel), H5T_NATIVE_INT);
 		H5Tinsert (memtype, "active",HOFFSET (sensor_t, active),H5T_NATIVE_INT);
 		H5Tinsert (memtype, "position",HOFFSET (sensor_t, position),point);
-		H5Tinsert (memtype, "gain",HOFFSET (sensor_t, gain), H5T_NATIVE_FLOAT);
+		H5Tinsert (memtype, "gain",HOFFSET (sensor_t, gain), H5T_NATIVE_DOUBLE);
 		H5Tinsert (memtype, "adc_to_pes",HOFFSET (sensor_t, adc_to_pes), H5T_NATIVE_FLOAT);
 
 		//dataspace for PMTs
