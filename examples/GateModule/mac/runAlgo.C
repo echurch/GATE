@@ -4,6 +4,8 @@
   gSystem->Load("libRIO.so");
   gSystem->Load("libHist.so");
 
+  gSystem->Load("$HDF5_LIB/libhdf5");
+
   gSystem->Load("../../../lib/libGATE.so");
   gSystem->Load("../../../lib/libGATEIO.so");
   gSystem->Load("../../../lib/libGATEUtils.so");
