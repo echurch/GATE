@@ -36,6 +36,10 @@ include $(GATEMAKEDIR)/GNUmakefile.GATE
 LIBS += $(shell root-config --libs)  -lCore -lRIO -lHist
 LIBS += -L../../lib  -lGATE -lGATEIO -lGATEUtils -lGateModule
 
+ifneq  ($(HDF5_LIB),)
+LIBS += -L$(HDF5_LIB) -lhdf5
+endif
+
 LDFLAGS = -Wl,--no-as-needed
 
 bin: lib/$(SHLIB) RunGateAlgo.o
