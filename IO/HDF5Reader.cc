@@ -186,9 +186,9 @@ gate::Event& gate::HDF5Reader::Read(size_t i){
 		wf->SetData(data);
 		//TODO: Read from file
 		if( GetPmtTable().compare("pmtrd") == 0 ){
-			wf->SetSampWidth(0.001);
+			wf->SetSampWidth(1);
 		}else{
-			wf->SetSampWidth(0.025);
+			wf->SetSampWidth(25);
 		}
 
 		hit->SetWaveform(wf);
