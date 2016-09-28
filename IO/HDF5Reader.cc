@@ -1,4 +1,4 @@
-#include<HDF5Reader.h>
+#include <HDF5Reader.h>
 
 #ifdef HDF5
 #include <hdf5.h>
@@ -70,6 +70,29 @@ void gate::HDF5Reader::Open(std::string file){
 		
 	}
 
+    if(H5Lexists(_h5file, "/Sensors/DataPMT", H5P_DEFAULT)){
+		_dsetSensorsPMT = H5Dopen (_h5file, "/Sensors/DataPMT", H5P_DEFAULT);
+		_dspaceSensorsPMT = H5Dget_space(_dsetSensorsPMT);
+		const int ndims = H5Sget_simple_extent_ndims(_dspaceSensorsPMT);
+		hsize_t dims[ndims];
+		H5Sget_simple_extent_dims(_dspaceSensorsPMT, dims, NULL);
+
+		_sensorsPMT = (sensor_t*) malloc(dims[0]*sizeof(sensor_t));
+
+		//Create compound datatype for the table
+		hsize_t point_dim[1] = {3};
+		hid_t point = H5Tarray_create(H5T_NATIVE_FLOAT, 1, point_dim);
+		size_t memtype = H5Tcreate (H5T_COMPOUND, sizeof (sensor_t));
+		H5Tinsert (memtype, "channel",HOFFSET (sensor_t, channel), H5T_NATIVE_INT);
+		H5Tinsert (memtype, "active",HOFFSET (sensor_t, active),H5T_NATIVE_INT);
+		H5Tinsert (memtype, "position",HOFFSET (sensor_t, position),point);
+		H5Tinsert (memtype, "gain",HOFFSET (sensor_t, gain), H5T_NATIVE_DOUBLE);
+		H5Tinsert (memtype, "adc_to_pes",HOFFSET (sensor_t, adc_to_pes), H5T_NATIVE_FLOAT);
+
+		H5Dread (_dsetSensorsPMT, memtype, H5S_ALL, H5S_ALL, H5P_DEFAULT,_sensorsPMT);
+
+	}
+
     if(H5Lexists(_h5file, "/Sensors/DataSiPM", H5P_DEFAULT)){
 		_dsetSensorsSIPM = H5Dopen (_h5file, "/Sensors/DataSiPM", H5P_DEFAULT);
 		_dspaceSensorsSIPM = H5Dget_space(_dsetSensorsSIPM);
@@ -86,7 +109,7 @@ void gate::HDF5Reader::Open(std::string file){
 		H5Tinsert (memtype, "channel",HOFFSET (sensor_t, channel), H5T_NATIVE_INT);
 		H5Tinsert (memtype, "active",HOFFSET (sensor_t, active),H5T_NATIVE_INT);
 		H5Tinsert (memtype, "position",HOFFSET (sensor_t, position),point);
-		H5Tinsert (memtype, "gain",HOFFSET (sensor_t, gain), H5T_NATIVE_FLOAT);
+		H5Tinsert (memtype, "gain",HOFFSET (sensor_t, gain), H5T_NATIVE_DOUBLE);
 		H5Tinsert (memtype, "adc_to_pes",HOFFSET (sensor_t, adc_to_pes), H5T_NATIVE_FLOAT);
 
 		H5Dread (_dsetSensorsSIPM, memtype, H5S_ALL, H5S_ALL, H5P_DEFAULT,_sensorsSIPM);
@@ -140,12 +163,15 @@ gate::Event& gate::HDF5Reader::Read(size_t i){
 
 	for(int i=0;i<_npmt;i++){
 		gate::Hit* hit = new gate::Hit();
-		hit->SetSensorID(i);
+		int channel = _sensorsPMT[i].channel;
+
+		hit->SetPosition(gate::Point3D(_sensorsPMT[i].position[0],_sensorsPMT[i].position[1]));
+
+		hit->SetSensorID(channel);
 		hit->SetSensorType(gate::PMT);
 		gate::Waveform* wf = new gate::Waveform();
 		wf->SetSensorID(i);
 
-		//TODO: signed & real
 		std::vector<std::pair<unsigned int, float> > data;
 
 		unsigned int sindex = 0; 
@@ -158,7 +184,12 @@ gate::Event& gate::HDF5Reader::Read(size_t i){
 
 
 		wf->SetData(data);
-		wf->SetSampWidth(0.025);
+		//TODO: Read from file
+		if( GetPmtTable().compare("pmtrd") == 0 ){
+			wf->SetSampWidth(0.001);
+		}else{
+			wf->SetSampWidth(0.025);
+		}
 
 		hit->SetWaveform(wf);
 		_evt->AddHit(gate::PMT, hit);
@@ -185,6 +216,7 @@ gate::Event& gate::HDF5Reader::Read(size_t i){
 		}
 
 		wf->SetData(data);
+		//TODO: Read from file
 		wf->SetSampWidth(1);
 
 		hit->SetWaveform(wf);

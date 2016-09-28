@@ -33,7 +33,7 @@ typedef struct{
 	int channel;
 	int active;
 	float position[3];
-	float gain;
+	double gain;
 	float adc_to_pes;
 } sensor_t;
 
@@ -54,7 +54,7 @@ class gate::HDF5Reader : public gate::IReader {
   gate::Run* _run;
 
   size_t _h5file, _dsetPMT, _dspacePMT, _dsetSIPM, _dspaceSIPM;
-  size_t _dsetSensorsSIPM, _dspaceSensorsSIPM;
+  size_t _dsetSensorsPMT, _dspaceSensorsPMT, _dsetSensorsSIPM, _dspaceSensorsSIPM;
 
   float * _pmtdata;
   float * _sipmdata;
@@ -64,6 +64,7 @@ class gate::HDF5Reader : public gate::IReader {
   bool _hasPMT, _hasSIPM;
 
   sensor_t * _sensorsSIPM;
+  sensor_t * _sensorsPMT;
 
   std::string _pmtTable;
   std::string _sipmTable;
@@ -102,16 +103,24 @@ class gate::HDF5Reader : public gate::IReader {
 
   //! set pmt table name
   void SetPmtTable(std::string name);
+  
+  //! get pmt table name
+  std::string GetPmtTable();
 
   //! set sipm table name
   void SetSipmTable(std::string name);
+
+  //! get sipm table name
+  std::string GetSipmTable();
 
   ClassDef(gate::HDF5Reader,1)
 
     };
 
 inline void gate::HDF5Reader::SetPmtTable(std::string name){ _pmtTable = name;}
+inline std::string gate::HDF5Reader::GetPmtTable(){return  _pmtTable;}
 inline void gate::HDF5Reader::SetSipmTable(std::string name){ _sipmTable = name;}
+inline std::string gate::HDF5Reader::GetSipmTable(){return _sipmTable;}
 
 inline unsigned int gate::HDF5Reader::GetNRuns() const {   
   

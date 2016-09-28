@@ -95,7 +95,7 @@ void gate::HDF5Writer::Close(){
 void gate::HDF5Writer::Write(Event& evt){
 	//We need to create the tables on the first call.
 	//Here is where we can check the size of the waveform
-    
+
 	if(_firstEvent){
 
 		//Create group for sensors
@@ -419,17 +419,17 @@ void gate::HDF5Writer::Write(Event& evt){
 void gate::HDF5Writer::WriteRunInfo(Run& runInfo){
 	hid_t space, dset, memtype;
 
-	sensor_t pmts[12];
-	sensor_t sipms[1792];
+	sensor_t pmts[GetMaxNumPmt()];
+	sensor_t sipms[GetMaxNumSipm()];
 	hsize_t lastPMT=0, lastSiPM=0;//indexes
 
 	if (runInfo.GetGeometry() != NULL){
-		typedef std::map<int, gate::Sensor*>::iterator it_sensors;
 		std::map<int, gate::Sensor*> sensors = runInfo.GetGeometry()->GetSensors();
-		for(it_sensors is = sensors.begin(); is != sensors.end(); is++) {
-			gate::Sensor* s = is->second;
 
-			if(s->GetID() < 1000){
+		//Get active PMTs info
+		for(unsigned int i=0; i<GetMaxNumPmt(); i++) {
+			if(_activePmts[i]){
+				gate::Sensor* s = sensors[i];
 				pmts[lastPMT].channel = s->GetID();
 				pmts[lastPMT].active = _activePmts[s->GetID()];
 				pmts[lastPMT].gain = _deconv[s->GetID()];
@@ -438,9 +438,15 @@ void gate::HDF5Writer::WriteRunInfo(Run& runInfo){
 				pmts[lastPMT].position[1] = s->GetPosition().y();
 				pmts[lastPMT].position[2] = s->GetPosition().z();
 				lastPMT++;
-			}else{
+			}
+		}
+
+		//Get active SiPMs info
+		for(unsigned int i=0; i<GetMaxNumSipm(); i++) {
+			if(_activeSipms[i]){
+				gate::Sensor* s = sensors[PositiontoSipmID(i)];
 				sipms[lastSiPM].channel = s->GetID();
-				sipms[lastSiPM].active = _activeSipms[SipmIDtoPosition(s->GetID())];
+				sipms[lastSiPM].active = _activeSipms[i];
 				sipms[lastSiPM].gain = 1;
 				sipms[lastSiPM].adc_to_pes = s->GetGain();
 				sipms[lastSiPM].position[0] = s->GetPosition().x();
@@ -515,6 +521,12 @@ int gate::HDF5Writer::SipmIDtoPosition(int id){
 	int position = ((id/1000)-1)*64 + id%1000;
 	return position;
 }
+
+int gate::HDF5Writer::PositiontoSipmID(int pos){
+	int sipmid = (pos/64+1)*1000 + pos%64;
+	return sipmid;
+}
+
 
 #else
 

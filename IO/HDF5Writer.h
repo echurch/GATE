@@ -106,6 +106,7 @@ namespace gate{
 	void SetDataType(gate::DATATYPE t);
 
 	int SipmIDtoPosition(int id);
+	int PositiontoSipmID(int pos);
 
 	size_t GetMaxNumPmt();
 	void SetMaxNumPmt(size_t maxPmt);
