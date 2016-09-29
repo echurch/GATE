@@ -237,7 +237,7 @@ bool gate::HDF5Reader::eof(size_t i){
 }
 
 #else
-
+bool gate::HDF5Reader::eof(size_t i){return true;}
 void gate::HDF5Reader::Open(std::string file){}
 void gate::HDF5Reader::Close(){}
 unsigned int gate::HDF5Reader::GetNEvents() const{return 0;}
