@@ -48,11 +48,10 @@ void gate::HDF5Reader::Open(std::string file){
 		_npmt = dims[1];
 		_pmtwflen = dims[2];
 
-		_pmtdata = (float*) malloc(dims[0]*dims[1]*dims[2]*sizeof(float));
-		H5Dread (_dsetPMT, H5T_NATIVE_FLOAT, H5S_ALL, H5S_ALL, H5P_DEFAULT,_pmtdata);
+		_pmtdata = (float*) malloc(_npmt*_pmtwflen*sizeof(float));
 	}
 
-	//Check if there is PMT data
+	//Check if there is SiPM data
     _hasSIPM = H5Lexists(_h5file, _sipmTable.c_str(), H5P_DEFAULT);
 	if(_hasSIPM){
 		_dsetSIPM = H5Dopen (_h5file, _sipmTable.c_str(), H5P_DEFAULT);
@@ -65,9 +64,7 @@ void gate::HDF5Reader::Open(std::string file){
 		_nsipm = dims[1];
 		_sipmwflen = dims[2];
 
-		_sipmdata = (float*) malloc(dims[0]*dims[1]*dims[2]*sizeof(float));
-		H5Dread (_dsetSIPM, H5T_NATIVE_FLOAT, H5S_ALL, H5S_ALL, H5P_DEFAULT,_sipmdata);
-		
+		_sipmdata = (float*) malloc(_nsipm*_sipmwflen*sizeof(float));
 	}
 
     if(H5Lexists(_h5file, "/Sensors/DataPMT", H5P_DEFAULT)){
@@ -116,9 +113,7 @@ void gate::HDF5Reader::Open(std::string file){
 
 	}
 
-
 	_isOpen = true;
-
 }
 
 void gate::HDF5Reader::Print(){
@@ -132,13 +127,14 @@ void gate::HDF5Reader::Close(){
 	if(_hasPMT){
 		H5Dclose (_dsetPMT);
 		H5Sclose (_dspacePMT);
+		free(_pmtdata);
 	}
 	if(_hasSIPM){
 		H5Dclose (_dsetSIPM);
 		H5Sclose (_dspaceSIPM);
+		free(_sipmdata);
 	}
     H5Fclose (_h5file);
-
 
 	_isOpen = false;
 }
@@ -154,12 +150,48 @@ gate::Run& gate::HDF5Reader::GetRunInfo(size_t i){
 
 gate::Event& gate::HDF5Reader::Read(size_t i){
      
-   //! TO BE IMPLEMENTED
-  
+	hsize_t start[3], count[3], stride[3] = {1,1,1}, block[3] = {1,1,1};
+
+	//Check if there is PMT data
+    _hasPMT = H5Lexists(_h5file, _pmtTable.c_str(), H5P_DEFAULT);
+	if(_hasPMT){
+		//Set hyperslab
+		start[0] = _evtIndex;
+		start[1] = 0; 
+		start[2] = 0;
+
+		count[0] = 1;
+		count[1] = _npmt;
+		count[2] = _pmtwflen;
+
+		//Create memspace for copying data into ram
+		hsize_t memspace = H5Screate_simple(3,count,NULL);
+
+		H5Sselect_hyperslab (_dspacePMT, H5S_SELECT_SET, start, stride, count, block);
+		H5Dread (_dsetPMT, H5T_NATIVE_FLOAT, memspace, _dspacePMT, H5P_DEFAULT,_pmtdata);
+	}
+
+	//Check if there is SiPM data
+    _hasSIPM = H5Lexists(_h5file, _sipmTable.c_str(), H5P_DEFAULT);
+	if(_hasSIPM){
+		//Set hyperslab
+		start[0] = _evtIndex;
+		start[1] = 0; 
+		start[2] = 0;
+
+		count[0] = 1;
+		count[1] = _nsipm;
+		count[2] = _sipmwflen;
+
+		//Create memspace for copying data into ram
+		hsize_t memspace = H5Screate_simple(3,count,NULL);
+
+		H5Sselect_hyperslab (_dspaceSIPM, H5S_SELECT_SET, start, stride, count, block);
+		H5Dread (_dsetSIPM, H5T_NATIVE_FLOAT, memspace, _dspaceSIPM, H5P_DEFAULT,_sipmdata);
+	}
 
 	_evt->Clear();
 	_evt->SetEventID(_evtIndex);
-
 
 	for(int i=0;i<_npmt;i++){
 		gate::Hit* hit = new gate::Hit();
@@ -177,18 +209,17 @@ gate::Event& gate::HDF5Reader::Read(size_t i){
 		unsigned int sindex = 0; 
 
 		for(int j=0; j<_pmtwflen; j++){
-			int offset = _evtIndex*_npmt*_pmtwflen + i*_pmtwflen + j;
+			int offset = i*_pmtwflen + j;
 			data.push_back(std::make_pair(sindex, *(_pmtdata+offset )));
 			sindex++;
 		}
 
-
 		wf->SetData(data);
 		//TODO: Read from file
 		if( GetPmtTable().compare("pmtrd") == 0 ){
-			wf->SetSampWidth(1);
+			wf->SetSampWidth(0.001);
 		}else{
-			wf->SetSampWidth(25);
+			wf->SetSampWidth(0.025);
 		}
 
 		hit->SetWaveform(wf);
@@ -210,7 +241,7 @@ gate::Event& gate::HDF5Reader::Read(size_t i){
 
 		unsigned int sindex = 0; 
 		for(int j=0; j<_sipmwflen; j++){
-			int offset = _evtIndex*_nsipm*_sipmwflen + i*_sipmwflen + j;
+			int offset = i*_sipmwflen + j;
 			data.push_back(std::make_pair(sindex, *(_sipmdata+offset )));
 			sindex++;
 		}
@@ -237,6 +268,7 @@ bool gate::HDF5Reader::eof(size_t i){
 }
 
 #else
+
 bool gate::HDF5Reader::eof(size_t i){return true;}
 void gate::HDF5Reader::Open(std::string file){}
 void gate::HDF5Reader::Close(){}
