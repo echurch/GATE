@@ -45,7 +45,6 @@ class gate::HDF5Reader : public gate::IReader {
   
   //! pointer to current event
   gate::Event* _evt;
-  int _evtIndex;
 
   int _npmt, _pmtwflen;
   int _nsipm, _sipmwflen;
@@ -59,7 +58,7 @@ class gate::HDF5Reader : public gate::IReader {
   float * _pmtdata;
   float * _sipmdata;
 
-  int _nEvents;
+  unsigned int _nEvents;
 
   bool _hasPMT, _hasSIPM;
 

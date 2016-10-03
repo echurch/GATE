@@ -8,8 +8,6 @@ ClassImp(gate::HDF5Reader)
 
 gate::HDF5Reader::HDF5Reader() : IReader() {
    
-    _evt = 0;
-    
     _run = 0;
 
 	_npmt = 0;
@@ -30,8 +28,6 @@ gate::HDF5Reader::~HDF5Reader(){
 #ifdef HDF5
 
 void gate::HDF5Reader::Open(std::string file){
-
-	_evtIndex = 0;
 
 	_h5file = H5Fopen (file.c_str(), H5F_ACC_RDONLY, H5P_DEFAULT);
 
@@ -149,14 +145,14 @@ gate::Run& gate::HDF5Reader::GetRunInfo(size_t i){
 }
 
 gate::Event& gate::HDF5Reader::Read(size_t i){
-     
+
 	hsize_t start[3], count[3], stride[3] = {1,1,1}, block[3] = {1,1,1};
 
 	//Check if there is PMT data
     _hasPMT = H5Lexists(_h5file, _pmtTable.c_str(), H5P_DEFAULT);
 	if(_hasPMT){
 		//Set hyperslab
-		start[0] = _evtIndex;
+		start[0] = i;
 		start[1] = 0; 
 		start[2] = 0;
 
@@ -175,7 +171,7 @@ gate::Event& gate::HDF5Reader::Read(size_t i){
     _hasSIPM = H5Lexists(_h5file, _sipmTable.c_str(), H5P_DEFAULT);
 	if(_hasSIPM){
 		//Set hyperslab
-		start[0] = _evtIndex;
+		start[0] = i;
 		start[1] = 0; 
 		start[2] = 0;
 
@@ -191,25 +187,25 @@ gate::Event& gate::HDF5Reader::Read(size_t i){
 	}
 
 	_evt->Clear();
-	_evt->SetEventID(_evtIndex);
+	_evt->SetEventID(i);
 
-	for(int i=0;i<_npmt;i++){
+	for(int idxPmt=0;idxPmt<_npmt;idxPmt++){
 		gate::Hit* hit = new gate::Hit();
-		int channel = _sensorsPMT[i].channel;
+		int channel = _sensorsPMT[idxPmt].channel;
 
-		hit->SetPosition(gate::Point3D(_sensorsPMT[i].position[0],_sensorsPMT[i].position[1]));
+		hit->SetPosition(gate::Point3D(_sensorsPMT[idxPmt].position[0],_sensorsPMT[idxPmt].position[1]));
 
 		hit->SetSensorID(channel);
 		hit->SetSensorType(gate::PMT);
 		gate::Waveform* wf = new gate::Waveform();
-		wf->SetSensorID(i);
+		wf->SetSensorID(channel);
 
 		std::vector<std::pair<unsigned int, float> > data;
 
 		unsigned int sindex = 0; 
 
 		for(int j=0; j<_pmtwflen; j++){
-			int offset = i*_pmtwflen + j;
+			int offset = idxPmt*_pmtwflen + j;
 			data.push_back(std::make_pair(sindex, *(_pmtdata+offset )));
 			sindex++;
 		}
@@ -226,11 +222,11 @@ gate::Event& gate::HDF5Reader::Read(size_t i){
 		_evt->AddHit(gate::PMT, hit);
 	}
 
-	for(int i=0;i<_nsipm;i++){
+	for(int idxSipm=0;idxSipm<_nsipm;idxSipm++){
 		gate::Hit* hit = new gate::Hit();
-		int channel = _sensorsSIPM[i].channel;
+		int channel = _sensorsSIPM[idxSipm].channel;
 
-		hit->SetPosition(gate::Point3D(_sensorsSIPM[i].position[0],_sensorsSIPM[i].position[1]));
+		hit->SetPosition(gate::Point3D(_sensorsSIPM[idxSipm].position[0],_sensorsSIPM[idxSipm].position[1]));
 
 		hit->SetSensorID(channel);
 		hit->SetSensorType(gate::SIPM);
@@ -241,7 +237,7 @@ gate::Event& gate::HDF5Reader::Read(size_t i){
 
 		unsigned int sindex = 0; 
 		for(int j=0; j<_sipmwflen; j++){
-			int offset = i*_sipmwflen + j;
+			int offset = idxSipm*_sipmwflen + j;
 			data.push_back(std::make_pair(sindex, *(_sipmdata+offset )));
 			sindex++;
 		}
@@ -254,7 +250,6 @@ gate::Event& gate::HDF5Reader::Read(size_t i){
 		_evt->AddHit(gate::SIPM, hit);
 	}
 
-	_evtIndex++;
 	return *_evt;
 
 }
@@ -264,7 +259,7 @@ unsigned int gate::HDF5Reader::GetNEvents() const{
 }
 
 bool gate::HDF5Reader::eof(size_t i){
-	return _evtIndex >= _nEvents;
+	return i >= _nEvents;
 }
 
 #else
