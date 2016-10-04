@@ -259,7 +259,7 @@ unsigned int gate::HDF5Reader::GetNEvents() const{
 }
 
 bool gate::HDF5Reader::eof(size_t i){
-	return i >= _nEvents;
+	return i >_nEvents;
 }
 
 #else
