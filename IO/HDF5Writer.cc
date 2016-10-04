@@ -5,6 +5,7 @@
 #include <HDF5Writer.h>
 #include <sstream>
 #include <cstring>
+#include <stdlib.h>
 
 ClassImp(gate::HDF5Writer)
 
