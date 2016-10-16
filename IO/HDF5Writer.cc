@@ -11,10 +11,11 @@ ClassImp(gate::HDF5Writer)
 
 typedef struct{
 	int channel;
-	int active;
+	//int active;
 	float position[3];
-	double gain;
+	double coeff;
 	float adc_to_pes;
+	float noise_rms;
 } sensor_t;
 
 typedef struct{
@@ -143,9 +144,9 @@ void gate::HDF5Writer::Write(Event& evt){
 
 			// Create the dataset 'pmtrd1'
 			if (GetDataType() == gate::MC){
-				_pmtrd = H5Dcreate(wfgroup, "pmtrd", H5T_NATIVE_FLOAT, file_space, H5P_DEFAULT, plistPmt, H5P_DEFAULT);
+				_pmtrd = H5Dcreate(wfgroup, "pmtrd", H5T_NATIVE_USHORT, file_space, H5P_DEFAULT, plistPmt, H5P_DEFAULT);
 			}else{
-				_pmtrd = H5Dcreate(wfgroup, "pmtrwf", H5T_NATIVE_FLOAT, file_space, H5P_DEFAULT, plistPmt, H5P_DEFAULT);
+				_pmtrd = H5Dcreate(wfgroup, "pmtrwf", H5T_NATIVE_USHORT, file_space, H5P_DEFAULT, plistPmt, H5P_DEFAULT);
 
 			}
 
@@ -178,9 +179,9 @@ void gate::HDF5Writer::Write(Event& evt){
 
 			// Create the dataset 'pmtrd1'
 			if (GetDataType() == gate::MC){
-				_sipmrd = H5Dcreate(wfgroup, "sipmrd", H5T_NATIVE_FLOAT, file_space, H5P_DEFAULT, plistSipm, H5P_DEFAULT);
+				_sipmrd = H5Dcreate(wfgroup, "sipmrd", H5T_NATIVE_USHORT, file_space, H5P_DEFAULT, plistSipm, H5P_DEFAULT);
 			}else{
-				_sipmrd = H5Dcreate(wfgroup, "sipmrwf", H5T_NATIVE_FLOAT, file_space, H5P_DEFAULT, plistSipm, H5P_DEFAULT);
+				_sipmrd = H5Dcreate(wfgroup, "sipmrwf", H5T_NATIVE_USHORT, file_space, H5P_DEFAULT, plistSipm, H5P_DEFAULT);
 			}
 
 			//Close resources
@@ -248,7 +249,7 @@ void gate::HDF5Writer::Write(Event& evt){
 
 	//Read PMT waveforms
 	if (_pmtDatasize > 0){
-		float *pmtdata = new float[_npmt*_pmtDatasize];
+		unsigned short int *pmtdata = new unsigned short int[_npmt*_pmtDatasize];
 		int index=0;
 
 		//Sensors can have any order in any event
@@ -271,7 +272,7 @@ void gate::HDF5Writer::Write(Event& evt){
 				const std::vector<std::pair<unsigned int,float> >& d = wf.GetData();
 
 				for (unsigned int samp = 0; samp<d.size(); samp++){
-					pmtdata[index] = d[samp].second;
+					pmtdata[index] = (unsigned short int) (d[samp].second);
 					index++;
 				}
 			}
@@ -291,9 +292,9 @@ void gate::HDF5Writer::Write(Event& evt){
 		//Write PMT waveforms
 		file_space = H5Dget_space(_pmtrd);
 		hsize_t startPmt[3] = {_ievt, 0, 0};
-		hsize_t countPmt[3] = {1,_npmt,_pmtDatasize}; 
+		hsize_t countPmt[3] = {1,_npmt,_pmtDatasize};
 		H5Sselect_hyperslab(file_space, H5S_SELECT_SET, startPmt, NULL, countPmt, NULL);
-		H5Dwrite(_pmtrd, H5T_NATIVE_FLOAT, memspace, file_space, H5P_DEFAULT, pmtdata);
+		H5Dwrite(_pmtrd, H5T_NATIVE_USHORT, memspace, file_space, H5P_DEFAULT, pmtdata);
 		H5Sclose(file_space);
 
 		delete pmtdata;
@@ -301,7 +302,7 @@ void gate::HDF5Writer::Write(Event& evt){
 
 	//Read SiPM waveforms
 	if (_sipmDatasize){
-		float *sipmdata = new float[_nsipm*_sipmDatasize];
+		unsigned short int *sipmdata = new unsigned short int[_nsipm*_sipmDatasize];
 		int index=0;
 
 		//Sensors can have any order in any event
@@ -324,7 +325,7 @@ void gate::HDF5Writer::Write(Event& evt){
 				const std::vector<std::pair<unsigned int,float> >& d = wf.GetData();
 
 				for (unsigned int samp = 0; samp<d.size(); samp++){
-					sipmdata[index] = d[samp].second;
+					sipmdata[index] = (unsigned short int) (d[samp].second);
 					index++;
 				}
 			}
@@ -344,9 +345,9 @@ void gate::HDF5Writer::Write(Event& evt){
 		//Write SIPM waveforms
 		file_space = H5Dget_space(_sipmrd);
 		hsize_t startSipm[3] = {_ievt, 0, 0};
-		hsize_t countSipm[3] = {1,_nsipm,_sipmDatasize}; 
+		hsize_t countSipm[3] = {1,_nsipm,_sipmDatasize};
 		H5Sselect_hyperslab(file_space, H5S_SELECT_SET, startSipm, NULL, countSipm, NULL);
-		H5Dwrite(_sipmrd, H5T_NATIVE_FLOAT, memspace, file_space, H5P_DEFAULT, sipmdata);
+		H5Dwrite(_sipmrd, H5T_NATIVE_USHORT, memspace, file_space, H5P_DEFAULT, sipmdata);
 		H5Sclose(file_space);
 
 		delete sipmdata;
@@ -402,7 +403,7 @@ void gate::HDF5Writer::Write(Event& evt){
 			//Write MCTrack waveforms
 			file_space = H5Dget_space(_mctrks);
 			hsize_t startMC[1] = {_mctrkCount};
-			hsize_t countMC[1] = {1}; 
+			hsize_t countMC[1] = {1};
 			H5Sselect_hyperslab(file_space, H5S_SELECT_SET, startMC, NULL, countMC, NULL);
 			H5Dwrite(_mctrks, _memtypeMC, memspace, file_space, H5P_DEFAULT, &mctrk);
 //			H5Dwrite (dset, memtype, H5S_ALL, H5S_ALL, H5P_DEFAULT, &gm);
@@ -432,9 +433,10 @@ void gate::HDF5Writer::WriteRunInfo(Run& runInfo){
 			if(_activePmts[i]){
 				gate::Sensor* s = sensors[i];
 				pmts[lastPMT].channel = s->GetID();
-				pmts[lastPMT].active = _activePmts[s->GetID()];
-				pmts[lastPMT].gain = _deconv[s->GetID()];
+				//pmts[lastPMT].active = _activePmts[s->GetID()];
+				pmts[lastPMT].coeff = _deconv[s->GetID()];
 				pmts[lastPMT].adc_to_pes = s->GetGain();
+				pmts[lastPMT].noise_rms = s->GetGainSig();
 				pmts[lastPMT].position[0] = s->GetPosition().x();
 				pmts[lastPMT].position[1] = s->GetPosition().y();
 				pmts[lastPMT].position[2] = s->GetPosition().z();
@@ -447,9 +449,10 @@ void gate::HDF5Writer::WriteRunInfo(Run& runInfo){
 			if(_activeSipms[i]){
 				gate::Sensor* s = sensors[PositiontoSipmID(i)];
 				sipms[lastSiPM].channel = s->GetID();
-				sipms[lastSiPM].active = _activeSipms[i];
-				sipms[lastSiPM].gain = 1;
+				//sipms[lastSiPM].active = _activeSipms[i];
+				sipms[lastSiPM].coeff = 1;
 				sipms[lastSiPM].adc_to_pes = s->GetGain();
+				sipms[lastSiPM].noise_rms = s->GetGainSig();
 				sipms[lastSiPM].position[0] = s->GetPosition().x();
 				sipms[lastSiPM].position[1] = s->GetPosition().y();
 				sipms[lastSiPM].position[2] = s->GetPosition().z();
@@ -465,10 +468,11 @@ void gate::HDF5Writer::WriteRunInfo(Run& runInfo){
 		//Create compound datatype for the table
 		memtype = H5Tcreate (H5T_COMPOUND, sizeof (sensor_t));
 		H5Tinsert (memtype, "channel",HOFFSET (sensor_t, channel), H5T_NATIVE_INT);
-		H5Tinsert (memtype, "active",HOFFSET (sensor_t, active),H5T_NATIVE_INT);
+		//H5Tinsert (memtype, "active",HOFFSET (sensor_t, active),H5T_NATIVE_INT);
 		H5Tinsert (memtype, "position",HOFFSET (sensor_t, position),point);
-		H5Tinsert (memtype, "gain",HOFFSET (sensor_t, gain), H5T_NATIVE_DOUBLE);
+		H5Tinsert (memtype, "coeff",HOFFSET (sensor_t, coeff), H5T_NATIVE_DOUBLE);
 		H5Tinsert (memtype, "adc_to_pes",HOFFSET (sensor_t, adc_to_pes), H5T_NATIVE_FLOAT);
+		H5Tinsert (memtype, "noise_rms",HOFFSET (sensor_t, noise_rms), H5T_NATIVE_FLOAT);
 
 		//dataspace for PMTs
 		hsize_t dimsPMTs[1] = {lastPMT};

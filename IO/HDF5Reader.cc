@@ -44,7 +44,7 @@ void gate::HDF5Reader::Open(std::string file){
 		_npmt = dims[1];
 		_pmtwflen = dims[2];
 
-		_pmtdata = (float*) malloc(_npmt*_pmtwflen*sizeof(float));
+		_pmtdata = (unsigned short int*) malloc(_npmt*_pmtwflen*sizeof(unsigned short int));
 	}
 
 	//Check if there is SiPM data
@@ -60,7 +60,7 @@ void gate::HDF5Reader::Open(std::string file){
 		_nsipm = dims[1];
 		_sipmwflen = dims[2];
 
-		_sipmdata = (float*) malloc(_nsipm*_sipmwflen*sizeof(float));
+		_sipmdata = (unsigned short int*) malloc(_nsipm*_sipmwflen*sizeof(unsigned short int));
 	}
 
     if(H5Lexists(_h5file, "/Sensors/DataPMT", H5P_DEFAULT)){
@@ -77,10 +77,11 @@ void gate::HDF5Reader::Open(std::string file){
 		hid_t point = H5Tarray_create(H5T_NATIVE_FLOAT, 1, point_dim);
 		size_t memtype = H5Tcreate (H5T_COMPOUND, sizeof (sensor_t));
 		H5Tinsert (memtype, "channel",HOFFSET (sensor_t, channel), H5T_NATIVE_INT);
-		H5Tinsert (memtype, "active",HOFFSET (sensor_t, active),H5T_NATIVE_INT);
+//		H5Tinsert (memtype, "active",HOFFSET (sensor_t, active),H5T_NATIVE_INT);
 		H5Tinsert (memtype, "position",HOFFSET (sensor_t, position),point);
-		H5Tinsert (memtype, "gain",HOFFSET (sensor_t, gain), H5T_NATIVE_DOUBLE);
+		H5Tinsert (memtype, "coeff",HOFFSET (sensor_t, coeff), H5T_NATIVE_DOUBLE);
 		H5Tinsert (memtype, "adc_to_pes",HOFFSET (sensor_t, adc_to_pes), H5T_NATIVE_FLOAT);
+		H5Tinsert (memtype, "noise_rms",HOFFSET (sensor_t, noise_rms), H5T_NATIVE_FLOAT);
 
 		H5Dread (_dsetSensorsPMT, memtype, H5S_ALL, H5S_ALL, H5P_DEFAULT,_sensorsPMT);
 
@@ -100,10 +101,11 @@ void gate::HDF5Reader::Open(std::string file){
 		hid_t point = H5Tarray_create(H5T_NATIVE_FLOAT, 1, point_dim);
 		size_t memtype = H5Tcreate (H5T_COMPOUND, sizeof (sensor_t));
 		H5Tinsert (memtype, "channel",HOFFSET (sensor_t, channel), H5T_NATIVE_INT);
-		H5Tinsert (memtype, "active",HOFFSET (sensor_t, active),H5T_NATIVE_INT);
+//		H5Tinsert (memtype, "active",HOFFSET (sensor_t, active),H5T_NATIVE_INT);
 		H5Tinsert (memtype, "position",HOFFSET (sensor_t, position),point);
-		H5Tinsert (memtype, "gain",HOFFSET (sensor_t, gain), H5T_NATIVE_DOUBLE);
+		H5Tinsert (memtype, "coeff",HOFFSET (sensor_t, coeff), H5T_NATIVE_DOUBLE);
 		H5Tinsert (memtype, "adc_to_pes",HOFFSET (sensor_t, adc_to_pes), H5T_NATIVE_FLOAT);
+		H5Tinsert (memtype, "noise_rms",HOFFSET (sensor_t, noise_rms), H5T_NATIVE_FLOAT);
 
 		H5Dread (_dsetSensorsSIPM, memtype, H5S_ALL, H5S_ALL, H5P_DEFAULT,_sensorsSIPM);
 
@@ -164,7 +166,7 @@ gate::Event& gate::HDF5Reader::Read(size_t i){
 		hsize_t memspace = H5Screate_simple(3,count,NULL);
 
 		H5Sselect_hyperslab (_dspacePMT, H5S_SELECT_SET, start, stride, count, block);
-		H5Dread (_dsetPMT, H5T_NATIVE_FLOAT, memspace, _dspacePMT, H5P_DEFAULT,_pmtdata);
+		H5Dread (_dsetPMT, H5T_NATIVE_USHORT, memspace, _dspacePMT, H5P_DEFAULT,_pmtdata);
 	}
 
 	//Check if there is SiPM data
@@ -183,7 +185,7 @@ gate::Event& gate::HDF5Reader::Read(size_t i){
 		hsize_t memspace = H5Screate_simple(3,count,NULL);
 
 		H5Sselect_hyperslab (_dspaceSIPM, H5S_SELECT_SET, start, stride, count, block);
-		H5Dread (_dsetSIPM, H5T_NATIVE_FLOAT, memspace, _dspaceSIPM, H5P_DEFAULT,_sipmdata);
+		H5Dread (_dsetSIPM, H5T_NATIVE_USHORT, memspace, _dspaceSIPM, H5P_DEFAULT,_sipmdata);
 	}
 
 	_evt->Clear();
@@ -206,7 +208,7 @@ gate::Event& gate::HDF5Reader::Read(size_t i){
 
 		for(int j=0; j<_pmtwflen; j++){
 			int offset = idxPmt*_pmtwflen + j;
-			data.push_back(std::make_pair(sindex, *(_pmtdata+offset )));
+			data.push_back(std::make_pair(sindex, (float) *(_pmtdata+offset )));
 			sindex++;
 		}
 
@@ -238,7 +240,7 @@ gate::Event& gate::HDF5Reader::Read(size_t i){
 		unsigned int sindex = 0; 
 		for(int j=0; j<_sipmwflen; j++){
 			int offset = idxSipm*_sipmwflen + j;
-			data.push_back(std::make_pair(sindex, *(_sipmdata+offset )));
+			data.push_back(std::make_pair(sindex, (float) *(_sipmdata+offset )));
 			sindex++;
 		}
 
