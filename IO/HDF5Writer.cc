@@ -50,8 +50,11 @@ gate::HDF5Writer::HDF5Writer() :   IWriter(),
 
 			_activePmts = (bool*) malloc(_maxNumPmt*sizeof(bool));
 			memset(_activePmts,0,_maxNumPmt*sizeof(bool));
+			_activePmtsBlr = (bool*) malloc(_maxNumPmt*sizeof(bool));
+			memset(_activePmtsBlr,0,_maxNumPmt*sizeof(bool));
 			_activeSipms = (bool*)malloc(_maxNumSipm*sizeof(bool));
 			memset(_activeSipms,0,_maxNumSipm*sizeof(bool));
+			_blrOn = false;
 
 			_deconv = std::vector<double>(_maxNumPmt, 0);
 
@@ -111,8 +114,8 @@ void gate::HDF5Writer::Write(Event& evt){
 
 		_firstEvent = false;
 
-                _npmt = evt.GetHits(gate::PMT).size();
-                _nsipm = evt.GetHits(gate::SIPM).size();
+		_npmt = evt.GetHits(gate::PMT).size();
+		_nsipm = evt.GetHits(gate::SIPM).size();
 
 		const hsize_t ndims = 3;
 		hid_t file_space;
@@ -140,14 +143,14 @@ void gate::HDF5Writer::Write(Event& evt){
 			H5Pset_chunk(plistPmt, ndims, chunk_dims);
 
 			//Set compression
-			H5Pset_deflate (plistPmt, 1); 
+			H5Pset_deflate (plistPmt, 1);
 
 			// Create the dataset 'pmtrd1'
 			if (GetDataType() == gate::MC){
 				_pmtrd = H5Dcreate(wfgroup, "pmtrd", H5T_NATIVE_USHORT, file_space, H5P_DEFAULT, plistPmt, H5P_DEFAULT);
 			}else{
 				_pmtrd = H5Dcreate(wfgroup, "pmtrwf", H5T_NATIVE_USHORT, file_space, H5P_DEFAULT, plistPmt, H5P_DEFAULT);
-
+				_pmtblr = H5Dcreate(wfgroup, "pmtblr", H5T_NATIVE_USHORT, file_space, H5P_DEFAULT, plistPmt, H5P_DEFAULT);
 			}
 
 			//Close resources
@@ -251,6 +254,7 @@ void gate::HDF5Writer::Write(Event& evt){
 	if (_pmtDatasize > 0){
 		unsigned short int *pmtdata = new unsigned short int[_npmt*_pmtDatasize];
 		int index=0;
+		int indexBlr=0;
 
 		//Sensors can have any order in any event
 		const std::vector<gate::Hit*>& hitsPmtUnsorted = evt.GetHits(gate::PMT);
@@ -258,11 +262,18 @@ void gate::HDF5Writer::Write(Event& evt){
 
 		//Sort them
 		gate::Hit* hitsPmt[GetMaxNumPmt()];
+		gate::Hit* hitsPmtBlr[GetMaxNumPmt()];
 		int sensorID;
 		for(ih i=hitsPmtUnsorted.begin(); i !=hitsPmtUnsorted.end(); ++i){
 			sensorID = (*i)->GetSensorID();
-			_activePmts[sensorID] = true;
-			hitsPmt[sensorID] = *i;
+			if ((*i)->GetLabel().compare("BLR") == 0){
+				_blrOn = true;
+				_activePmtsBlr[sensorID] = true;
+				hitsPmtBlr[sensorID] = *i;
+			}else{
+				_activePmts[sensorID] = true;
+				hitsPmt[sensorID] = *i;
+			}
 		}
 
 		//Read waveforms always in the same order
@@ -296,6 +307,41 @@ void gate::HDF5Writer::Write(Event& evt){
 		H5Sselect_hyperslab(file_space, H5S_SELECT_SET, startPmt, NULL, countPmt, NULL);
 		H5Dwrite(_pmtrd, H5T_NATIVE_USHORT, memspace, file_space, H5P_DEFAULT, pmtdata);
 		H5Sclose(file_space);
+
+
+		//Write BLR channels (if they exists)
+		//Read waveforms always in the same order
+		if(_blrOn){
+			for(unsigned int sensIndx=0; sensIndx<GetMaxNumPmt(); sensIndx++){
+				if(_activePmtsBlr[sensIndx]){
+					const gate::Waveform& wf =  hitsPmtBlr[sensIndx]->GetWaveform();
+					const std::vector<std::pair<unsigned int,float> >& d = wf.GetData();
+
+					for (unsigned int samp = 0; samp<d.size(); samp++){
+						pmtdata[indexBlr] = (unsigned short int) (d[samp].second);
+						indexBlr++;
+					}
+				}
+			}
+
+			//Create memspace for one PMT row
+			dims[0] = 1;
+			dims[1] = _npmt;
+			dims[2] = _pmtDatasize;
+			memspace = H5Screate_simple(ndims, dims, NULL);
+
+			//Extend PMT dataset
+			dims[0] = _ievt+1;
+			dims[1] = _npmt;
+			dims[2] = _pmtDatasize;
+			H5Dset_extent(_pmtblr, dims);
+
+			//Write PMT waveforms
+			file_space = H5Dget_space(_pmtblr);
+			H5Sselect_hyperslab(file_space, H5S_SELECT_SET, startPmt, NULL, countPmt, NULL);
+			H5Dwrite(_pmtblr, H5T_NATIVE_USHORT, memspace, file_space, H5P_DEFAULT, pmtdata);
+			H5Sclose(file_space);
+		}
 
 		delete pmtdata;
 	}
@@ -479,6 +525,9 @@ void gate::HDF5Writer::WriteRunInfo(Run& runInfo){
 		space = H5Screate_simple (1, dimsPMTs , NULL);
 		//dataset for PMTs
 		dset = H5Dcreate(sensorsG, "DataPMT", memtype, space, H5P_DEFAULT, H5P_DEFAULT,H5P_DEFAULT);
+		H5Dwrite (dset, memtype, H5S_ALL, H5S_ALL, H5P_DEFAULT, pmts);
+		//dataset for PMTs BLR
+		dset = H5Dcreate(sensorsG, "DataBLR", memtype, space, H5P_DEFAULT, H5P_DEFAULT,H5P_DEFAULT);
 		H5Dwrite (dset, memtype, H5S_ALL, H5S_ALL, H5P_DEFAULT, pmts);
 		H5Sclose (space);
 

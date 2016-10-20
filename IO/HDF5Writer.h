@@ -41,10 +41,12 @@ namespace gate{
 
 	//Sensors activated in the run
 	bool _pmtOn;
+	bool _blrOn;
 	bool _sipmOn;
 
 	//Datasets
 	size_t _pmtrd;
+	size_t _pmtblr;
 	size_t _sipmrd;
 	size_t _mctrks;
 	size_t _memtypeMC;
@@ -70,6 +72,7 @@ namespace gate{
 	gate::DATATYPE _dType;
 
 	bool * _activePmts;
+	bool * _activePmtsBlr;
 	bool * _activeSipms;
 
 	//! max number of channels
