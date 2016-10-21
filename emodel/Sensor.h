@@ -40,6 +40,12 @@ namespace gate{
     //! get type
     gate::SENSORTYPE GetType() const;
     
+    //! set electronics channel ID
+    void SetElecID(int id);
+    
+    //! set electronics channel ID
+    int GetElecID() const;
+
     //! Set dead flag
     void SetDead(bool ok);
 
@@ -83,7 +89,10 @@ namespace gate{
         
     //! sensor type
     SENSORTYPE _sType;
-
+    
+    //! electronic channel
+    int _eID;
+    
     //! flag dead sensor
     bool _dead;
     
@@ -102,13 +111,16 @@ namespace gate{
     //! position
     gate::Point3D _pos;
 
-    ClassDef(Sensor,1)
+    ClassDef(Sensor,2)
 
   };
   
   
   inline void Sensor::SetType(gate::SENSORTYPE t){_sType=t;}
   inline SENSORTYPE Sensor::GetType()const{return _sType;}
+  
+  inline void Sensor::SetElecID(int id) {_eID=id;}
+  inline int Sensor::GetElecID() const { return _eID;}
     
   inline void Sensor::SetDead(bool ok){_dead=ok;}
   inline bool Sensor::IsDead() const {return _dead;}

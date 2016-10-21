@@ -7,6 +7,8 @@ gate::Sensor::Sensor() : BObject(){
 //=======================================================
   
   _sType=gate::NOSTYPE;
+  
+  _eID = -1;
 
   _dead = false;
 
@@ -31,6 +33,8 @@ void gate::Sensor::Info(std::ostream& s) const{
   BObject::Info(s);
   
   s << " Sensor type: " << this->GetType()<< std::endl;
+
+  s << " Sensor electronics ID: " << this->GetElecID()<< std::endl;
 
   s << " Sensor gain: " << this->GetGain()<< std::endl;
   
