@@ -58,20 +58,20 @@ gate::HDF5Writer::HDF5Writer() :   IWriter(),
 
 			_deconv = std::vector<double>(_maxNumPmt, 0);
 
-			_deconv[0] = 0.0016414818563650;
-			_deconv[1] = 0.0016229879497475;
-			_deconv[4] = 0.0015960341795175;
-			_deconv[5] = 0.0015811781676775;
-			_deconv[8] = 0.0016215610282000;
-			_deconv[9] = 0.0016013117326050;
-			_deconv[18] = 0.0016183592928600;
-			_deconv[19] = 0.0016161407273750;
-			_deconv[22] = 0.0015986567401350;
-			_deconv[23] = 0.0016061886622500;
-			_deconv[26] = 0.0015705862023800;
-			_deconv[27] = 0.0015643825749600;
+			_deconv[0] = 0.001652348;
+			_deconv[1] = 0.00163149;
+			_deconv[4] = 0.001611269;
+			_deconv[5] = 0.001600633;
+			_deconv[8] = 0.001642566;
+			_deconv[9] = 0.001624928;
+			_deconv[18] = 0.001631774;
+			_deconv[19] = 0.00162948;
+			_deconv[22] = 0.001620873;
+			_deconv[23] = 0.001626805;
+			_deconv[26] = 0.001594688;
+			_deconv[27] = 0.001582021;
 }
-  
+
 
 gate::HDF5Writer::~HDF5Writer(){
 
@@ -150,7 +150,17 @@ void gate::HDF5Writer::Write(Event& evt){
 				_pmtrd = H5Dcreate(wfgroup, "pmtrd", H5T_NATIVE_USHORT, file_space, H5P_DEFAULT, plistPmt, H5P_DEFAULT);
 			}else{
 				_pmtrd = H5Dcreate(wfgroup, "pmtrwf", H5T_NATIVE_USHORT, file_space, H5P_DEFAULT, plistPmt, H5P_DEFAULT);
-				_pmtblr = H5Dcreate(wfgroup, "pmtblr", H5T_NATIVE_USHORT, file_space, H5P_DEFAULT, plistPmt, H5P_DEFAULT);
+
+				//Check if we need to create pmtblr
+				const std::vector<gate::Hit*>& hitsPmtUnsorted = evt.GetHits(gate::PMT);
+				typedef std::vector<gate::Hit*>::const_iterator ih;
+				for(ih i=hitsPmtUnsorted.begin(); i !=hitsPmtUnsorted.end(); ++i){
+					if ((*i)->GetLabel().compare("BLR") == 0){
+						_pmtblr = H5Dcreate(wfgroup, "pmtblr", H5T_NATIVE_USHORT, file_space, H5P_DEFAULT, plistPmt, H5P_DEFAULT);
+						break;
+					}
+				}
+
 			}
 
 			//Close resources
@@ -480,9 +490,17 @@ void gate::HDF5Writer::WriteRunInfo(Run& runInfo){
 				gate::Sensor* s = sensors[i];
 				pmts[lastPMT].channel = s->GetID();
 				//pmts[lastPMT].active = _activePmts[s->GetID()];
-				pmts[lastPMT].coeff = _deconv[s->GetID()];
+				if (GetDataType() == gate::MC){
+					pmts[lastPMT].coeff = 0.0;
+				}else{
+					if(s->find_dstore("deconvFactor")){
+						pmts[lastPMT].coeff = s->fetch_dstore("deconvFactor");
+					}else{
+						pmts[lastPMT].coeff = _deconv[s->GetID()];
+					}
+				}
 				pmts[lastPMT].adc_to_pes = s->GetGain();
-				pmts[lastPMT].noise_rms = s->GetGainSig();
+				pmts[lastPMT].noise_rms = s->GetBaselineSig();
 				pmts[lastPMT].position[0] = s->GetPosition().x();
 				pmts[lastPMT].position[1] = s->GetPosition().y();
 				pmts[lastPMT].position[2] = s->GetPosition().z();
@@ -498,7 +516,7 @@ void gate::HDF5Writer::WriteRunInfo(Run& runInfo){
 				//sipms[lastSiPM].active = _activeSipms[i];
 				sipms[lastSiPM].coeff = 1;
 				sipms[lastSiPM].adc_to_pes = s->GetGain();
-				sipms[lastSiPM].noise_rms = s->GetGainSig();
+				sipms[lastSiPM].noise_rms = 0.0;
 				sipms[lastSiPM].position[0] = s->GetPosition().x();
 				sipms[lastSiPM].position[1] = s->GetPosition().y();
 				sipms[lastSiPM].position[2] = s->GetPosition().z();
