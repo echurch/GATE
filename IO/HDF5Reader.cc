@@ -9,7 +9,7 @@ ClassImp(gate::HDF5Reader)
 gate::HDF5Reader::HDF5Reader() : IReader() {
    
     _run = 0;
-	_elecID = false;
+	_elecID = true;
 
 	_npmt = 0;
 	_nsipm = 0;
