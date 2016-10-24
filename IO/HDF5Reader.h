@@ -31,6 +31,7 @@ namespace gate{class HDF5Reader;}
 
 typedef struct{
 	int channel;
+	int sensorID;
 //	int active;
 	float position[3];
 	double coeff;
@@ -46,6 +47,9 @@ class gate::HDF5Reader : public gate::IReader {
   
   //! pointer to current event
   gate::Event* _evt;
+
+  //! set elecid as ID of the sensor
+  bool _elecID;
 
   int _npmt, _pmtwflen;
   int _nsipm, _sipmwflen;
@@ -110,6 +114,9 @@ class gate::HDF5Reader : public gate::IReader {
   //! set sipm table name
   void SetSipmTable(std::string name);
 
+  //! set sipm table name
+  void SetElecID(bool elecID);
+
   //! get sipm table name
   std::string GetSipmTable();
 
@@ -121,6 +128,7 @@ inline void gate::HDF5Reader::SetPmtTable(std::string name){ _pmtTable = name;}
 inline std::string gate::HDF5Reader::GetPmtTable(){return  _pmtTable;}
 inline void gate::HDF5Reader::SetSipmTable(std::string name){ _sipmTable = name;}
 inline std::string gate::HDF5Reader::GetSipmTable(){return _sipmTable;}
+inline void gate::HDF5Reader::SetElecID(bool elecID){ _elecID = elecID;}
 
 inline unsigned int gate::HDF5Reader::GetNRuns() const {   
   

@@ -11,6 +11,7 @@ ClassImp(gate::HDF5Writer)
 
 typedef struct{
 	int channel;
+	int sensorID;
 	//int active;
 	float position[3];
 	double coeff;
@@ -488,7 +489,8 @@ void gate::HDF5Writer::WriteRunInfo(Run& runInfo){
 		for(unsigned int i=0; i<GetMaxNumPmt(); i++) {
 			if(_activePmts[i]){
 				gate::Sensor* s = sensors[i];
-				pmts[lastPMT].channel = s->GetID();
+				pmts[lastPMT].channel = s->GetElecID();
+				pmts[lastPMT].sensorID = s->GetSensorID();
 				//pmts[lastPMT].active = _activePmts[s->GetID()];
 				if (GetDataType() == gate::MC){
 					pmts[lastPMT].coeff = 0.0;
@@ -512,7 +514,8 @@ void gate::HDF5Writer::WriteRunInfo(Run& runInfo){
 		for(unsigned int i=0; i<GetMaxNumSipm(); i++) {
 			if(_activeSipms[i]){
 				gate::Sensor* s = sensors[PositiontoSipmID(i)];
-				sipms[lastSiPM].channel = s->GetID();
+				sipms[lastSiPM].channel = s->GetElecID();
+				sipms[lastSiPM].sensorID = s->GetSensorID();
 				//sipms[lastSiPM].active = _activeSipms[i];
 				sipms[lastSiPM].coeff = 1;
 				sipms[lastSiPM].adc_to_pes = s->GetGain();
@@ -532,6 +535,7 @@ void gate::HDF5Writer::WriteRunInfo(Run& runInfo){
 		//Create compound datatype for the table
 		memtype = H5Tcreate (H5T_COMPOUND, sizeof (sensor_t));
 		H5Tinsert (memtype, "channel",HOFFSET (sensor_t, channel), H5T_NATIVE_INT);
+		H5Tinsert (memtype, "sensorID",HOFFSET (sensor_t, sensorID), H5T_NATIVE_INT);
 		//H5Tinsert (memtype, "active",HOFFSET (sensor_t, active),H5T_NATIVE_INT);
 		H5Tinsert (memtype, "position",HOFFSET (sensor_t, position),point);
 		H5Tinsert (memtype, "coeff",HOFFSET (sensor_t, coeff), H5T_NATIVE_DOUBLE);

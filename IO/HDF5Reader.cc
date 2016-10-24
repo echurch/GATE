@@ -9,6 +9,7 @@ ClassImp(gate::HDF5Reader)
 gate::HDF5Reader::HDF5Reader() : IReader() {
    
     _run = 0;
+	_elecID = false;
 
 	_npmt = 0;
 	_nsipm = 0;
@@ -77,6 +78,7 @@ void gate::HDF5Reader::Open(std::string file){
 		hid_t point = H5Tarray_create(H5T_NATIVE_FLOAT, 1, point_dim);
 		size_t memtype = H5Tcreate (H5T_COMPOUND, sizeof (sensor_t));
 		H5Tinsert (memtype, "channel",HOFFSET (sensor_t, channel), H5T_NATIVE_INT);
+		H5Tinsert (memtype, "sensorID",HOFFSET (sensor_t, sensorID), H5T_NATIVE_INT);
 //		H5Tinsert (memtype, "active",HOFFSET (sensor_t, active),H5T_NATIVE_INT);
 		H5Tinsert (memtype, "position",HOFFSET (sensor_t, position),point);
 		H5Tinsert (memtype, "coeff",HOFFSET (sensor_t, coeff), H5T_NATIVE_DOUBLE);
@@ -194,10 +196,15 @@ gate::Event& gate::HDF5Reader::Read(size_t i){
 	for(int idxPmt=0;idxPmt<_npmt;idxPmt++){
 		gate::Hit* hit = new gate::Hit();
 		int channel = _sensorsPMT[idxPmt].channel;
+		int sensorID = _sensorsPMT[idxPmt].sensorID;
 
 		hit->SetPosition(gate::Point3D(_sensorsPMT[idxPmt].position[0],_sensorsPMT[idxPmt].position[1]));
 
-		hit->SetSensorID(channel);
+		if(_elecID){
+			hit->SetSensorID(channel);
+		}else{
+			hit->SetSensorID(sensorID);
+		}
 		hit->SetSensorType(gate::PMT);
 		gate::Waveform* wf = new gate::Waveform();
 		wf->SetSensorID(channel);
