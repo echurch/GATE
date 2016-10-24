@@ -8,6 +8,8 @@ gate::Sensor::Sensor() : BObject(){
   
   _sType=gate::NOSTYPE;
   
+  _sID = -1;
+
   _eID = -1;
 
   _dead = false;
@@ -33,6 +35,8 @@ void gate::Sensor::Info(std::ostream& s) const{
   BObject::Info(s);
   
   s << " Sensor type: " << this->GetType()<< std::endl;
+  
+  s << " Sensor ID: " << this->GetSensorID()<< std::endl;
 
   s << " Sensor electronics ID: " << this->GetElecID()<< std::endl;
 
@@ -42,7 +46,7 @@ void gate::Sensor::Info(std::ostream& s) const{
   
   s << " Sensor baseline: " << this->GetBaseline()<< std::endl;
   
-  s << " Sensor baseline noise" << this->GetBaselineSig()<< std::endl;
+  s << " Sensor baseline noise: " << this->GetBaselineSig()<< std::endl;
   
   s << " Sensor dead: " << this->IsDead()<< std::endl;
 
