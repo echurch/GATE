@@ -143,7 +143,7 @@ void gate::HDF5Writer::Write(Event& evt){
 			H5Pset_chunk(plistPmt, ndims, chunk_dims);
 
 			//Set compression
-			H5Pset_deflate (plistPmt, 1);
+			H5Pset_deflate (plistPmt, 4);
 
 			// Create the dataset 'pmtrd1'
 			if (GetDataType() == gate::MC){
@@ -188,7 +188,7 @@ void gate::HDF5Writer::Write(Event& evt){
 			H5Pset_chunk(plistSipm, ndims, chunk_dimsSipm);
 
 			//Set compression
-			H5Pset_deflate (plistSipm, 1); 
+			H5Pset_deflate (plistSipm, 4); 
 
 			// Create the dataset 'pmtrd1'
 			if (GetDataType() == gate::MC){
@@ -246,7 +246,7 @@ void gate::HDF5Writer::Write(Event& evt){
 			H5Tinsert (_memtypeMC, "hit_energy",HOFFSET (mctrk_t, hit_energy), H5T_NATIVE_FLOAT);
 
 			//Set compression
-			H5Pset_deflate (plistMC, 1);
+			H5Pset_deflate (plistMC, 4);
 
 			// Create the dataset 'MCTracks'
 			_mctrks = H5Dcreate(mcG, "MCTracks", _memtypeMC, file_space, H5P_DEFAULT, plistMC, H5P_DEFAULT);
