@@ -46,7 +46,11 @@ void gate::Geometry::Info(std::ostream& s) const{
     std::cout<<"Z = "<<this->GetZmin()<<" - "<<this->GetZmax()<<std::endl;
     std::cout<<"R = "<<this->GetRmax()<<std::endl;
     std::cout<<"Number of sensors: "<<_sensors.size()<<std::endl;
-    
+    typedef std::map<int, gate::Sensor*>::const_iterator is;
+    for(is i=_sensors.begin(); i !=_sensors.end(); ++i){
+        std::cout<<"Sensor "<< i->first<<":"<<std::endl;
+        std::cout<< *i->second << std::endl;
+    }
     s << "============================================"<< std::endl;
 
 }
