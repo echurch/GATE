@@ -62,6 +62,9 @@
 
 #pragma link C++ class std::vector<const gate::MCParticle*>;
 
+#pragma link C++ class std::vector<const gate::BTrack*>;
+#pragma link C++ class std::vector<const gate::BParticle*>;
+
 #pragma link C++ class std::multimap<gate::SENSORTYPE,gate::Hit*>;
 #pragma link C++ class std::multimap<gate::SENSORTYPE,gate::HitMap*>;
 #pragma link C++ class std::multimap<gate::SENSORTYPE,gate::Cluster*>;
