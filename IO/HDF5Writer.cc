@@ -7,6 +7,8 @@
 #include <cstring>
 #include <stdlib.h>
 
+#define NPMT 12
+
 ClassImp(gate::HDF5Writer)
 
 typedef struct{
@@ -128,8 +130,8 @@ void gate::HDF5Writer::Write(Event& evt){
 			_pmtDatasize = evt.GetHits(gate::PMT)[0]->GetWaveform().GetData().size();
 
 			//Create 3D dataspace (evt,pmt,data). First dimension is unlimited (initially 0)
-			hsize_t dims[ndims] = {0, _npmt, _pmtDatasize};
-			hsize_t max_dims[ndims] = {H5S_UNLIMITED, _npmt,_pmtDatasize};
+			hsize_t dims[ndims] = {0, NPMT, _pmtDatasize};
+			hsize_t max_dims[ndims] = {H5S_UNLIMITED, NPMT,_pmtDatasize};
 			file_space = H5Screate_simple(ndims, dims, max_dims);
 
 			// Create a dataset creation property list
@@ -176,8 +178,8 @@ void gate::HDF5Writer::Write(Event& evt){
 			_sipmDatasize = evt.GetHits(gate::SIPM)[0]->GetWaveform().GetData().size();
 
 			//Create 3D dataspace (evt,sipm,data). First dimension is unlimited (initially 0)
-			hsize_t dimsSipm[ndims] = {0, _nsipm, _sipmDatasize};
-			hsize_t max_dimsSipm[ndims] = {H5S_UNLIMITED,_nsipm,_sipmDatasize};
+			hsize_t dimsSipm[ndims] = {0, NPMT, _sipmDatasize};
+			hsize_t max_dimsSipm[ndims] = {H5S_UNLIMITED,GetMaxNumSipm(),_sipmDatasize};
 			file_space = H5Screate_simple(ndims, dimsSipm, max_dimsSipm);
 
 			// Create a dataset creation property list
@@ -263,7 +265,7 @@ void gate::HDF5Writer::Write(Event& evt){
 
 	//Read PMT waveforms
 	if (_pmtDatasize > 0){
-		unsigned short int *pmtdata = new unsigned short int[_npmt*_pmtDatasize];
+		unsigned short int *pmtdata = new unsigned short int[NPMT*_pmtDatasize];
 		int index=0;
 		int indexBlr=0;
 
@@ -272,6 +274,8 @@ void gate::HDF5Writer::Write(Event& evt){
 		typedef std::vector<gate::Hit*>::const_iterator ih;
 
 		//Sort them
+		memset(_activePmts,0,_maxNumPmt*sizeof(bool));
+		memset(_activePmtsBlr,0,_maxNumPmt*sizeof(bool));
 		gate::Hit* hitsPmt[GetMaxNumPmt()];
 		gate::Hit* hitsPmtBlr[GetMaxNumPmt()];
 		int sensorID;
@@ -288,33 +292,39 @@ void gate::HDF5Writer::Write(Event& evt){
 		}
 
 		//Read waveforms always in the same order
-		for(unsigned int sensIndx=0; sensIndx<GetMaxNumPmt(); sensIndx++){
+		for(unsigned int sensIndx=0; sensIndx<NPMT; sensIndx++){
 			if(_activePmts[sensIndx]){
 				const gate::Waveform& wf =  hitsPmt[sensIndx]->GetWaveform();
 				const std::vector<std::pair<unsigned int,float> >& d = wf.GetData();
 
 				for (unsigned int samp = 0; samp<d.size(); samp++){
+					//index = sensIndx*_pmtDatasize + samp;
 					pmtdata[index] = (unsigned short int) (d[samp].second);
 					index++;
 				}
+			/*}else{
+				for (unsigned int samp = 0; samp<_pmtDatasize; samp++){
+					index = sensIndx*_sipmDatasize + samp;
+					pmtdata[index] = (unsigned short int) (-1);
+				}*/
 			}
 		}
 
 		//Create memspace for one PMT row
 		const hsize_t ndims = 3;
-		hsize_t dims[ndims] = {1, _npmt, _pmtDatasize};
+		hsize_t dims[ndims] = {1, NPMT, _pmtDatasize};
 		memspace = H5Screate_simple(ndims, dims, NULL);
 
 		//Extend PMT dataset
 		dims[0] = _ievt+1;
-		dims[1] = _npmt;
+		dims[1] = NPMT;
 		dims[2] = _pmtDatasize;
 		H5Dset_extent(_pmtrd, dims);
 
 		//Write PMT waveforms
 		file_space = H5Dget_space(_pmtrd);
 		hsize_t startPmt[3] = {_ievt, 0, 0};
-		hsize_t countPmt[3] = {1,_npmt,_pmtDatasize};
+		hsize_t countPmt[3] = {1,NPMT,_pmtDatasize};
 		H5Sselect_hyperslab(file_space, H5S_SELECT_SET, startPmt, NULL, countPmt, NULL);
 		H5Dwrite(_pmtrd, H5T_NATIVE_USHORT, memspace, file_space, H5P_DEFAULT, pmtdata);
 		H5Sclose(file_space);
@@ -323,27 +333,33 @@ void gate::HDF5Writer::Write(Event& evt){
 		//Write BLR channels (if they exists)
 		//Read waveforms always in the same order
 		if(_blrOn){
-			for(unsigned int sensIndx=0; sensIndx<GetMaxNumPmt(); sensIndx++){
+			for(unsigned int sensIndx=0; sensIndx<NPMT; sensIndx++){
 				if(_activePmtsBlr[sensIndx]){
 					const gate::Waveform& wf =  hitsPmtBlr[sensIndx]->GetWaveform();
 					const std::vector<std::pair<unsigned int,float> >& d = wf.GetData();
 
 					for (unsigned int samp = 0; samp<d.size(); samp++){
+						//indexBlr = sensIndx*_pmtDatasize + samp;
 						pmtdata[indexBlr] = (unsigned short int) (d[samp].second);
 						indexBlr++;
 					}
+				/*}else{
+					for (unsigned int samp = 0; samp<_pmtDatasize; samp++){
+						indexBlr = sensIndx*_sipmDatasize + samp;
+						pmtdata[indexBlr] = (unsigned short int) (-1);
+					}*/
 				}
 			}
 
 			//Create memspace for one PMT row
 			dims[0] = 1;
-			dims[1] = _npmt;
+			dims[1] = NPMT;
 			dims[2] = _pmtDatasize;
 			memspace = H5Screate_simple(ndims, dims, NULL);
 
 			//Extend PMT dataset
 			dims[0] = _ievt+1;
-			dims[1] = _npmt;
+			dims[1] = NPMT;
 			dims[2] = _pmtDatasize;
 			H5Dset_extent(_pmtblr, dims);
 
@@ -359,7 +375,7 @@ void gate::HDF5Writer::Write(Event& evt){
 
 	//Read SiPM waveforms
 	if (_sipmDatasize){
-		unsigned short int *sipmdata = new unsigned short int[_nsipm*_sipmDatasize];
+		unsigned short int *sipmdata = new unsigned short int[GetMaxNumSipm()*_sipmDatasize];
 		int index=0;
 
 		//Sensors can have any order in any event
@@ -367,6 +383,7 @@ void gate::HDF5Writer::Write(Event& evt){
 		typedef std::vector<gate::Hit*>::const_iterator ih;
 
 		//Sort them
+		memset(_activeSipms,0,_maxNumSipm*sizeof(bool));
 		gate::Hit* hitsSipm[GetMaxNumSipm()];
 		int sensorID;
 		for(ih i=hitsSipmUnsorted.begin(); i !=hitsSipmUnsorted.end(); ++i){
@@ -382,27 +399,33 @@ void gate::HDF5Writer::Write(Event& evt){
 				const std::vector<std::pair<unsigned int,float> >& d = wf.GetData();
 
 				for (unsigned int samp = 0; samp<d.size(); samp++){
+					index = sensIndx*_sipmDatasize + samp;
 					sipmdata[index] = (unsigned short int) (d[samp].second);
-					index++;
+				}
+			}else{
+				for (unsigned int samp = 0; samp<_sipmDatasize; samp++){
+					index = sensIndx*_sipmDatasize + samp;
+					sipmdata[index] = (unsigned short int) (-1);
 				}
 			}
 		}
 
+
 		//Create memspace for one SIPM row
 		const hsize_t ndims = 3;
-		hsize_t dims[ndims] = {1, _nsipm, _sipmDatasize};
+		hsize_t dims[ndims] = {1, GetMaxNumSipm(), _sipmDatasize};
 		memspace = H5Screate_simple(ndims, dims, NULL);
 
 		//Extend SIPM dataset
 		dims[0] = _ievt+1;
-		dims[1] = _nsipm;
+		dims[1] = GetMaxNumSipm();
 		dims[2] = _sipmDatasize;
 		H5Dset_extent(_sipmrd, dims);
 
 		//Write SIPM waveforms
 		file_space = H5Dget_space(_sipmrd);
 		hsize_t startSipm[3] = {_ievt, 0, 0};
-		hsize_t countSipm[3] = {1,_nsipm,_sipmDatasize};
+		hsize_t countSipm[3] = {1,GetMaxNumSipm(),_sipmDatasize};
 		H5Sselect_hyperslab(file_space, H5S_SELECT_SET, startSipm, NULL, countSipm, NULL);
 		H5Dwrite(_sipmrd, H5T_NATIVE_USHORT, memspace, file_space, H5P_DEFAULT, sipmdata);
 		H5Sclose(file_space);
@@ -512,19 +535,43 @@ void gate::HDF5Writer::WriteRunInfo(Run& runInfo){
 
 		//Get active SiPMs info
 		for(unsigned int i=0; i<GetMaxNumSipm(); i++) {
-			if(_activeSipms[i]){
-				gate::Sensor* s = sensors[PositiontoSipmID(i)];
-				sipms[lastSiPM].channel = s->GetElecID();
-				sipms[lastSiPM].sensorID = s->GetSensorID();
-				//sipms[lastSiPM].active = _activeSipms[i];
-				sipms[lastSiPM].coeff = 1;
-				sipms[lastSiPM].adc_to_pes = s->GetGain();
-				sipms[lastSiPM].noise_rms = 0.0;
-				sipms[lastSiPM].position[0] = s->GetPosition().x();
-				sipms[lastSiPM].position[1] = s->GetPosition().y();
-				sipms[lastSiPM].position[2] = s->GetPosition().z();
+			//if(_activeSipms[i]){
+				int sID = PositiontoSipmID(i);
+				gate::Sensor* s = sensors[sID];
+				if (sID == 14010 || sID == 15047 || sID == 25049){
+					sipms[lastSiPM].channel = sID;
+					sipms[lastSiPM].sensorID = sID;
+					//sipms[lastSiPM].active = _activeSipms[i];
+					sipms[lastSiPM].coeff = 1;
+					sipms[lastSiPM].adc_to_pes = 0;
+					sipms[lastSiPM].noise_rms = 0.0;
+					if (sID==14010){
+						sipms[lastSiPM].position[0] = -65.0;
+						sipms[lastSiPM].position[1] = -215.0;
+					}
+					if (sID==15047){
+						sipms[lastSiPM].position[0] = 55.0;
+						sipms[lastSiPM].position[1] = 235.0;
+					}
+					if (sID==25049){
+						sipms[lastSiPM].position[0] = 145.0;
+						sipms[lastSiPM].position[1] = -185.0;
+					}
+					sipms[lastSiPM].position[2] = -10000.0;
+				}
+				else{
+					sipms[lastSiPM].channel = s->GetElecID();
+					sipms[lastSiPM].sensorID = s->GetSensorID();
+					//sipms[lastSiPM].active = _activeSipms[i];
+					sipms[lastSiPM].coeff = 1;
+					sipms[lastSiPM].adc_to_pes = s->GetGain();
+					sipms[lastSiPM].noise_rms = 0.0;
+					sipms[lastSiPM].position[0] = s->GetPosition().x();
+					sipms[lastSiPM].position[1] = s->GetPosition().y();
+					sipms[lastSiPM].position[2] = s->GetPosition().z();
+				}
 				lastSiPM++;
-			}
+				//}
 		}
 
 		//Create group for sensors
