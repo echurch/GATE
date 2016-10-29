@@ -292,7 +292,7 @@ void gate::HDF5Writer::Write(Event& evt){
 		}
 
 		//Read waveforms always in the same order
-		for(unsigned int sensIndx=0; sensIndx<NPMT; sensIndx++){
+		for(unsigned int sensIndx=0; sensIndx<GetMaxNumPmt(); sensIndx++){
 			if(_activePmts[sensIndx]){
 				const gate::Waveform& wf =  hitsPmt[sensIndx]->GetWaveform();
 				const std::vector<std::pair<unsigned int,float> >& d = wf.GetData();
@@ -333,7 +333,7 @@ void gate::HDF5Writer::Write(Event& evt){
 		//Write BLR channels (if they exists)
 		//Read waveforms always in the same order
 		if(_blrOn){
-			for(unsigned int sensIndx=0; sensIndx<NPMT; sensIndx++){
+			for(unsigned int sensIndx=0; sensIndx<GetMaxNumPmt(); sensIndx++){
 				if(_activePmtsBlr[sensIndx]){
 					const gate::Waveform& wf =  hitsPmtBlr[sensIndx]->GetWaveform();
 					const std::vector<std::pair<unsigned int,float> >& d = wf.GetData();
