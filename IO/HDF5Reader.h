@@ -60,8 +60,8 @@ class gate::HDF5Reader : public gate::IReader {
   size_t _h5file, _dsetPMT, _dspacePMT, _dsetSIPM, _dspaceSIPM;
   size_t _dsetSensorsPMT, _dspaceSensorsPMT, _dsetSensorsSIPM, _dspaceSensorsSIPM;
 
-  unsigned short int * _pmtdata;
-  unsigned short int * _sipmdata;
+  short int * _pmtdata;
+  short int * _sipmdata;
 
   unsigned int _nEvents;
 

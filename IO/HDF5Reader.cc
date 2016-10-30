@@ -45,7 +45,7 @@ void gate::HDF5Reader::Open(std::string file){
 		_npmt = dims[1];
 		_pmtwflen = dims[2];
 
-		_pmtdata = (unsigned short int*) malloc(_npmt*_pmtwflen*sizeof(unsigned short int));
+		_pmtdata = (short int*) malloc(_npmt*_pmtwflen*sizeof(short int));
 	}
 
 	//Check if there is SiPM data
@@ -61,7 +61,7 @@ void gate::HDF5Reader::Open(std::string file){
 		_nsipm = dims[1];
 		_sipmwflen = dims[2];
 
-		_sipmdata = (unsigned short int*) malloc(_nsipm*_sipmwflen*sizeof(unsigned short int));
+		_sipmdata = (short int*) malloc(_nsipm*_sipmwflen*sizeof(short int));
 	}
 
     if(H5Lexists(_h5file, "/Sensors/DataPMT", H5P_DEFAULT)){
@@ -168,7 +168,7 @@ gate::Event& gate::HDF5Reader::Read(size_t i){
 		hsize_t memspace = H5Screate_simple(3,count,NULL);
 
 		H5Sselect_hyperslab (_dspacePMT, H5S_SELECT_SET, start, stride, count, block);
-		H5Dread (_dsetPMT, H5T_NATIVE_USHORT, memspace, _dspacePMT, H5P_DEFAULT,_pmtdata);
+		H5Dread (_dsetPMT, H5T_NATIVE_SHORT, memspace, _dspacePMT, H5P_DEFAULT,_pmtdata);
 	}
 
 	//Check if there is SiPM data
@@ -187,7 +187,7 @@ gate::Event& gate::HDF5Reader::Read(size_t i){
 		hsize_t memspace = H5Screate_simple(3,count,NULL);
 
 		H5Sselect_hyperslab (_dspaceSIPM, H5S_SELECT_SET, start, stride, count, block);
-		H5Dread (_dsetSIPM, H5T_NATIVE_USHORT, memspace, _dspaceSIPM, H5P_DEFAULT,_sipmdata);
+		H5Dread (_dsetSIPM, H5T_NATIVE_SHORT, memspace, _dspaceSIPM, H5P_DEFAULT,_sipmdata);
 	}
 
 	_evt->Clear();

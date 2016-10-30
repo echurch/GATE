@@ -49,7 +49,7 @@ typedef struct{
 
 gate::HDF5Writer::HDF5Writer() :   IWriter(), 
   
-    _file(0), _pmtrd(0), _evt(0), _run(0), _ievt(0), _pmtDatasize(0), _sipmDatasize(0),_npmt(0),_nsipm(0),_dType(gate::DATA), _maxNumPmt(32), _maxNumSipm(1792) {
+    _file(0), _pmtrd(0), _evt(0), _run(0), _ievt(0), _pmtDatasize(0), _sipmDatasize(1200),_npmt(0),_nsipm(0),_dType(gate::DATA), _maxNumPmt(32), _maxNumSipm(1792) {
 
 			_activePmts = (bool*) malloc(_maxNumPmt*sizeof(bool));
 			memset(_activePmts,0,_maxNumPmt*sizeof(bool));
@@ -150,16 +150,16 @@ void gate::HDF5Writer::Write(Event& evt){
 
 			// Create the dataset 'pmtrd1'
 			if (GetDataType() == gate::MC){
-				_pmtrd = H5Dcreate(wfgroup, "pmtrd", H5T_NATIVE_USHORT, file_space, H5P_DEFAULT, plistPmt, H5P_DEFAULT);
+				_pmtrd = H5Dcreate(wfgroup, "pmtrd", H5T_NATIVE_SHORT, file_space, H5P_DEFAULT, plistPmt, H5P_DEFAULT);
 			}else{
-				_pmtrd = H5Dcreate(wfgroup, "pmtrwf", H5T_NATIVE_USHORT, file_space, H5P_DEFAULT, plistPmt, H5P_DEFAULT);
+				_pmtrd = H5Dcreate(wfgroup, "pmtrwf", H5T_NATIVE_SHORT, file_space, H5P_DEFAULT, plistPmt, H5P_DEFAULT);
 
 				//Check if we need to create pmtblr
 				const std::vector<gate::Hit*>& hitsPmtUnsorted = evt.GetHits(gate::PMT);
 				typedef std::vector<gate::Hit*>::const_iterator ih;
 				for(ih i=hitsPmtUnsorted.begin(); i !=hitsPmtUnsorted.end(); ++i){
 					if ((*i)->GetLabel().compare("BLR") == 0){
-						_pmtblr = H5Dcreate(wfgroup, "pmtblr", H5T_NATIVE_USHORT, file_space, H5P_DEFAULT, plistPmt, H5P_DEFAULT);
+						_pmtblr = H5Dcreate(wfgroup, "pmtblr", H5T_NATIVE_SHORT, file_space, H5P_DEFAULT, plistPmt, H5P_DEFAULT);
 						break;
 					}
 				}
@@ -173,9 +173,11 @@ void gate::HDF5Writer::Write(Event& evt){
 
 		//SIPM
 		//Check SIPM exists and get WF length
-		if(_nsipm > 0){
+		if(_nsipm > 0 || GetDataType() != gate::MC){
 			//Get WF length
-			_sipmDatasize = evt.GetHits(gate::SIPM)[0]->GetWaveform().GetData().size();
+			if (GetDataType() == gate::MC){
+				_sipmDatasize = evt.GetHits(gate::SIPM)[0]->GetWaveform().GetData().size();
+			}
 
 			//Create 3D dataspace (evt,sipm,data). First dimension is unlimited (initially 0)
 			hsize_t dimsSipm[ndims] = {0, NPMT, _sipmDatasize};
@@ -195,9 +197,9 @@ void gate::HDF5Writer::Write(Event& evt){
 
 			// Create the dataset 'pmtrd1'
 			if (GetDataType() == gate::MC){
-				_sipmrd = H5Dcreate(wfgroup, "sipmrd", H5T_NATIVE_USHORT, file_space, H5P_DEFAULT, plistSipm, H5P_DEFAULT);
+				_sipmrd = H5Dcreate(wfgroup, "sipmrd", H5T_NATIVE_SHORT, file_space, H5P_DEFAULT, plistSipm, H5P_DEFAULT);
 			}else{
-				_sipmrd = H5Dcreate(wfgroup, "sipmrwf", H5T_NATIVE_USHORT, file_space, H5P_DEFAULT, plistSipm, H5P_DEFAULT);
+				_sipmrd = H5Dcreate(wfgroup, "sipmrwf", H5T_NATIVE_SHORT, file_space, H5P_DEFAULT, plistSipm, H5P_DEFAULT);
 			}
 
 			//Close resources
@@ -265,7 +267,7 @@ void gate::HDF5Writer::Write(Event& evt){
 
 	//Read PMT waveforms
 	if (_pmtDatasize > 0){
-		unsigned short int *pmtdata = new unsigned short int[NPMT*_pmtDatasize];
+		short int *pmtdata = new short int[NPMT*_pmtDatasize];
 		int index=0;
 		int indexBlr=0;
 
@@ -299,13 +301,13 @@ void gate::HDF5Writer::Write(Event& evt){
 
 				for (unsigned int samp = 0; samp<d.size(); samp++){
 					//index = sensIndx*_pmtDatasize + samp;
-					pmtdata[index] = (unsigned short int) (d[samp].second);
+					pmtdata[index] = (short int) (d[samp].second);
 					index++;
 				}
 			/*}else{
 				for (unsigned int samp = 0; samp<_pmtDatasize; samp++){
 					index = sensIndx*_sipmDatasize + samp;
-					pmtdata[index] = (unsigned short int) (-1);
+					pmtdata[index] = (short int) (-1);
 				}*/
 			}
 		}
@@ -326,7 +328,7 @@ void gate::HDF5Writer::Write(Event& evt){
 		hsize_t startPmt[3] = {_ievt, 0, 0};
 		hsize_t countPmt[3] = {1,NPMT,_pmtDatasize};
 		H5Sselect_hyperslab(file_space, H5S_SELECT_SET, startPmt, NULL, countPmt, NULL);
-		H5Dwrite(_pmtrd, H5T_NATIVE_USHORT, memspace, file_space, H5P_DEFAULT, pmtdata);
+		H5Dwrite(_pmtrd, H5T_NATIVE_SHORT, memspace, file_space, H5P_DEFAULT, pmtdata);
 		H5Sclose(file_space);
 
 
@@ -340,13 +342,13 @@ void gate::HDF5Writer::Write(Event& evt){
 
 					for (unsigned int samp = 0; samp<d.size(); samp++){
 						//indexBlr = sensIndx*_pmtDatasize + samp;
-						pmtdata[indexBlr] = (unsigned short int) (d[samp].second);
+						pmtdata[indexBlr] = (short int) (d[samp].second);
 						indexBlr++;
 					}
 				/*}else{
 					for (unsigned int samp = 0; samp<_pmtDatasize; samp++){
 						indexBlr = sensIndx*_sipmDatasize + samp;
-						pmtdata[indexBlr] = (unsigned short int) (-1);
+						pmtdata[indexBlr] = (short int) (-1);
 					}*/
 				}
 			}
@@ -366,7 +368,7 @@ void gate::HDF5Writer::Write(Event& evt){
 			//Write PMT waveforms
 			file_space = H5Dget_space(_pmtblr);
 			H5Sselect_hyperslab(file_space, H5S_SELECT_SET, startPmt, NULL, countPmt, NULL);
-			H5Dwrite(_pmtblr, H5T_NATIVE_USHORT, memspace, file_space, H5P_DEFAULT, pmtdata);
+			H5Dwrite(_pmtblr, H5T_NATIVE_SHORT, memspace, file_space, H5P_DEFAULT, pmtdata);
 			H5Sclose(file_space);
 		}
 
@@ -375,7 +377,7 @@ void gate::HDF5Writer::Write(Event& evt){
 
 	//Read SiPM waveforms
 	if (_sipmDatasize){
-		unsigned short int *sipmdata = new unsigned short int[GetMaxNumSipm()*_sipmDatasize];
+		short int *sipmdata = new short int[GetMaxNumSipm()*_sipmDatasize];
 		int index=0;
 
 		//Sensors can have any order in any event
@@ -400,12 +402,12 @@ void gate::HDF5Writer::Write(Event& evt){
 
 				for (unsigned int samp = 0; samp<d.size(); samp++){
 					index = sensIndx*_sipmDatasize + samp;
-					sipmdata[index] = (unsigned short int) (d[samp].second);
+					sipmdata[index] = (short int) (d[samp].second);
 				}
 			}else{
 				for (unsigned int samp = 0; samp<_sipmDatasize; samp++){
 					index = sensIndx*_sipmDatasize + samp;
-					sipmdata[index] = (unsigned short int) (-1);
+					sipmdata[index] = (short int) (-1);
 				}
 			}
 		}
@@ -427,7 +429,7 @@ void gate::HDF5Writer::Write(Event& evt){
 		hsize_t startSipm[3] = {_ievt, 0, 0};
 		hsize_t countSipm[3] = {1,GetMaxNumSipm(),_sipmDatasize};
 		H5Sselect_hyperslab(file_space, H5S_SELECT_SET, startSipm, NULL, countSipm, NULL);
-		H5Dwrite(_sipmrd, H5T_NATIVE_USHORT, memspace, file_space, H5P_DEFAULT, sipmdata);
+		H5Dwrite(_sipmrd, H5T_NATIVE_SHORT, memspace, file_space, H5P_DEFAULT, sipmdata);
 		H5Sclose(file_space);
 
 		delete sipmdata;

@@ -116,6 +116,9 @@ namespace gate{
 
 	size_t GetMaxNumSipm();
 	void SetMaxNumSipm(size_t maxSipm);
+
+	size_t GetSipmDataSize();
+	void SetSipmDataSize(size_t sipmdatasize);
      
     
     ClassDef(gate::HDF5Writer,1)
@@ -130,6 +133,9 @@ namespace gate{
 
   inline size_t gate::HDF5Writer::GetMaxNumSipm() {return _maxNumSipm;}
   inline void gate::HDF5Writer::SetMaxNumSipm(size_t maxSipm) {_maxNumSipm = maxSipm;}
+
+  inline size_t gate::HDF5Writer::GetSipmDataSize() {return _sipmDatasize;}
+  inline void gate::HDF5Writer::SetSipmDataSize(size_t sipmdatasize) {_sipmDatasize = sipmdatasize;}
 
 }
 
