@@ -22,6 +22,10 @@ typedef struct{
 } sensor_t;
 
 typedef struct{
+	int run_number;
+} runinfo_t;
+
+typedef struct{
 	float x[2];
 	float y[2];
 	float z[2];
@@ -90,6 +94,25 @@ void gate::HDF5Writer::Open(std::string fileName, std::string option){
 	_file =  H5Fcreate( fileName.c_str(), H5F_ACC_TRUNC,
 			H5P_DEFAULT, H5P_DEFAULT ); 
 
+	//Group for runinfo
+	_rinfoG = H5Gcreate2(_file, "/Run", H5P_DEFAULT, H5P_DEFAULT, H5P_DEFAULT);
+
+	//Create 1D dataspace (evt number). First dimension is unlimited (initially 0)
+	hsize_t ndims = 1;
+	hsize_t dims[ndims] = {0};
+	hsize_t max_dims[ndims] = {H5S_UNLIMITED};
+	hsize_t file_space = H5Screate_simple(ndims, dims, max_dims);
+
+	// Create a dataset creation property list
+	// The layout of the dataset have to be chunked when using unlimited dimensions
+	hid_t plistEvents = H5Pcreate(H5P_DATASET_CREATE);
+	H5Pset_layout(plistEvents, H5D_CHUNKED);
+	hsize_t chunk_dims[ndims] = {32768};
+	H5Pset_chunk(plistEvents, ndims, chunk_dims);
+	// Create dataset
+	_eventsTable = H5Dcreate(_rinfoG, "event_number", H5T_NATIVE_SHORT, file_space, H5P_DEFAULT, plistEvents, H5P_DEFAULT);
+
+
 	_isOpen=true; 
 }
 
@@ -103,7 +126,6 @@ void gate::HDF5Writer::Close(){
 void gate::HDF5Writer::Write(Event& evt){
 	//We need to create the tables on the first call.
 	//Here is where we can check the size of the waveform
-
 	if(_firstEvent){
 
 		//Create group for sensors
@@ -264,6 +286,25 @@ void gate::HDF5Writer::Write(Event& evt){
 	}
 
 	hid_t memspace, file_space;
+
+	//Write event number
+	int evtNumber[1] = {evt.fetch_istore("EVENTHEADER_NbInRun")};
+	//Create memspace for one event number
+	hsize_t dimsEvt[1] = {1};
+	memspace = H5Screate_simple(1, dimsEvt, NULL);
+
+	//Extend PMT dataset
+	dimsEvt[0] = _ievt+1;
+	H5Dset_extent(_eventsTable, dimsEvt);
+
+	//Write PMT waveforms
+	file_space = H5Dget_space(_eventsTable);
+	hsize_t startEvt[3] = {_ievt,};
+	hsize_t countEvt[3] = {1};
+	H5Sselect_hyperslab(file_space, H5S_SELECT_SET, startEvt, NULL, countEvt, NULL);
+	H5Dwrite(_eventsTable, H5T_NATIVE_INT, memspace, file_space, H5P_DEFAULT, evtNumber);
+	H5Sclose(file_space);
+
 
 	//Read PMT waveforms
 	if (_pmtDatasize > 0){
@@ -503,6 +544,20 @@ void gate::HDF5Writer::Write(Event& evt){
 void gate::HDF5Writer::WriteRunInfo(Run& runInfo){
 	hid_t space, dset, memtype;
 
+	//Compound type for runinfo
+	memtype = H5Tcreate (H5T_COMPOUND, sizeof (runinfo_t));
+	H5Tinsert (memtype, "run_number",HOFFSET (runinfo_t, run_number), H5T_NATIVE_INT);
+	//dataspace for runinfo
+	hsize_t dimsRunInfo[1] = {1};
+	space = H5Screate_simple (1, dimsRunInfo, NULL);
+	//dataset for runinfo
+	runinfo_t rinfo;
+	rinfo.run_number = runInfo.GetRunID();
+	dset = H5Dcreate(_rinfoG, "runInfo", memtype, space, H5P_DEFAULT, H5P_DEFAULT,H5P_DEFAULT);
+	H5Dwrite (dset, memtype, H5S_ALL, H5S_ALL, H5P_DEFAULT, &rinfo);
+	H5Sclose (space);
+
+	//Prepare sensors
 	sensor_t pmts[GetMaxNumPmt()];
 	sensor_t sipms[GetMaxNumSipm()];
 	hsize_t lastPMT=0, lastSiPM=0;//indexes

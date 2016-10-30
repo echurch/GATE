@@ -39,6 +39,9 @@ namespace gate{
 	//! First event
 	bool _firstEvent;
 
+	//! Group for Run info
+	size_t _rinfoG;
+
 	//Sensors activated in the run
 	bool _pmtOn;
 	bool _blrOn;
@@ -46,6 +49,7 @@ namespace gate{
 
 	//Datasets
 	size_t _pmtrd;
+	size_t _eventsTable;
 	size_t _pmtblr;
 	size_t _sipmrd;
 	size_t _mctrks;
