@@ -110,7 +110,7 @@ void gate::HDF5Writer::Open(std::string fileName, std::string option){
 	hsize_t chunk_dims[ndims] = {32768};
 	H5Pset_chunk(plistEvents, ndims, chunk_dims);
 	// Create dataset
-	_eventsTable = H5Dcreate(_rinfoG, "event_number", H5T_NATIVE_SHORT, file_space, H5P_DEFAULT, plistEvents, H5P_DEFAULT);
+	_eventsTable = H5Dcreate(_rinfoG, "event_number", H5T_NATIVE_INT, file_space, H5P_DEFAULT, plistEvents, H5P_DEFAULT);
 
 
 	_isOpen=true; 
