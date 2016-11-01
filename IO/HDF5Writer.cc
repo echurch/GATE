@@ -299,7 +299,11 @@ void gate::HDF5Writer::Write(Event& evt){
 
 	//Write event number
 	evt_t evtData;
-	evtData.evt_number = evt.fetch_istore("EVENTHEADER_NbInRun");
+	if (GetDataType() == gate::MC){
+		evtData.evt_number = evt.GetEventID();
+	}else{
+		evtData.evt_number = evt.fetch_istore("EVENTHEADER_NbInRun");
+	}
 	evtData.timestamp = evt.GetTime();
 	//Create memspace for one event number
 	hsize_t dimsEvt[1] = {1};
