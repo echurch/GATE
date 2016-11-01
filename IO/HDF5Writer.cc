@@ -26,6 +26,11 @@ typedef struct{
 } runinfo_t;
 
 typedef struct{
+	int evt_number;
+	uint64_t timestamp;
+} evt_t;
+
+typedef struct{
 	float x[2];
 	float y[2];
 	float z[2];
@@ -109,8 +114,13 @@ void gate::HDF5Writer::Open(std::string fileName, std::string option){
 	H5Pset_layout(plistEvents, H5D_CHUNKED);
 	hsize_t chunk_dims[ndims] = {32768};
 	H5Pset_chunk(plistEvents, ndims, chunk_dims);
+
+	//Create compound datatype for the table
+	_memtypeEvt = H5Tcreate (H5T_COMPOUND, sizeof (evt_t));
+	H5Tinsert (_memtypeEvt, "evt_number",HOFFSET (evt_t, evt_number), H5T_NATIVE_INT);
+	H5Tinsert (_memtypeEvt, "timestamp",HOFFSET (evt_t, timestamp),H5T_NATIVE_UINT64);
 	// Create dataset
-	_eventsTable = H5Dcreate(_rinfoG, "event_number", H5T_NATIVE_INT, file_space, H5P_DEFAULT, plistEvents, H5P_DEFAULT);
+	_eventsTable = H5Dcreate(_rinfoG, "events", _memtypeEvt, file_space, H5P_DEFAULT, plistEvents, H5P_DEFAULT);
 
 
 	_isOpen=true; 
@@ -288,7 +298,9 @@ void gate::HDF5Writer::Write(Event& evt){
 	hid_t memspace, file_space;
 
 	//Write event number
-	int evtNumber[1] = {evt.fetch_istore("EVENTHEADER_NbInRun")};
+	evt_t evtData;
+	evtData.evt_number = evt.fetch_istore("EVENTHEADER_NbInRun");
+	evtData.timestamp = evt.GetTime();
 	//Create memspace for one event number
 	hsize_t dimsEvt[1] = {1};
 	memspace = H5Screate_simple(1, dimsEvt, NULL);
@@ -299,11 +311,12 @@ void gate::HDF5Writer::Write(Event& evt){
 
 	//Write PMT waveforms
 	file_space = H5Dget_space(_eventsTable);
-	hsize_t startEvt[3] = {_ievt,};
-	hsize_t countEvt[3] = {1};
+	hsize_t startEvt[1] = {_ievt};
+	hsize_t countEvt[1] = {1};
 	H5Sselect_hyperslab(file_space, H5S_SELECT_SET, startEvt, NULL, countEvt, NULL);
-	H5Dwrite(_eventsTable, H5T_NATIVE_INT, memspace, file_space, H5P_DEFAULT, evtNumber);
+	H5Dwrite(_eventsTable, _memtypeEvt, memspace, file_space, H5P_DEFAULT, &evtData);
 	H5Sclose(file_space);
+
 
 
 	//Read PMT waveforms

@@ -54,6 +54,7 @@ namespace gate{
 	size_t _sipmrd;
 	size_t _mctrks;
 	size_t _memtypeMC;
+	size_t _memtypeEvt;
 	size_t _mctrkCount;
 
     //! pointer to current event
