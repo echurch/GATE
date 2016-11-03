@@ -58,7 +58,7 @@ typedef struct{
 
 gate::HDF5Writer::HDF5Writer() :   IWriter(), 
   
-    _file(0), _pmtrd(0), _evt(0), _run(0), _ievt(0), _pmtDatasize(0), _sipmDatasize(1200),_npmt(0),_nsipm(0),_dType(gate::DATA), _maxNumPmt(32), _maxNumSipm(1792) {
+    _file(0), _pmtrd(0), _evt(0), _run(0), _ievt(0), _pmtDatasize(0), _sipmDatasize(0),_npmt(0),_nsipm(0),_dType(gate::DATA), _maxNumPmt(32), _maxNumSipm(1792) {
 
 			_activePmts = (bool*) malloc(_maxNumPmt*sizeof(bool));
 			memset(_activePmts,0,_maxNumPmt*sizeof(bool));
@@ -209,6 +209,8 @@ void gate::HDF5Writer::Write(Event& evt){
 			//Get WF length
 			if (GetDataType() == gate::MC){
 				_sipmDatasize = evt.GetHits(gate::SIPM)[0]->GetWaveform().GetData().size();
+			}else{
+				_sipmDatasize = (int)evt.fetch_dstore("TRIGGER_DAQbufferSize") / 40;
 			}
 
 			//Create 3D dataspace (evt,sipm,data). First dimension is unlimited (initially 0)
