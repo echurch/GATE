@@ -16,9 +16,6 @@ typedef struct{
 	int sensorID;
 	//int active;
 	float position[3];
-	double coeff;
-	float adc_to_pes;
-	float noise_rms;
 } sensor_t;
 
 typedef struct{
@@ -29,13 +26,6 @@ typedef struct{
 	int evt_number;
 	uint64_t timestamp;
 } evt_t;
-
-typedef struct{
-	float x[2];
-	float y[2];
-	float z[2];
-	float r;
-} geometry_t;
 
 typedef struct{
 	int event_indx;
@@ -56,8 +46,8 @@ typedef struct{
 
 
 
-gate::HDF5Writer::HDF5Writer() :   IWriter(), 
-  
+gate::HDF5Writer::HDF5Writer() :   IWriter(),
+
     _file(0), _pmtrd(0), _evt(0), _run(0), _ievt(0), _pmtDatasize(0), _sipmDatasize(0),_npmt(0),_nsipm(0),_dType(gate::DATA), _maxNumPmt(32), _maxNumSipm(1792) {
 
 			_activePmts = (bool*) malloc(_maxNumPmt*sizeof(bool));
@@ -67,21 +57,6 @@ gate::HDF5Writer::HDF5Writer() :   IWriter(),
 			_activeSipms = (bool*)malloc(_maxNumSipm*sizeof(bool));
 			memset(_activeSipms,0,_maxNumSipm*sizeof(bool));
 			_blrOn = false;
-
-			_deconv = std::vector<double>(_maxNumPmt, 0);
-
-			_deconv[0] = 0.001652348;
-			_deconv[1] = 0.00163149;
-			_deconv[4] = 0.001611269;
-			_deconv[5] = 0.001600633;
-			_deconv[8] = 0.001642566;
-			_deconv[9] = 0.001624928;
-			_deconv[18] = 0.001631774;
-			_deconv[19] = 0.00162948;
-			_deconv[22] = 0.001620873;
-			_deconv[23] = 0.001626805;
-			_deconv[26] = 0.001594688;
-			_deconv[27] = 0.001582021;
 }
 
 
@@ -97,13 +72,13 @@ void gate::HDF5Writer::Open(std::string fileName, std::string option){
 	_firstEvent= true;
 
 	_file =  H5Fcreate( fileName.c_str(), H5F_ACC_TRUNC,
-			H5P_DEFAULT, H5P_DEFAULT ); 
+			H5P_DEFAULT, H5P_DEFAULT );
 
 	//Group for runinfo
 	_rinfoG = H5Gcreate2(_file, "/Run", H5P_DEFAULT, H5P_DEFAULT, H5P_DEFAULT);
 
 	//Create 1D dataspace (evt number). First dimension is unlimited (initially 0)
-	hsize_t ndims = 1;
+	const hsize_t ndims = 1;
 	hsize_t dims[ndims] = {0};
 	hsize_t max_dims[ndims] = {H5S_UNLIMITED};
 	hsize_t file_space = H5Screate_simple(ndims, dims, max_dims);
@@ -123,7 +98,7 @@ void gate::HDF5Writer::Open(std::string fileName, std::string option){
 	_eventsTable = H5Dcreate(_rinfoG, "events", _memtypeEvt, file_space, H5P_DEFAULT, plistEvents, H5P_DEFAULT);
 
 
-	_isOpen=true; 
+	_isOpen=true;
 }
 
 
@@ -131,8 +106,8 @@ void gate::HDF5Writer::Close(){
   _isOpen=false;
 
   H5Fclose(_file);
-}  
- 
+}
+
 void gate::HDF5Writer::Write(Event& evt){
 	//We need to create the tables on the first call.
 	//Here is where we can check the size of the waveform
@@ -227,7 +202,7 @@ void gate::HDF5Writer::Write(Event& evt){
 			H5Pset_chunk(plistSipm, ndims, chunk_dimsSipm);
 
 			//Set compression
-			H5Pset_deflate (plistSipm, 4); 
+			H5Pset_deflate (plistSipm, 4);
 
 			// Create the dataset 'pmtrd1'
 			if (GetDataType() == gate::MC){
@@ -591,17 +566,6 @@ void gate::HDF5Writer::WriteRunInfo(Run& runInfo){
 				pmts[lastPMT].channel = s->GetElecID();
 				pmts[lastPMT].sensorID = s->GetSensorID();
 				//pmts[lastPMT].active = _activePmts[s->GetID()];
-				if (GetDataType() == gate::MC){
-					pmts[lastPMT].coeff = 0.0;
-				}else{
-					if(s->find_dstore("deconvFactor")){
-						pmts[lastPMT].coeff = s->fetch_dstore("deconvFactor");
-					}else{
-						pmts[lastPMT].coeff = _deconv[s->GetID()];
-					}
-				}
-				pmts[lastPMT].adc_to_pes = s->GetGain();
-				pmts[lastPMT].noise_rms = s->GetBaselineSig();
 				pmts[lastPMT].position[0] = s->GetPosition().x();
 				pmts[lastPMT].position[1] = s->GetPosition().y();
 				pmts[lastPMT].position[2] = s->GetPosition().z();
@@ -618,9 +582,6 @@ void gate::HDF5Writer::WriteRunInfo(Run& runInfo){
 					sipms[lastSiPM].channel = sID;
 					sipms[lastSiPM].sensorID = sID;
 					//sipms[lastSiPM].active = _activeSipms[i];
-					sipms[lastSiPM].coeff = 1;
-					sipms[lastSiPM].adc_to_pes = 0;
-					sipms[lastSiPM].noise_rms = 0.0;
 					if (sID==14010){
 						sipms[lastSiPM].position[0] = -65.0;
 						sipms[lastSiPM].position[1] = -215.0;
@@ -639,9 +600,6 @@ void gate::HDF5Writer::WriteRunInfo(Run& runInfo){
 					sipms[lastSiPM].channel = s->GetElecID();
 					sipms[lastSiPM].sensorID = s->GetSensorID();
 					//sipms[lastSiPM].active = _activeSipms[i];
-					sipms[lastSiPM].coeff = 1;
-					sipms[lastSiPM].adc_to_pes = s->GetGain();
-					sipms[lastSiPM].noise_rms = 0.0;
 					sipms[lastSiPM].position[0] = s->GetPosition().x();
 					sipms[lastSiPM].position[1] = s->GetPosition().y();
 					sipms[lastSiPM].position[2] = s->GetPosition().z();
@@ -661,9 +619,6 @@ void gate::HDF5Writer::WriteRunInfo(Run& runInfo){
 		H5Tinsert (memtype, "sensorID",HOFFSET (sensor_t, sensorID), H5T_NATIVE_INT);
 		//H5Tinsert (memtype, "active",HOFFSET (sensor_t, active),H5T_NATIVE_INT);
 		H5Tinsert (memtype, "position",HOFFSET (sensor_t, position),point);
-		H5Tinsert (memtype, "coeff",HOFFSET (sensor_t, coeff), H5T_NATIVE_DOUBLE);
-		H5Tinsert (memtype, "adc_to_pes",HOFFSET (sensor_t, adc_to_pes), H5T_NATIVE_FLOAT);
-		H5Tinsert (memtype, "noise_rms",HOFFSET (sensor_t, noise_rms), H5T_NATIVE_FLOAT);
 
 		//dataspace for PMTs
 		hsize_t dimsPMTs[1] = {lastPMT};
@@ -683,36 +638,6 @@ void gate::HDF5Writer::WriteRunInfo(Run& runInfo){
 		dset = H5Dcreate(sensorsG, "DataSiPM", memtype, space, H5P_DEFAULT, H5P_DEFAULT,H5P_DEFAULT);
 		H5Dwrite (dset, memtype, H5S_ALL, H5S_ALL, H5P_DEFAULT, sipms);
 		H5Sclose (space);
-
-
-		//Get geometry
-		geometry_t gm;
-		gm.x[0] = runInfo.GetGeometry()->GetXmin();
-		gm.x[1] = runInfo.GetGeometry()->GetXmax();
-		gm.y[0] = runInfo.GetGeometry()->GetYmin();
-		gm.y[1] = runInfo.GetGeometry()->GetYmax();
-		gm.z[0] = runInfo.GetGeometry()->GetZmin();
-		gm.z[1] = runInfo.GetGeometry()->GetZmax();
-		gm.r = runInfo.GetGeometry()->GetRmax();
-
-		//Group for geometry
-		hid_t detectorG = H5Gcreate2(_file, "/Detector", H5P_DEFAULT, H5P_DEFAULT, H5P_DEFAULT);
-		//Create datatype for geometry
-		hsize_t coordMinMax_dim[1] = {2};
-		hid_t coordMinMax = H5Tarray_create(H5T_NATIVE_FLOAT, 1, coordMinMax_dim);
-		//Create compound datatype for the table
-		memtype = H5Tcreate (H5T_COMPOUND, sizeof (geometry_t));
-		H5Tinsert (memtype, "x_det",HOFFSET (geometry_t, x),coordMinMax);
-		H5Tinsert (memtype, "y_det",HOFFSET (geometry_t, y),coordMinMax);
-		H5Tinsert (memtype, "z_det",HOFFSET (geometry_t, z),coordMinMax);
-		H5Tinsert (memtype, "r_det",HOFFSET (geometry_t, r), H5T_NATIVE_FLOAT);
-		//dataspace for geometry
-		hsize_t dimsGeometry[1] = {1};
-		space = H5Screate_simple (1, dimsGeometry, NULL);
-		//dataset for geometry
-		dset = H5Dcreate(detectorG, "DetectorGeometry", memtype, space, H5P_DEFAULT, H5P_DEFAULT,H5P_DEFAULT);
-		H5Dwrite (dset, memtype, H5S_ALL, H5S_ALL, H5P_DEFAULT, &gm);
-		H5Sclose (space);
 	}
 }
 
@@ -731,7 +656,7 @@ int gate::HDF5Writer::PositiontoSipmID(int pos){
 
 void gate::HDF5Writer::Write(Event& evt){}
 void gate::HDF5Writer::Close(){}
-void gate::HDF5Writer::Open(std::string fileName, std::string option){}   
+void gate::HDF5Writer::Open(std::string fileName, std::string option){}
 void gate::HDF5Writer::WriteRunInfo(Run& runInfo){}
 
 #endif

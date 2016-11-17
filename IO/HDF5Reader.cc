@@ -7,7 +7,7 @@
 ClassImp(gate::HDF5Reader)
 
 gate::HDF5Reader::HDF5Reader() : IReader() {
-   
+
     _run = 0;
 	_elecID = true;
 
@@ -23,7 +23,7 @@ gate::HDF5Reader::HDF5Reader() : IReader() {
 
 
 gate::HDF5Reader::~HDF5Reader(){
-  
+
 }
 
 #ifdef HDF5
@@ -81,9 +81,6 @@ void gate::HDF5Reader::Open(std::string file){
 		H5Tinsert (memtype, "sensorID",HOFFSET (sensor_t, sensorID), H5T_NATIVE_INT);
 //		H5Tinsert (memtype, "active",HOFFSET (sensor_t, active),H5T_NATIVE_INT);
 		H5Tinsert (memtype, "position",HOFFSET (sensor_t, position),point);
-		H5Tinsert (memtype, "coeff",HOFFSET (sensor_t, coeff), H5T_NATIVE_DOUBLE);
-		H5Tinsert (memtype, "adc_to_pes",HOFFSET (sensor_t, adc_to_pes), H5T_NATIVE_FLOAT);
-		H5Tinsert (memtype, "noise_rms",HOFFSET (sensor_t, noise_rms), H5T_NATIVE_FLOAT);
 
 		H5Dread (_dsetSensorsPMT, memtype, H5S_ALL, H5S_ALL, H5P_DEFAULT,_sensorsPMT);
 
@@ -105,9 +102,6 @@ void gate::HDF5Reader::Open(std::string file){
 		H5Tinsert (memtype, "channel",HOFFSET (sensor_t, channel), H5T_NATIVE_INT);
 //		H5Tinsert (memtype, "active",HOFFSET (sensor_t, active),H5T_NATIVE_INT);
 		H5Tinsert (memtype, "position",HOFFSET (sensor_t, position),point);
-		H5Tinsert (memtype, "coeff",HOFFSET (sensor_t, coeff), H5T_NATIVE_DOUBLE);
-		H5Tinsert (memtype, "adc_to_pes",HOFFSET (sensor_t, adc_to_pes), H5T_NATIVE_FLOAT);
-		H5Tinsert (memtype, "noise_rms",HOFFSET (sensor_t, noise_rms), H5T_NATIVE_FLOAT);
 
 		H5Dread (_dsetSensorsSIPM, memtype, H5S_ALL, H5S_ALL, H5P_DEFAULT,_sensorsSIPM);
 
@@ -117,9 +111,9 @@ void gate::HDF5Reader::Open(std::string file){
 }
 
 void gate::HDF5Reader::Print(){
-    
+
     //! TO BE IMPLEMENTED
-  
+
 }
 
 void gate::HDF5Reader::Close(){
@@ -141,11 +135,11 @@ void gate::HDF5Reader::Close(){
 
 
 gate::Run& gate::HDF5Reader::GetRunInfo(size_t i){
-    
+
     //! TO BE IMPLEMENTED
 
   return *_run;
-  
+
 }
 
 gate::Event& gate::HDF5Reader::Read(size_t i){
@@ -157,7 +151,7 @@ gate::Event& gate::HDF5Reader::Read(size_t i){
 	if(_hasPMT){
 		//Set hyperslab
 		start[0] = i;
-		start[1] = 0; 
+		start[1] = 0;
 		start[2] = 0;
 
 		count[0] = 1;
@@ -176,7 +170,7 @@ gate::Event& gate::HDF5Reader::Read(size_t i){
 	if(_hasSIPM){
 		//Set hyperslab
 		start[0] = i;
-		start[1] = 0; 
+		start[1] = 0;
 		start[2] = 0;
 
 		count[0] = 1;
@@ -211,7 +205,7 @@ gate::Event& gate::HDF5Reader::Read(size_t i){
 
 		std::vector<std::pair<unsigned int, float> > data;
 
-		unsigned int sindex = 0; 
+		unsigned int sindex = 0;
 
 		for(int j=0; j<_pmtwflen; j++){
 			int offset = idxPmt*_pmtwflen + j;
@@ -244,7 +238,7 @@ gate::Event& gate::HDF5Reader::Read(size_t i){
 
 		std::vector<std::pair<unsigned int, float> > data;
 
-		unsigned int sindex = 0; 
+		unsigned int sindex = 0;
 		for(int j=0; j<_sipmwflen; j++){
 			int offset = idxSipm*_sipmwflen + j;
 			data.push_back(std::make_pair(sindex, (float) *(_sipmdata+offset )));
