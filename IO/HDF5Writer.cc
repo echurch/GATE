@@ -578,23 +578,12 @@ void gate::HDF5Writer::WriteRunInfo(Run& runInfo){
 			//if(_activeSipms[i]){
 				int sID = PositiontoSipmID(i);
 				gate::Sensor* s = sensors[sID];
-				if (sID == 14010 || sID == 15047 || sID == 25049){
+				if (s == NULL){
 					sipms[lastSiPM].channel = sID;
 					sipms[lastSiPM].sensorID = sID;
-					//sipms[lastSiPM].active = _activeSipms[i];
-					if (sID==14010){
-						sipms[lastSiPM].position[0] = -65.0;
-						sipms[lastSiPM].position[1] = -215.0;
-					}
-					if (sID==15047){
-						sipms[lastSiPM].position[0] = 55.0;
-						sipms[lastSiPM].position[1] = 235.0;
-					}
-					if (sID==25049){
-						sipms[lastSiPM].position[0] = 145.0;
-						sipms[lastSiPM].position[1] = -185.0;
-					}
-					sipms[lastSiPM].position[2] = -10000.0;
+					sipms[lastSiPM].position[0] = 0;
+					sipms[lastSiPM].position[1] = 0;
+					sipms[lastSiPM].position[2] = 0;
 				}
 				else{
 					sipms[lastSiPM].channel = s->GetElecID();
