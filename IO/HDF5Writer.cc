@@ -7,6 +7,8 @@
 #include <cstring>
 #include <stdlib.h>
 
+#include<stdint.h>
+
 #define NPMT 12
 
 ClassImp(gate::HDF5Writer)
