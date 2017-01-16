@@ -12,5 +12,6 @@
 #pragma link C++ class gate::RootReader+;
 #pragma link C++ class gate::HDF5Writer+;
 #pragma link C++ class gate::HDF5Reader+;
+#pragma link C++ class gate::RootHDF5Reader+;
 
 #endif
