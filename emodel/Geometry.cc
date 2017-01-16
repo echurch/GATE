@@ -24,7 +24,7 @@ gate::Geometry::~Geometry(){
 void gate::Geometry::AddSensor(gate::Sensor* sens){
 //=======================================================
     
-    _sensors[sens->GetID()]=sens;
+    _sensors[sens->GetSensorID()]=sens;
 }
 
 //=======================================================
