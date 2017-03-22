@@ -86,6 +86,12 @@ namespace gate{
 
 	//! deconvolution constant
 	std::vector<double> _deconv;
+
+	//! run info
+	Run _runinfo;
+
+	//! sensor map by sensorID
+	std::map<int, gate::Sensor*> _sensorMap;
         
   public:    
     
@@ -106,6 +112,9 @@ namespace gate{
     
     //! write dst info into root file
     void WriteRunInfo(Run& run);
+
+    //! save runinfo object
+    void SaveRunInfo(Run& run);
 
 	//! Get data type
 	gate::DATATYPE GetDataType() const;

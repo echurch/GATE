@@ -320,6 +320,10 @@ void gate::HDF5Writer::Write(Event& evt){
 		int sensorID;
 		for(ih i=hitsPmtUnsorted.begin(); i !=hitsPmtUnsorted.end(); ++i){
 			sensorID = (*i)->GetSensorID();
+			if (GetDataType() != gate::MC){
+				std::map<int, gate::Sensor*> sensors = _runinfo.GetGeometry()->GetSensors();
+				sensorID = sensors[sensorID]->GetSensorID();
+			}
 			if ((*i)->GetLabel().compare("BLR") == 0){
 				_blrOn = true;
 				_activePmtsBlr[sensorID] = true;
@@ -427,6 +431,11 @@ void gate::HDF5Writer::Write(Event& evt){
 		int sensorID;
 		for(ih i=hitsSipmUnsorted.begin(); i !=hitsSipmUnsorted.end(); ++i){
 			sensorID = SipmIDtoPosition((*i)->GetSensorID());
+			if (GetDataType() != gate::MC){
+				std::map<int, gate::Sensor*> sensors = _runinfo.GetGeometry()->GetSensors();
+				int tmp = sensors[(*i)->GetSensorID()]->GetSensorID();
+				sensorID = SipmIDtoPosition(tmp);
+			}
 			_activeSipms[sensorID] = true;
 			hitsSipm[sensorID] = *i;
 		}
@@ -537,6 +546,19 @@ void gate::HDF5Writer::Write(Event& evt){
 	_ievt++;
 }
 
+void gate::HDF5Writer::SaveRunInfo(Run& runInfo){
+	_runinfo = runInfo;
+	// build sensorMap by sensorID
+	_sensorMap = std::map<int, gate::Sensor*>();
+
+	std::map<int, gate::Sensor*> sensors = runInfo.GetGeometry()->GetSensors();
+	std::map<int, gate::Sensor*>::iterator it;
+	for(it = sensors.begin(); it != sensors.end(); ++it) {
+		gate::Sensor* s = it->second;
+		_sensorMap[s->GetSensorID()] = s;
+	}
+}
+
 void gate::HDF5Writer::WriteRunInfo(Run& runInfo){
 	hid_t space, dset, memtype;
 
@@ -564,7 +586,7 @@ void gate::HDF5Writer::WriteRunInfo(Run& runInfo){
 		//Get active PMTs info
 		for(unsigned int i=0; i<GetMaxNumPmt(); i++) {
 			if(_activePmts[i]){
-				gate::Sensor* s = sensors[i];
+				gate::Sensor* s = _sensorMap[i];
 				pmts[lastPMT].channel = s->GetElecID();
 				pmts[lastPMT].sensorID = s->GetSensorID();
 				//pmts[lastPMT].active = _activePmts[s->GetID()];
@@ -579,7 +601,7 @@ void gate::HDF5Writer::WriteRunInfo(Run& runInfo){
 		for(unsigned int i=0; i<GetMaxNumSipm(); i++) {
 			//if(_activeSipms[i]){
 				int sID = PositiontoSipmID(i);
-				gate::Sensor* s = sensors[sID];
+				gate::Sensor* s = _sensorMap[sID];
 				if (s == NULL){
 					sipms[lastSiPM].channel = sID;
 					sipms[lastSiPM].sensorID = sID;
