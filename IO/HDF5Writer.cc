@@ -335,8 +335,10 @@ void gate::HDF5Writer::Write(Event& evt){
 		}
 
 		//Read waveforms always in the same order
+		int sensorCount = 0;
 		for(unsigned int sensIndx=0; sensIndx<GetMaxNumPmt(); sensIndx++){
 			if(_activePmts[sensIndx]){
+				sensorCount++;
 				const gate::Waveform& wf =  hitsPmt[sensIndx]->GetWaveform();
 				const std::vector<std::pair<unsigned int,float> >& d = wf.GetData();
 
@@ -350,6 +352,13 @@ void gate::HDF5Writer::Write(Event& evt){
 					index = sensIndx*_sipmDatasize + samp;
 					pmtdata[index] = (short int) (-1);
 				}*/
+			}
+		}
+		while (sensorCount < 12){
+			sensorCount++;
+			for (unsigned int samp = 0; samp<_pmtDatasize; samp++){
+				pmtdata[index] = (short int) 0;
+				index++;
 			}
 		}
 
@@ -376,8 +385,10 @@ void gate::HDF5Writer::Write(Event& evt){
 		//Write BLR channels (if they exists)
 		//Read waveforms always in the same order
 		if(_blrOn){
+			sensorCount = 0;
 			for(unsigned int sensIndx=0; sensIndx<GetMaxNumPmt(); sensIndx++){
 				if(_activePmtsBlr[sensIndx]){
+					sensorCount++;
 					const gate::Waveform& wf =  hitsPmtBlr[sensIndx]->GetWaveform();
 					const std::vector<std::pair<unsigned int,float> >& d = wf.GetData();
 
@@ -391,6 +402,14 @@ void gate::HDF5Writer::Write(Event& evt){
 						indexBlr = sensIndx*_sipmDatasize + samp;
 						pmtdata[indexBlr] = (short int) (-1);
 					}*/
+				}
+			}
+
+			while (sensorCount < 12){
+				sensorCount++;
+				for (unsigned int samp = 0; samp<_pmtDatasize; samp++){
+					pmtdata[indexBlr] = (short int) 0;
+					indexBlr++;
 				}
 			}
 
@@ -453,7 +472,7 @@ void gate::HDF5Writer::Write(Event& evt){
 			}else{
 				for (unsigned int samp = 0; samp<_sipmDatasize; samp++){
 					index = sensIndx*_sipmDatasize + samp;
-					sipmdata[index] = (short int) (-1);
+					sipmdata[index] = (short int) 0;
 				}
 			}
 		}
