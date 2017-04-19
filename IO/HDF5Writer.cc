@@ -50,7 +50,8 @@ typedef struct{
 
 gate::HDF5Writer::HDF5Writer() :   IWriter(),
 
-    _file(0), _pmtrd(0), _evt(0), _run(0), _ievt(0), _pmtDatasize(0), _sipmDatasize(0),_npmt(0),_nsipm(0),_dType(gate::DATA), _maxNumPmt(32), _maxNumSipm(1792) {
+    _file(0), _pmtrd(0), _evt(0), _run(0), _ievt(0), _pmtDatasize(0), _extpmtDatasize(0),
+   	_sipmDatasize(0),_npmt(0),_nsipm(0),_dType(gate::DATA), _maxNumPmt(32), _maxNumSipm(1792) {
 
 			_activePmts = (bool*) malloc(_maxNumPmt*sizeof(bool));
 			memset(_activePmts,0,_maxNumPmt*sizeof(bool));
@@ -59,6 +60,8 @@ gate::HDF5Writer::HDF5Writer() :   IWriter(),
 			_activeSipms = (bool*)malloc(_maxNumSipm*sizeof(bool));
 			memset(_activeSipms,0,_maxNumSipm*sizeof(bool));
 			_blrOn = false;
+			_extPmtOn = false;
+			_extPmt = 0;
 }
 
 
@@ -123,14 +126,57 @@ void gate::HDF5Writer::Write(Event& evt){
 			wfgroup = H5Gcreate2(_file, "/RD", H5P_DEFAULT, H5P_DEFAULT, H5P_DEFAULT);
 		}
 
-
 		_firstEvent = false;
 
 		_npmt = evt.GetHits(gate::PMT).size();
 		_nsipm = evt.GetHits(gate::SIPM).size();
 
-		const hsize_t ndims = 3;
+		//find wether there is external pmt or not
+		if (GetDataType() != gate::MC){
+			const std::vector<gate::Hit*>& hitsPmtUnsorted = evt.GetHits(gate::PMT);
+			typedef std::vector<gate::Hit*>::const_iterator ih;
+			for(ih i=hitsPmtUnsorted.begin(); i !=hitsPmtUnsorted.end(); ++i){
+				int sensorID =  (*i)->GetSensorID();
+				if (_elecidMap.count(sensorID) == 0){
+					_extPmtOn = true;
+					_extPmt = sensorID;
+					break;
+				}
+			}
+		}
+
+		const hsize_t ndimsExt = 2;
 		hid_t file_space;
+		if(_extPmtOn){
+			//Get WF length
+			_extpmtDatasize = evt.GetHits(gate::PMT)[0]->GetWaveform().GetData().size();
+
+			//Create 2D dataspace (evt,data). First dimension is unlimited (initially 0)
+			hsize_t dims[ndimsExt] = {0, _extpmtDatasize};
+			hsize_t max_dims[ndimsExt] = {H5S_UNLIMITED,_extpmtDatasize};
+			file_space = H5Screate_simple(ndimsExt, dims, max_dims);
+
+			// Create a dataset creation property list
+			// The layout of the dataset have to be chunked when using unlimited dimensions
+			hid_t plistPmt = H5Pcreate(H5P_DATASET_CREATE);
+			H5Pset_layout(plistPmt, H5D_CHUNKED);
+			hsize_t chunk_dims[ndimsExt] = {1,32768};
+			if(_extpmtDatasize < 32768){
+				chunk_dims[2] = _extpmtDatasize;
+			}
+			H5Pset_chunk(plistPmt, ndimsExt, chunk_dims);
+
+			//Set compression
+			H5Pset_deflate (plistPmt, 4);
+
+			// Create the dataset 'extpmtrd1'
+			_extpmtrd = H5Dcreate(wfgroup, "extpmt", H5T_NATIVE_SHORT, file_space, H5P_DEFAULT, plistPmt, H5P_DEFAULT);
+
+			//Close resources
+			H5Pclose(plistPmt);
+		}
+
+		const hsize_t ndims = 3;
 
 		//PMTs
 		//Check PMT exists and get WF length
@@ -305,6 +351,8 @@ void gate::HDF5Writer::Write(Event& evt){
 	//Read PMT waveforms
 	if (_pmtDatasize > 0){
 		short int *pmtdata = new short int[NPMT*_pmtDatasize];
+		short int *extpmtdata = new short int[_extpmtDatasize];
+		gate::Hit* extPmHit = 0;
 		int index=0;
 		int indexBlr=0;
 
@@ -320,17 +368,21 @@ void gate::HDF5Writer::Write(Event& evt){
 		int sensorID;
 		for(ih i=hitsPmtUnsorted.begin(); i !=hitsPmtUnsorted.end(); ++i){
 			sensorID = (*i)->GetSensorID();
-			if (GetDataType() != gate::MC){
-				std::map<int, gate::Sensor*> sensors = _runinfo.GetGeometry()->GetSensors();
-				sensorID = sensors[sensorID]->GetSensorID();
-			}
-			if ((*i)->GetLabel().compare("BLR") == 0){
-				_blrOn = true;
-				_activePmtsBlr[sensorID] = true;
-				hitsPmtBlr[sensorID] = *i;
+			if (sensorID != _extPmt){
+				if (GetDataType() != gate::MC){
+					std::map<int, gate::Sensor*> sensors = _runinfo.GetGeometry()->GetSensors();
+					sensorID = sensors[sensorID]->GetSensorID();
+				}
+				if ((*i)->GetLabel().compare("BLR") == 0){
+					_blrOn = true;
+					_activePmtsBlr[sensorID] = true;
+					hitsPmtBlr[sensorID] = *i;
+				}else{
+					_activePmts[sensorID] = true;
+					hitsPmt[sensorID] = *i;
+				}
 			}else{
-				_activePmts[sensorID] = true;
-				hitsPmt[sensorID] = *i;
+				extPmHit = *i;
 			}
 		}
 
@@ -381,6 +433,30 @@ void gate::HDF5Writer::Write(Event& evt){
 		H5Dwrite(_pmtrd, H5T_NATIVE_SHORT, memspace, file_space, H5P_DEFAULT, pmtdata);
 		H5Sclose(file_space);
 
+		//Write external pmt
+		if (_extPmtOn && extPmHit != 0){
+			const std::vector<std::pair<unsigned int,float> >& d = extPmHit->GetWaveform().GetData();
+			for (unsigned int samp = 0; samp<d.size(); samp++){
+				extpmtdata[samp] = (short int) (d[samp].second);
+			}
+
+			//Create memspace for one PMT row
+			const hsize_t ndimsExt = 2;
+			hsize_t dimsExt[ndimsExt] = {1, _extpmtDatasize};
+			memspace = H5Screate_simple(ndimsExt, dimsExt, NULL);
+
+			//Extend PMT dataset
+			dimsExt[0] = _ievt+1;
+			dimsExt[1] = _extpmtDatasize;
+			H5Dset_extent(_extpmtrd, dimsExt);
+
+			//Write PMT waveforms
+			file_space = H5Dget_space(_extpmtrd);
+			hsize_t startExtPmt[2] = {_ievt, 0};
+			hsize_t countExtPmt[2] = {1,_extpmtDatasize};
+			H5Sselect_hyperslab(file_space, H5S_SELECT_SET, startExtPmt, NULL, countExtPmt, NULL);
+			H5Dwrite(_extpmtrd, H5T_NATIVE_SHORT, memspace, file_space, H5P_DEFAULT, extpmtdata);
+		}
 
 		//Write BLR channels (if they exists)
 		//Read waveforms always in the same order
@@ -569,12 +645,14 @@ void gate::HDF5Writer::SaveRunInfo(Run& runInfo){
 	_runinfo = runInfo;
 	// build sensorMap by sensorID
 	_sensorMap = std::map<int, gate::Sensor*>();
+	_elecidMap = std::map<int, gate::Sensor*>();
 
 	std::map<int, gate::Sensor*> sensors = runInfo.GetGeometry()->GetSensors();
 	std::map<int, gate::Sensor*>::iterator it;
 	for(it = sensors.begin(); it != sensors.end(); ++it) {
 		gate::Sensor* s = it->second;
 		_sensorMap[s->GetSensorID()] = s;
+		_elecidMap[s->GetElecID()] = s;
 	}
 }
 
