@@ -61,7 +61,7 @@ gate::HDF5Writer::HDF5Writer() :   IWriter(),
 			memset(_activeSipms,0,_maxNumSipm*sizeof(bool));
 			_blrOn = false;
 			_extPmtOn = false;
-			_extPmt = 0;
+			_extPmt = -1;
 }
 
 
@@ -368,7 +368,7 @@ void gate::HDF5Writer::Write(Event& evt){
 		int sensorID;
 		for(ih i=hitsPmtUnsorted.begin(); i !=hitsPmtUnsorted.end(); ++i){
 			sensorID = (*i)->GetSensorID();
-			if (sensorID != _extPmt){
+			if (!_extPmtOn || (sensorID != _extPmt)){
 				if (GetDataType() != gate::MC){
 					std::map<int, gate::Sensor*> sensors = _runinfo.GetGeometry()->GetSensors();
 					sensorID = sensors[sensorID]->GetSensorID();
