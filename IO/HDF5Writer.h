@@ -46,9 +46,12 @@ namespace gate{
 	bool _pmtOn;
 	bool _blrOn;
 	bool _sipmOn;
+	bool _extPmtOn;
+    int _extPmt;
 
 	//Datasets
 	size_t _pmtrd;
+	size_t _extpmtrd;
 	size_t _eventsTable;
 	size_t _pmtblr;
 	size_t _sipmrd;
@@ -68,6 +71,7 @@ namespace gate{
 
 	//! Waveform sizes
 	size_t _pmtDatasize;
+	size_t _extpmtDatasize;
 	size_t _sipmDatasize;
 
 	size_t _npmt;
@@ -86,6 +90,13 @@ namespace gate{
 
 	//! deconvolution constant
 	std::vector<double> _deconv;
+
+	//! run info
+	Run _runinfo;
+
+	//! sensor map by sensorID
+	std::map<int, gate::Sensor*> _sensorMap;
+	std::map<int, gate::Sensor*> _elecidMap;
         
   public:    
     
@@ -106,6 +117,9 @@ namespace gate{
     
     //! write dst info into root file
     void WriteRunInfo(Run& run);
+
+    //! save runinfo object
+    void SaveRunInfo(Run& run);
 
 	//! Get data type
 	gate::DATATYPE GetDataType() const;
