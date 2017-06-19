@@ -87,6 +87,12 @@ class gate::HitMap : public BObject {
   //! get number of time samples in hitmap
   size_t GetNsamp() const;
 
+  //! get maximum amplitude in ADC sample
+  double GetMaxSampAmp() const;
+
+  //! set maximum amplitude in ADC sample
+  void SetMaxSampAmp(double amp);
+  
  private:
   
   //! signal sensor type (PMT or SiPM)
@@ -98,6 +104,9 @@ class gate::HitMap : public BObject {
   //! signal amplitude 
   double _amp;
 
+  //! maximum amplitude in ADC samples
+  double _maxSampAmp;
+  
   //! signal start  time
   double _sTime;
   
@@ -106,7 +115,7 @@ class gate::HitMap : public BObject {
   
   //! size of time samples
   double _tSample;
-
+ 
   //! time map for signal
   std::vector<std::map<int,float> > _tmap; 
   
@@ -115,7 +124,7 @@ class gate::HitMap : public BObject {
   //! print pulse into stream
   void Info(std::ostream& s=std::cout) const;
   
-  ClassDef(gate::HitMap,2)
+  ClassDef(gate::HitMap,3)
 
 };
 
@@ -127,6 +136,9 @@ inline gate::SIGNALTYPE gate::HitMap::GetSignalType()  const { return _sType;}
 
 inline void gate::HitMap::SetAmplitude(double a) { _amp = a; }
 inline double gate::HitMap::GetAmplitude() const { return _amp;}
+
+inline void gate::HitMap::SetMaxSampAmp(double a) { _maxSampAmp = a; }
+inline double gate::HitMap::GetMaxSampAmp() const { return _maxSampAmp;}
 
 inline void gate::HitMap::SetStartTime(double t) { _sTime = t; }
 inline double gate::HitMap::GetStartTime()  const { return _sTime;}
