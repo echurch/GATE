@@ -28,13 +28,13 @@ void gate::Signal::Info(std::ostream& s) const{
 
     s << "Signal end time: "<< _eTime << std::endl;
 
-    s << "Cathode HitMap: "<< std::endl;
-    
-    s << *_chitmap << std::endl;
+    if (_chitmap){
+      s << "Cathode HitMap: "<< std::endl;
+      s << *_chitmap << std::endl;}
 
-    s << "Anode HitMap: "<< std::endl;
-    
-    s << *_ahitmap << std::endl;
+    if (_ahitmap){
+      s << "Anode HitMap: "<< std::endl;
+      s << *_ahitmap << std::endl;}
 
     s << "=================================="<< std::endl;
 
