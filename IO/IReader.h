@@ -1,8 +1,8 @@
 #ifndef __ireader_h
 #define __ireader_h
 
-#include<GATE/Event.h>
-#include<GATE/Run.h> 
+#include "Event.h"
+#include "Run.h"
 
 /**
  *\defgroup IO Classes to create and read GATE data files 

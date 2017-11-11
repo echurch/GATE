@@ -21,7 +21,7 @@
 
 namespace gate{class Signal;}
 
-#include <GATE/HitMap.h>
+#include <HitMap.h>
 
 class gate::Signal : public BObject {
   

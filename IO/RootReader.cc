@@ -22,25 +22,28 @@ gate::RootReader::~RootReader(){
 void gate::RootReader::Open(std::string file){
   
   if (_tf) delete _tf;
-
+  std::cout << "Here 0" << std::endl;
   _tf = new TFile(file.c_str());
+  std::cout << "Here 1" << std::endl;
   
   Assert(_tf->IsOpen(),__FILE__,__LINE__,
 	 
 	 bad_argument("File not found, name: "+file));
   
+  std::cout << "Here 2" << std::endl;
   _evtTree = (TTree*) _tf->Get("EVENT");
-  
+  std::cout << "Here 3" << std::endl;  
   _runTree = (TTree*) _tf->Get("RUN");
-  
+  std::cout << "Here 4" << std::endl;
   _evt = 0;
   
   _run = 0;
 
   _evtTree->SetBranchAddress("event", &_evt);
-  
+  std::cout << "Here 5" << std::endl;
   if (_runTree) _runTree->SetBranchAddress("run", &_run);
-  
+  std::cout << "Here 6" << std::endl;  
+
   _isOpen = true;
 
 }

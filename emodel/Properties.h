@@ -19,7 +19,7 @@
  * @ingroup emodel
  */
 
-#include<GATE/BObject.h>
+#include "BObject.h"
 
 namespace gate{class Properties;}
 

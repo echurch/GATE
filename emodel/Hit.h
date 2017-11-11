@@ -19,9 +19,9 @@
  * @ingroup emodel
  */
 
-#include <GATE/Pulse.h>
-#include <GATE/Waveform.h>
-#include <GATE/BHit.h>
+#include <Pulse.h>
+#include <Waveform.h>
+#include <BHit.h>
 
 namespace gate{class Hit;}
 

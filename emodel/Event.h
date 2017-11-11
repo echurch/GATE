@@ -24,16 +24,16 @@
  */
 
 
-#include <GATE/BObject.h>
-#include <GATE/Hit.h>
-#include <GATE/HitMap.h>
-#include <GATE/Signal.h>
-#include <GATE/Cluster.h>
-#include <GATE/Track.h>
-#include <GATE/Particle.h>
-#include <GATE/MCHit.h>
-#include <GATE/MCTrack.h>
-#include <GATE/MCParticle.h>
+#include "BObject.h"
+#include "Hit.h"
+#include "HitMap.h"
+#include "Signal.h"
+#include "Cluster.h"
+#include "Track.h"
+#include "Particle.h"
+#include "MCHit.h"
+#include "MCTrack.h"
+#include "MCParticle.h"
  
 namespace gate{class Event;}
 

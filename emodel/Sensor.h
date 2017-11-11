@@ -19,8 +19,8 @@
  * @ingroup emodel
  */
 
-#include<GATE/BObject.h>
-#include<GATE/Point3D.h>
+#include "BObject.h"
+#include "Point3D.h"
 
 namespace gate{
   

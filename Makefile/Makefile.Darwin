@@ -1,8 +1,14 @@
 #COMPILER:
-CC              = gcc
-CXX             = g++
-LINKER          = libtool
-SOMAKER         = libtool
+#CC              = gcc
+#CXX             = g++
+CC		 = clang
+CXX		 = clang
+#LINKER          = libtool
+#SOMAKER         = libtool
+LINKER          = clang
+SOMAKER         = clang
+#LINKER          = gcc
+#SOMAKER         = gcc
 #g++
 
 #######"-O" FLAG: (not always ideal with debugging info)
@@ -68,7 +74,7 @@ DLLFLAGS        += -dynamiclib -single_module -undefined dynamic_lookup
 #STATIC LIBRARY
 AFLAGS          += -static 
 #LOADABLE LIBRARY
-SOFLAGS         += -dynamic
+SOFLAGS         += -dynamiclib
 #ALTERNATIVE: checks symbols at run-time only -> disable for debugging
 SOFLAGS         += -undefined dynamic_lookup 
 

@@ -1,12 +1,12 @@
 #ifndef __RootHDF5Reader_h
 #define __RootHDF5Reader_h
 
-#include<GATE/Event.h>
-#include<GATE/Run.h>
-#include<GATE/Error.h>
+#include "Event.h"
+#include "Run.h"
+#include "Error.h"
 
-#include<GATE/RootReader.h>
-#include<GATE/HDF5Reader.h>
+#include "RootReader.h"
+#include "HDF5Reader.h"
 
 
 /**

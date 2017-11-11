@@ -19,8 +19,8 @@
  * @ingroup emodel
  */
 
-#include <GATE/BTrack.h>
-#include <GATE/MCParticle.h>
+#include "BTrack.h"
+#include "MCParticle.h"
 
 namespace gate{class MCTrack;}
 

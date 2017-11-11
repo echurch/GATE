@@ -1,10 +1,10 @@
 #ifndef __RootReader_h
 #define __RootReader_h
 
-#include<GATE/Event.h>
-#include<GATE/Run.h>
-#include<GATE/IReader.h>
-#include<GATE/Error.h>
+#include "Event.h"
+#include "Run.h"
+#include "IReader.h"
+#include "Error.h"
 
 #include<TFile.h> 
 #include<TTree.h> 

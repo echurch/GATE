@@ -1,9 +1,9 @@
 #ifndef __HDF5Writer_h
 #define __HDF5Writer_h
 
-#include<GATE/IWriter.h> 
-#include<GATE/Event.h> 
-#include<GATE/Run.h> 
+#include "IWriter.h"
+#include "Event.h"
+#include "Run.h"
 
 
 //#include <H5Cpp.h> // roocint doesn't like this header...

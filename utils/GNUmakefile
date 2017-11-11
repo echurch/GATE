@@ -4,7 +4,8 @@ GATEMAKEDIR = ../Makefile
 GATELIBDIR = ../lib
 
 DICT  = GATEUtilsCint
-SHLIB = libGATEUtils.so
+SHLIB = libGATEUtils.dylib
+ROOTMAP = libGATEUtils.rootmap
 SOURCES = $(wildcard *.cc)
 #HEADERS = $(wildcard *.h)
 HEADERS = $(filter-out GATEUtilsCint.h,$(wildcard *.h))
@@ -15,6 +16,7 @@ OBJECTS = $(SOURCES:.cc=.o)
 # include options for this package
 INCFLAGS = -I.
 INCFLAGS += -I./../
+INCFLAGS += -I./../emodel
 
 # platform-specific options
 OSNAME          = $(shell uname -s)

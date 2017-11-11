@@ -21,7 +21,7 @@
 
 namespace gate{class HitMap;}
 
-#include <GATE/BObject.h>
+#include <BObject.h>
 
 class gate::HitMap : public BObject {
   

@@ -21,7 +21,7 @@
 
 
 
-#include <GATE/Hit.h>
+#include <Hit.h>
 
 namespace gate{class Cluster;}
 

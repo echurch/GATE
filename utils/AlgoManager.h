@@ -2,9 +2,9 @@
 #ifndef _ialgoman___
 #define _ialgoman___
 
-#include <GATE/Messenger.h>
+#include "Messenger.h"
 
-#include <GATE/IAlgo.h>
+#include "IAlgo.h"
 
 /**
  * \class AlgoManager

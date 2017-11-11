@@ -19,8 +19,8 @@
  * @ingroup emodel
  */
 
-#include <GATE/BHit.h>
-#include <GATE/MCParticle.h>
+#include <BHit.h>
+#include <MCParticle.h>
 
 namespace gate{class MCHit;}
 

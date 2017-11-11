@@ -5,7 +5,8 @@ GATEMAKEDIR = ../Makefile
 GATELIBDIR = ../lib
 
 DICT  = GATEIOCint
-SHLIB = libGATEIO.so
+SHLIB = libGATEIO.dylib
+ROOTMAP = libGATEIO.rootmap
 SOURCES = $(wildcard *.cc)
 #HEADERS = $(wildcard *.h)
 HEADERS = $(filter-out GATEIOCint.h,$(wildcard *.h))
@@ -16,6 +17,7 @@ OBJECTS = $(SOURCES:.cc=.o)
 # include options for this package
 INCFLAGS = -I.
 INCFLAGS += -I../
+INCFLAGS += -I../emodel
 #INCFLAGS += -I$()/DCBase
 
 # platform-specific options

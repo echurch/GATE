@@ -22,8 +22,8 @@
 #include <iostream>
 #include <cmath>
 
-#include <GATE/Error.h>
-#include <GATE/Point3D.h>
+#include "Error.h"
+#include "Point3D.h"
 
 #include<Rtypes.h>
 

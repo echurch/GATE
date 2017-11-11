@@ -1,4 +1,4 @@
-#include<GATE/Sensor.h>
+#include "Sensor.h" 
 
 ClassImp(gate::Sensor);
 

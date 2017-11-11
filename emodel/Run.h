@@ -19,8 +19,8 @@
  * @ingroup emodel
  */
 
-#include <GATE/Geometry.h>
-#include <GATE/Properties.h>
+#include "Geometry.h"
+#include "Properties.h"
 
 namespace gate{class Run;}
 

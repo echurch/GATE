@@ -19,7 +19,7 @@
  * @ingroup emodel
  */
 
-#include <GATE/Sensor.h>
+#include "Sensor.h"
 
 namespace gate{class Geometry;}
 

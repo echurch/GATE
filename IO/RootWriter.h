@@ -4,9 +4,9 @@
 #include<TFile.h> 
 #include<TTree.h> 
 
-#include<GATE/IWriter.h> 
-#include<GATE/Event.h> 
-#include<GATE/Run.h> 
+#include "IWriter.h"
+#include "Event.h"
+#include "Run.h"
 
 /**
  * @file RootWriter.h

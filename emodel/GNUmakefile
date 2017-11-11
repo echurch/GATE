@@ -4,7 +4,8 @@ GATEMAKEDIR = ../Makefile
 GATELIBDIR = ../lib
 
 DICT  = GATECint
-SHLIB = libGATE.so
+SHLIB = libGATE.dylib
+ROOTMAP = libGATE.rootmap
 SOURCES = $(wildcard *.cc)
 #HEADERS = $(wildcard *.h)
 HEADERS = $(filter-out GATECint.h,$(wildcard *.h))

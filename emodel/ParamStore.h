@@ -22,7 +22,7 @@
 #include <fstream>
 #include <map>
 
-#include <GATE/Error.h>
+#include "Error.h"
 
 #include<Rtypes.h>
 #include<TObject.h>

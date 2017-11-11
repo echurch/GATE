@@ -1,4 +1,4 @@
-#include<GATE/Signal.h>
+#include "Signal.h"
 
 ClassImp(gate::Signal)
 
