@@ -1,3 +1,19 @@
+
+THIS IS ERIC'S VERSION OF GATE. ONE SHOULD PROBABLY IGNORE MUCH OF THE README THE BELOW. COMPILES/LINKS WITH CLANG. WORKS WITH ROOT 6.08, PYTHON 3.6.
+BOTH CLING AND PYTHON VERSIONS OF INTERACTIVE FUNCTIONAL EXAMPLES LIVE IN examples/mac/.
+CODE IS SO FAR ONLY IN github.com/echurch/GATE on branch echurch.
+
+====================================================================================================================================
+====================================================================================================================================
+====================================================================================================================================
+
+
+
+
+
+
+
+
 GATE: Event model for Gas-TPC events        {#mainpage}
 ==================================================================
 
