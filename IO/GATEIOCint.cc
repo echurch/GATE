@@ -1027,6 +1027,7 @@ namespace {
     static const char* includePaths[] = {
 "../",
 "../emodel",
+"/Users/chur558/Downloads/hdf5-1.10.1/hdf5/include",
 "/Users/chur558/root-6.08.06/build/include",
 "/Users/chur558/NEXT/GATE/IO/",
 0

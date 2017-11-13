@@ -78,7 +78,7 @@ void gate::HDF5Writer::Open(std::string fileName, std::string option){
 
 	_file =  H5Fcreate( fileName.c_str(), H5F_ACC_TRUNC,
 			H5P_DEFAULT, H5P_DEFAULT );
-
+	std::cout << "Creating file " + std::string(fileName) << ". File id is " << _file << std::endl;
 	//Group for runinfo
 	_rinfoG = H5Gcreate2(_file, "/Run", H5P_DEFAULT, H5P_DEFAULT, H5P_DEFAULT);
 
@@ -162,7 +162,7 @@ void gate::HDF5Writer::Write(Event& evt){
 			H5Pset_layout(plistPmt, H5D_CHUNKED);
 			hsize_t chunk_dims[ndimsExt] = {1,32768};
 			if(_extpmtDatasize < 32768){
-				chunk_dims[2] = _extpmtDatasize;
+			  chunk_dims[1/*2*/] = _extpmtDatasize;  // EC: 1->2
 			}
 			H5Pset_chunk(plistPmt, ndimsExt, chunk_dims);
 
@@ -508,7 +508,7 @@ void gate::HDF5Writer::Write(Event& evt){
 			H5Sclose(file_space);
 		}
 
-		delete pmtdata;
+		delete[] pmtdata;
 	}
 
 	//Read SiPM waveforms
@@ -573,7 +573,7 @@ void gate::HDF5Writer::Write(Event& evt){
 		H5Dwrite(_sipmrd, H5T_NATIVE_SHORT, memspace, file_space, H5P_DEFAULT, sipmdata);
 		H5Sclose(file_space);
 
-		delete sipmdata;
+		delete[] sipmdata;
 	}
 
 

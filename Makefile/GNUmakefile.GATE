@@ -20,7 +20,7 @@ $(DICT).cc: $(HEADERS) LinkDef.hh
 lib/$(SHLIB): $(OBJECTS) $(DICT).o
 	@echo '<< generating $(SHLIB) >>'
 	@mkdir -p lib
-	@$(SOMAKER) $(SOFLAGS) -o lib/$(SHLIB) $(filter-out $(DICT).o, $(OBJECTS)) $(DICT).o
+	@$(SOMAKER) $(SOFLAGS) -o lib/$(SHLIB) $(filter-out $(DICT).o, $(OBJECTS)) $(DICT).o -L/Users/chur558/Downloads/hdf5-1.10.1/hdf5/lib -lhdf5
 	@echo '<< Done! >>'
 
 # rule for making symlink in $(GATELIBDIR)
@@ -31,6 +31,8 @@ $(GATELIBDIR)/$(SHLIB): lib/$(SHLIB)
 #	@ln -sf $(PWD)/lib/$(ROOTMAP) $(GATELIBDIR)
 
 
+
+## EC: What? Above rootcling command makes the CInt.cc file, the rootmap file, and the pcm file.
 
 # if ROOTMAP defined, define rule for making it
 #ifdef ROOTMAP
@@ -46,10 +48,12 @@ $(GATELIBDIR)/$(SHLIB): lib/$(SHLIB)
 clean:
 	@echo '<< cleaning all >>'
 	@rm -f $(DICT).* *.o lib*.so *~ .depend ./lib/*.o lib/lib*.so
+	@echo '<< removing CINT >>'
+	@rm -f $(DICT).*
 
 ###################################################
 libclean:
-	@echo '<< clearning lib/ directory >>'
+	@echo '<< cleaning lib/ directory >>'
 	@rm -f $(GATELIBDIR)/$(SHLIB) 
 	@rm -f lib/$(SHLIB) 
 

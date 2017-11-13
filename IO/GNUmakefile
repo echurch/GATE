@@ -31,6 +31,8 @@ include $(GATEMAKEDIR)/Makefile.${OSNAME}
 CXXFLAGS += $(shell root-config --cflags)
 CXXFLAGS += '-fPIC'
 
+HDF5_INC = "/Users/chur558/Downloads/hdf5-1.10.1/hdf5/include"
+# Setting this variable crucially compiles-in non-null versions in HDF5Writer/Reader.cc of Open,Write,Read, ... functions
 ifneq  ($(HDF5_INC),)
 CXXFLAGS += '-DHDF5'
 INCFLAGS += -I$(HDF5_INC)
